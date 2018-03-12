@@ -15,6 +15,7 @@ using namespace std;
 
 class Factory {
 public:
+	Factory();
 	virtual ~Factory();
 	virtual Ghost* createGhost(string name) = 0;
 	virtual Pacman* createPacman() = 0;

@@ -7,21 +7,42 @@
 
 #include "GhostSDL.h"
 #include <sdl2/SDL.h>
+#include <sdl2/SDL_image.h>
 
 extern SDL_Window* sdlWindow;
 extern SDL_Surface* sdlScreenSurface;
 
+GhostSDL::GhostSDL(){
+
+}
+
+GhostSDL::~GhostSDL(){
+
+}
+
 void GhostSDL::visualize(){
-	SDL_Surface* gHelloWorld = NULL;
-	gHelloWorld = SDL_LoadBMP( "img/hello_world.bmp" );
-	if( gHelloWorld == NULL )
+	cout << "\nI'm Visualized.";
+
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load( "Assets/pacman.png" );
+	if( loadedSurface == NULL )
 	{
-		printf( "Unable to load image %s! SDL Error: %s\n", "img/hello_world.bmp", SDL_GetError() );
+		printf( "Unable to load image %s! SDL_image Error: %s\n", "Assets/pacman.png", IMG_GetError() );
+	}
+	else
+	{
+		//Convert surface to screen format
+		optimizedSurface = SDL_ConvertSurface( loadedSurface, sdlScreenSurface->format, NULL );
+		if( optimizedSurface == NULL )
+		{
+			printf( "Unable to optimize image %s! SDL Error: %s\n", "Assets/pacman.png", SDL_GetError() );
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface( loadedSurface );
 	}
 
-	SDL_BlitSurface( gHelloWorld, NULL, sdlScreenSurface, NULL );
-	SDL_UpdateWindowSurface( sdlWindow );
-	SDL_Delay( 2000 );
-
-	cout << "\nI'm Visualized.";
 }

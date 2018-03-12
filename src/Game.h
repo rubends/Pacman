@@ -14,6 +14,7 @@ class Game {
 public:
 	Factory* aFactory;
 	Game(Factory*& abstractFactory);
+	virtual ~Game();
 	void start();
 };
 

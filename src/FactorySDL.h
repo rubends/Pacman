@@ -17,6 +17,7 @@
 class FactorySDL : public Factory{
 	public:
 		FactorySDL();
+		virtual ~FactorySDL();
 		Ghost* createGhost(string name);
 		Pacman* createPacman();
 	};

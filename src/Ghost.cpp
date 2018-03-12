@@ -9,6 +9,10 @@
 #include "Ghost.h"
 using namespace std;
 
+Ghost::Ghost(){
+
+}
+
 Ghost::~Ghost() {
 	// TODO Auto-generated destructor stub
 }

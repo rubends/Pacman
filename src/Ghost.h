@@ -13,6 +13,7 @@ using namespace std;
 class Ghost {
 public:
 	string name;
+	Ghost();
 	virtual ~Ghost();
 	void setName(string givenName);
 	virtual void visualize() = 0;

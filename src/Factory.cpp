@@ -7,6 +7,9 @@
 
 #include "Factory.h"
 
+Factory::Factory() {
+}
+
 Factory::~Factory() {
 	// TODO Auto-generated destructor stub
 }

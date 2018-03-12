@@ -13,6 +13,8 @@
 
 class GhostSDL : public Ghost{
 public:
+	GhostSDL();
+	virtual ~GhostSDL();
 	void visualize();
 };
 

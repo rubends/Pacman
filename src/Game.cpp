@@ -7,11 +7,15 @@
 
 #include "Game.h"
 #include "Ghost.h"
-
-#include <sdl2/SDL.h>
+#include "EventHandlerSDL.h"
+#include "EventHandler.h"
 
 Game::Game(Factory*& abstractFactory) {
 	aFactory = abstractFactory;
+
+}
+
+Game::~Game(){
 
 }
 
@@ -19,16 +23,22 @@ void Game::start(){
 	Ghost* blinky = aFactory->createGhost("Blinky");
 	Pacman* pac = aFactory->createPacman();
 
+	EventHandler* ev = new EventHandlerSDL();
+
 	bool quit = false;
-	SDL_Event e;
 	while( !quit )
 	{
-		while( SDL_PollEvent( &e ) != 0 )
+		while( ev->pollEvent() != 0 )
 		{
 			//User requests quit
-			if( e.type == SDL_QUIT )
+			if( ev->quitEvent() )
 			{
 				quit = true;
+				delete blinky;
+				delete pac;
+			} else if(ev->keyDown()){
+				int key = ev->getKeyDown();
+				cout << "\nkey: " << key; // log keystrokes
 			}
 		}
 	}

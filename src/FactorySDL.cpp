@@ -7,6 +7,7 @@
 
 #include "FactorySDL.h"
 #include <sdl2/SDL.h>
+#include <sdl2/SDL_image.h>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -27,24 +28,26 @@ FactorySDL::FactorySDL(){
 		}
 		else
 		{
-			//Get window surface
-			sdlScreenSurface = SDL_GetWindowSurface( sdlWindow );
+			int imgFlags = IMG_INIT_PNG;
+			if( !( IMG_Init( imgFlags ) & imgFlags ) )
+			{
+				printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+			} else {
+				//Get window surface
+				sdlScreenSurface = SDL_GetWindowSurface( sdlWindow );
+			}
 
 			//Fill the surface white
 			SDL_FillRect( sdlScreenSurface, NULL, SDL_MapRGB( sdlScreenSurface->format, 0x06, 0x38, 0x61 ) );
 
 			//Update the surface
 			SDL_UpdateWindowSurface( sdlWindow );
-
-			//Wait two seconds
-			//SDL_Delay( 2000 );
 		}
 	}
-	//Destroy window
-	//SDL_DestroyWindow( sdlWindow );
+}
 
-	//Quit SDL subsystems
-	//SDL_Quit();
+FactorySDL::~FactorySDL(){
+
 }
 
 Ghost* FactorySDL::createGhost(string name){
