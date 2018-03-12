@@ -16,7 +16,7 @@ public:
 	Ghost();
 	virtual ~Ghost();
 	void setName(string givenName);
-	virtual void visualize() = 0;
+	virtual void visualize(string name) = 0;
 };
 
 #endif /* GHOST_H_ */

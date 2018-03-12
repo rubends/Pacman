@@ -34,6 +34,7 @@ void Game::start(){
 			if( ev->quitEvent() )
 			{
 				quit = true;
+				//aFactory->quit(); TODO
 				delete blinky;
 				delete pac;
 			} else if(ev->keyDown()){

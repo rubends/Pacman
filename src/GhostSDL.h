@@ -15,7 +15,7 @@ class GhostSDL : public Ghost{
 public:
 	GhostSDL();
 	virtual ~GhostSDL();
-	void visualize();
+	void visualize(string name);
 };
 
 #endif /* GHOSTSDL_H_ */

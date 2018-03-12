@@ -53,7 +53,7 @@ FactorySDL::~FactorySDL(){
 Ghost* FactorySDL::createGhost(string name){
 	Ghost* ghost = new GhostSDL;
 	ghost->setName(name);
-	ghost->visualize();
+	ghost->visualize(name);
 
 	return ghost;
 }
