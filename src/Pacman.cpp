@@ -8,7 +8,10 @@
 #include "Pacman.h"
 
 Pacman::Pacman() {
-	// TODO Auto-generated constructor stub
+	mPosX = 0;
+	mPosY = 0;
+	mVelX = 0;
+	mVelY = 0;
 
 }
 

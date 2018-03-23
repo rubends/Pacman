@@ -13,6 +13,8 @@
 #include "GhostSDL.h"
 #include "Pacman.h"
 #include "PacmanSDL.h"
+#include "Tile.h"
+#include "TileSDL.h"
 
 class FactorySDL : public Factory{
 	public:
@@ -20,6 +22,9 @@ class FactorySDL : public Factory{
 		virtual ~FactorySDL();
 		Ghost* createGhost(string name);
 		Pacman* createPacman();
+		Tile* createTile(int x, int y, int type, int width, int height);
+		void ClearScreen();
+		void quitVis();
 	};
 
 #endif /* FACTORYSDL_H_ */

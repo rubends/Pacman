@@ -7,8 +7,10 @@
 
 #include "Game.h"
 #include "Ghost.h"
+#include "Map.h"
 #include "EventHandlerSDL.h"
 #include "EventHandler.h"
+
 
 Game::Game(Factory*& abstractFactory) {
 	aFactory = abstractFactory;
@@ -20,8 +22,9 @@ Game::~Game(){
 }
 
 void Game::start(){
+	Map* map = new Map(aFactory);
 	Ghost* blinky = aFactory->createGhost("Blinky");
-	Pacman* pac = aFactory->createPacman();
+	Pacman* pacman = aFactory->createPacman();
 
 	EventHandler* ev = new EventHandlerSDL();
 
@@ -34,14 +37,17 @@ void Game::start(){
 			if( ev->quitEvent() )
 			{
 				quit = true;
-				//aFactory->quit(); TODO
-				delete blinky;
-				delete pac;
+				//delete blinky;
+				//delete pacman;
+				aFactory->quitVis();
 			} else if(ev->keyDown()){
 				int key = ev->getKeyDown();
-				cout << "\nkey: " << key; // log keystrokes
+				pacman->Move(key);
 			}
 		}
+		map->Draw();
+		pacman->Visualize();
+		pacman->Animate();
 	}
 }
 

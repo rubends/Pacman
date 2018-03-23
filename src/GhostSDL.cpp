@@ -27,10 +27,11 @@ void GhostSDL::visualize(string name){
 	SDL_Surface* optimizedSurface = NULL;
 
 	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load("Assets/" << name << ".png");
+	string path = string("Assets/") + string(name) + string(".png");
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if( loadedSurface == NULL )
 	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", "Assets/" << name << ".png", IMG_GetError() );
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
 	}
 	else
 	{
@@ -38,7 +39,7 @@ void GhostSDL::visualize(string name){
 		optimizedSurface = SDL_ConvertSurface( loadedSurface, sdlScreenSurface->format, NULL );
 		if( optimizedSurface == NULL )
 		{
-			printf( "Unable to optimize image %s! SDL Error: %s\n", "Assets/" << name << ".png", SDL_GetError() );
+			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
 		}
 
 		//Get rid of old loaded surface

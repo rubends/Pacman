@@ -15,7 +15,9 @@ class PacmanSDL : public Pacman{
 public:
 	PacmanSDL();
 	virtual ~PacmanSDL();
-	void visualize();
+	void Visualize();
+	void Animate();
+	void Move(int key);
 };
 
 #endif /* PACMANSDL_H_ */
