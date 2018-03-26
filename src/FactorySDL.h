@@ -24,6 +24,8 @@ class FactorySDL : public Factory{
 		Pacman* createPacman();
 		Tile* createTile(int x, int y, int type, int width, int height);
 		void ClearScreen();
+		void UpdateScreen();
+		bool checkCollision(SDL_Rect a, SDL_Rect b);
 		void quitVis();
 	};
 

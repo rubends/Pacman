@@ -35,17 +35,23 @@ void TileSDL::renderTile(int x, int y, int tileType, int width, int height) {
 		SDL_RenderFillRect( sdlRenderer, &fillRect2 );
 	}
 
-	SDL_RenderPresent( sdlRenderer );
-
+	//SDL_RenderPresent( sdlRenderer );
 }
 
 void TileSDL::visualize()
 {
+	cout << mBox.x << "\n";
 	//wallMap.render( mBox.x - camera.x, mBox.y - camera.y, &gTileClips[ mType ] );
 }
 
 SDL_Rect TileSDL::getBox()
 {
     return mBox;
+}
+
+int* TileSDL::getBoxInt()
+{
+	int box[4] = {mBox.x, mBox.y, mBox.w, mBox.h};
+	return box;
 }
 

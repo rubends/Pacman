@@ -22,6 +22,7 @@ public:
 	virtual Pacman* createPacman() = 0;
 	virtual Tile* createTile(int x, int y, int type, int width, int height) = 0;
 	virtual void ClearScreen() = 0;
+	virtual void UpdateScreen() = 0;
 	virtual void quitVis() = 0;
 };
 

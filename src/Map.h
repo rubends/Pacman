@@ -16,6 +16,7 @@ public:
 	const int TILE_HEIGHT = 40;
 	Map(Factory*& aFactory);
 	void Draw();
+	Tile** GetTiles();
 	virtual ~Map();
 };
 

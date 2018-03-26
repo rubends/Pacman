@@ -23,11 +23,13 @@ Game::~Game(){
 
 void Game::start(){
 	Map* map = new Map(aFactory);
-	Ghost* blinky = aFactory->createGhost("Blinky");
+	//Ghost* blinky = aFactory->createGhost("Blinky");
 	Pacman* pacman = aFactory->createPacman();
+	pacman->Load();
+
+	int key = 0;
 
 	EventHandler* ev = new EventHandlerSDL();
-
 	bool quit = false;
 	while( !quit )
 	{
@@ -41,13 +43,15 @@ void Game::start(){
 				//delete pacman;
 				aFactory->quitVis();
 			} else if(ev->keyDown()){
-				int key = ev->getKeyDown();
+				key = ev->getKeyDown();
 				pacman->Move(key);
+				pacman->CheckCollisions(map->GetTiles());
 			}
 		}
 		map->Draw();
 		pacman->Visualize();
 		pacman->Animate();
+
 	}
 }
 

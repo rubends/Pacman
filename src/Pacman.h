@@ -9,16 +9,18 @@
 #define PACMAN_H_
 
 #include <iostream>
+#include "Tile.h"
 using namespace std;
 
 class Pacman {
 public:
 	Pacman();
 	virtual ~Pacman();
+	void CheckCollisions(Tile** tileSet);
 	virtual void Visualize() = 0;
 	virtual void Animate() = 0;
 	virtual void Move(int key) = 0;
-
+	virtual void Load() = 0;
 	static const int PACMAN_VEL = 10;
 protected:
 	 int mPosX, mPosY;

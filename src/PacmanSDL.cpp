@@ -8,10 +8,9 @@
 #include "PacmanSDL.h"
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
+#include "FactorySDL.h"
 
 extern SDL_Renderer* sdlRenderer;
-SDL_Surface* loadedSurface;
-
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -26,24 +25,21 @@ int mHeight;
 int frame = 0;
 int fps = 0;
 
-PacmanSDL::PacmanSDL() {
-	cout << "hey";
-	SDL_Surface* loadedSurface = IMG_Load("Assets/sprites.png");
-	SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0x00, 0x00, 0x00 ) );
-
-
+PacmanSDL::PacmanSDL(FactorySDL* fac) {
+	factory = fac;
+	loadedSurface = NULL;
+	cout << "HAP HAP HAP";
 }
 
 PacmanSDL::~PacmanSDL() {
 	// TODO Auto-generated destructor stub
 }
 
-void PacmanSDL::Visualize(){
-	SDL_Surface* loadedSurface = IMG_Load("Assets/sprites.png");
-	SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0, 0 ) );
-
-
+void PacmanSDL::Load() { //MOET NAAR FACTORYSDL
+	loadedSurface = IMG_Load("Assets/sprites.png");
+	SDL_SetColorKey(loadedSurface, SDL_TRUE, 0x000000 );
 	pacTexture = SDL_CreateTextureFromSurface( sdlRenderer, loadedSurface );
+
 	mWidth = loadedSurface->w;
 	mHeight = loadedSurface->h;
 
@@ -61,20 +57,21 @@ void PacmanSDL::Visualize(){
 	pacmanSprite[2].y = 0;
 	pacmanSprite[2].w = 15;
 	pacmanSprite[2].h = 15;
+}
 
-	renderQuad = { SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3, mWidth, mHeight };
+void PacmanSDL::Visualize(){
+	renderQuad = { mPosX, mPosY, mWidth, mHeight };
 	renderQuad.w = 40;
 	renderQuad.h = 40;
+	SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
+	SDL_RenderPresent( sdlRenderer );
 }
 
 void PacmanSDL::Animate(){
-	if(fps >= 2000000){
-		frame++;
-		SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
-		SDL_RenderPresent( sdlRenderer );
-
-		if(frame >= 2){
-			frame = -1;
+	if(fps >= 240){
+		frame--;
+		if(frame <= 0){
+			frame = 3;
 		}
 		fps = 0;
 	}
@@ -101,17 +98,11 @@ void PacmanSDL::Move(int key){
 	}
 	if(mPosX < 0) //pacman went to far
 	{
-		mPosX -= PACMAN_VEL;
+		mPosX = SCREEN_WIDTH;
 	}
-	if(mPosY < 0)
+	if(mPosX > (SCREEN_WIDTH-40)) //GET TILE WIDTH
 	{
-		mPosY -= PACMAN_VEL;
+		mPosX = 0;
 	}
-
-	renderQuad = { mPosX, mPosY, mWidth, mHeight };
-	renderQuad.w = 40;
-	renderQuad.h = 40;
-	SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
-	SDL_RenderPresent( sdlRenderer );
 }
 

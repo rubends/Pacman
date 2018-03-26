@@ -18,6 +18,7 @@ public:
 	virtual ~TileSDL();
 	void visualize();
 	void renderTile(int x, int y, int tileType, int width, int height);
+	int* getBoxInt();
 	SDL_Rect getBox();
 private:
 	//attributes
