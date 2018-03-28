@@ -11,18 +11,15 @@
 #include "Pacman.h"
 #include <iostream>
 #include <sdl2/SDL.h>
-#include "FactorySDL.h"
 
-class FactorySDL;
 class PacmanSDL : public Pacman{
 public:
-	FactorySDL* factory;
-	PacmanSDL(FactorySDL* fac);
+	PacmanSDL();
 	virtual ~PacmanSDL();
-	void Visualize();
-	void Load();
-	void Animate();
-	void Move(int key);
+	void visualize();
+	void load();
+	void animate();
+	void move(int key);
 private:
 	SDL_Surface* loadedSurface;
 };

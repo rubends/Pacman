@@ -33,8 +33,6 @@ Map::~Map() {
 }
 
 void Map::Draw() {
-	aFactory->ClearScreen();
-
 	int x = 0, y = 0;
 	for(int tile = 0; tile < TOTAL_TILES; tile++){
 		int tileType = 0;
@@ -48,7 +46,6 @@ void Map::Draw() {
 			y += TILE_HEIGHT;
 		}
 	}
-	aFactory->UpdateScreen();
 	// go back to beginning of map
 	map.seekg(0, ios::beg);
 }

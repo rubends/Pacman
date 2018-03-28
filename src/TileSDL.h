@@ -23,6 +23,7 @@ public:
 private:
 	//attributes
 	SDL_Rect mBox;
+	int TILETYPE;
 };
 
 #endif /* TILESDL_H_ */

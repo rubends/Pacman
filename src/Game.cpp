@@ -25,7 +25,7 @@ void Game::start(){
 	Map* map = new Map(aFactory);
 	//Ghost* blinky = aFactory->createGhost("Blinky");
 	Pacman* pacman = aFactory->createPacman();
-	pacman->Load();
+	pacman->load();
 
 	int key = 0;
 
@@ -44,14 +44,16 @@ void Game::start(){
 				aFactory->quitVis();
 			} else if(ev->keyDown()){
 				key = ev->getKeyDown();
-				pacman->Move(key);
-				pacman->CheckCollisions(map->GetTiles());
+				pacman->move(key);
+
+				pacman->checkCollisions(map->GetTiles(), 192);
 			}
 		}
+		aFactory->ClearScreen();
 		map->Draw();
-		pacman->Visualize();
-		pacman->Animate();
-
+		pacman->visualize();
+		pacman->animate();
+		aFactory->UpdateScreen();
 	}
 }
 

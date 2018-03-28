@@ -9,11 +9,8 @@
 #define FACTORYSDL_H_
 
 #include "Factory.h"
-#include "Ghost.h"
-#include "GhostSDL.h"
-#include "Pacman.h"
 #include "PacmanSDL.h"
-#include "Tile.h"
+#include "GhostSDL.h"
 #include "TileSDL.h"
 
 class FactorySDL : public Factory{
@@ -25,7 +22,6 @@ class FactorySDL : public Factory{
 		Tile* createTile(int x, int y, int type, int width, int height);
 		void ClearScreen();
 		void UpdateScreen();
-		bool checkCollision(SDL_Rect a, SDL_Rect b);
 		void quitVis();
 	};
 

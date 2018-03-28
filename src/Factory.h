@@ -23,6 +23,7 @@ public:
 	virtual Tile* createTile(int x, int y, int type, int width, int height) = 0;
 	virtual void ClearScreen() = 0;
 	virtual void UpdateScreen() = 0;
+	bool checkCollision(int* a, int* b);
 	virtual void quitVis() = 0;
 };
 

@@ -14,6 +14,7 @@ const int SCREEN_HEIGHT = 480;
 
 SDL_Window* sdlWindow = NULL;
 SDL_Surface* sdlScreenSurface = NULL;
+SDL_Renderer* sdlRendererTEMP = NULL;
 SDL_Renderer* sdlRenderer = NULL;
 
 FactorySDL::FactorySDL(){
@@ -32,7 +33,8 @@ FactorySDL::FactorySDL(){
 		}
 		else
 		{
-			sdlRenderer = SDL_CreateRenderer( sdlWindow, -1, SDL_RENDERER_ACCELERATED );
+			sdlRendererTEMP = SDL_CreateRenderer( sdlWindow, -1, SDL_RENDERER_ACCELERATED );
+			//sdlRenderer = sdlRendererTEMP;
 			int imgFlags = IMG_INIT_PNG;
 			if( !( IMG_Init( imgFlags ) & imgFlags ) )
 			{
@@ -51,7 +53,7 @@ FactorySDL::~FactorySDL(){
 }
 
 Ghost* FactorySDL::createGhost(string name){
-	Ghost* ghost = new GhostSDL;
+	Ghost* ghost = new GhostSDL();
 	ghost->setName(name);
 	ghost->visualize(name);
 
@@ -59,8 +61,8 @@ Ghost* FactorySDL::createGhost(string name){
 }
 
 Pacman* FactorySDL::createPacman(){
-	Pacman* pacman = new PacmanSDL(this);
-	//pacman->Visualize();
+	Pacman* pacman = new PacmanSDL();
+	pacman->setFactory(this);
 
 	return pacman;
 }
@@ -72,56 +74,13 @@ Tile* FactorySDL::createTile(int x, int y, int type, int width, int height){
 }
 
 void FactorySDL::ClearScreen(){
-	SDL_SetRenderDrawColor( sdlRenderer, 0x00, 0x00, 0x00, 0x00 );
-	SDL_RenderClear( sdlRenderer );
+	SDL_SetRenderDrawColor( sdlRendererTEMP, 0x00, 0x00, 0x00, 0x00 );
+	SDL_RenderClear( sdlRendererTEMP );
 }
 
 void FactorySDL::UpdateScreen(){
+	sdlRenderer = sdlRendererTEMP;
 	SDL_RenderPresent( sdlRenderer );
-}
-
-bool FactorySDL::checkCollision(SDL_Rect a, SDL_Rect b){
-	//The sides of the rectangles
-	int leftA, leftB;
-	int rightA, rightB;
-	int topA, topB;
-	int bottomA, bottomB;
-
-	//Calculate the sides of rect A
-	leftA = a.x;
-	rightA = a.x + a.w;
-	topA = a.y;
-	bottomA = a.y + a.h;
-
-	//Calculate the sides of rect B
-	leftB = b.x;
-	rightB = b.x + b.w;
-	topB = b.y;
-	bottomB = b.y + b.h;
-
-	//If any of the sides from A are outside of B
-	if( bottomA <= topB )
-	{
-		return false;
-	}
-
-	if( topA >= bottomB )
-	{
-		return false;
-	}
-
-	if( rightA <= leftB )
-	{
-		return false;
-	}
-
-	if( leftA >= rightB )
-	{
-		return false;
-	}
-
-	//If none of the sides from A are outside B
-	return true;
 }
 
 void FactorySDL::quitVis(){

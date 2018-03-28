@@ -8,9 +8,9 @@
 #include "PacmanSDL.h"
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
-#include "FactorySDL.h"
+#include "Factory.h"
 
-extern SDL_Renderer* sdlRenderer;
+extern SDL_Renderer* sdlRendererTEMP;
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -19,26 +19,21 @@ SDL_Rect pacmanSprite[3];
 SDL_Texture* pacTexture = NULL;
 SDL_Rect renderQuad;
 
-int mWidth;
-int mHeight;
-
 int frame = 0;
 int fps = 0;
 
-PacmanSDL::PacmanSDL(FactorySDL* fac) {
-	factory = fac;
+PacmanSDL::PacmanSDL() {
 	loadedSurface = NULL;
-	cout << "HAP HAP HAP";
 }
 
 PacmanSDL::~PacmanSDL() {
 	// TODO Auto-generated destructor stub
 }
 
-void PacmanSDL::Load() { //MOET NAAR FACTORYSDL
+void PacmanSDL::load() { //MOET NAAR FACTORYSDL
 	loadedSurface = IMG_Load("Assets/sprites.png");
 	SDL_SetColorKey(loadedSurface, SDL_TRUE, 0x000000 );
-	pacTexture = SDL_CreateTextureFromSurface( sdlRenderer, loadedSurface );
+	pacTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, loadedSurface );
 
 	mWidth = loadedSurface->w;
 	mHeight = loadedSurface->h;
@@ -59,50 +54,73 @@ void PacmanSDL::Load() { //MOET NAAR FACTORYSDL
 	pacmanSprite[2].h = 15;
 }
 
-void PacmanSDL::Visualize(){
+void PacmanSDL::visualize(){
 	renderQuad = { mPosX, mPosY, mWidth, mHeight };
 	renderQuad.w = 40;
 	renderQuad.h = 40;
-	SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
-	SDL_RenderPresent( sdlRenderer );
+	SDL_RenderCopy( sdlRendererTEMP, pacTexture, &pacmanSprite[frame], &renderQuad );
 }
 
-void PacmanSDL::Animate(){
+void PacmanSDL::animate(){
 	if(fps >= 240){
 		frame--;
-		if(frame <= 0){
-			frame = 3;
+		if(frame <= -1){
+			frame = 2;
 		}
 		fps = 0;
 	}
 	fps++;
 }
 
-void PacmanSDL::Move(int key){
-	switch(key)
+void PacmanSDL::move(int key){
+	//cout << collision;
+	if(!collision)
 	{
-		case 1: //UP
-			mPosY -= PACMAN_VEL;
-			break;
-		case 2: //DOWN
-			mPosY += PACMAN_VEL;
-			break;
-		case 3: //LEFT
-			mPosX -= PACMAN_VEL;
-			break;
-		case 4: //RIGHT
-			mPosX += PACMAN_VEL;
-			break;
-		default:
-			break;
-	}
-	if(mPosX < 0) //pacman went to far
-	{
-		mPosX = SCREEN_WIDTH;
-	}
-	if(mPosX > (SCREEN_WIDTH-40)) //GET TILE WIDTH
-	{
-		mPosX = 0;
+		switch(key)
+		{
+			case 1: //UP
+				mPosY -= PACMAN_VEL;
+				pacmanSprite[0].x = 455;
+				pacmanSprite[0].y = 32;
+				pacmanSprite[1].x = 471;
+				pacmanSprite[1].y = 32;
+				break;
+			case 2: //DOWN
+				mPosY += PACMAN_VEL;
+				pacmanSprite[0].x = 455;
+				pacmanSprite[0].y = 48;
+				pacmanSprite[1].x = 471;
+				pacmanSprite[1].y = 48;
+				break;
+			case 3: //LEFT
+				mPosX -= PACMAN_VEL;
+				pacmanSprite[0].x = 455;
+				pacmanSprite[0].y = 16;
+				pacmanSprite[1].x = 471;
+				pacmanSprite[1].y = 16;
+				break;
+			case 4: //RIGHT
+				mPosX += PACMAN_VEL;
+				pacmanSprite[0].x = 455;
+				pacmanSprite[0].y = 0;
+				pacmanSprite[1].x = 471;
+				pacmanSprite[1].y = 0;
+				break;
+			default:
+				break;
+		}
+		if(mPosX < 0) //pacman went to far
+		{
+			mPosX = SCREEN_WIDTH;
+		}
+		if(mPosX > (SCREEN_WIDTH-40)) //TODO: GET TILE WIDTH
+		{
+			mPosX = 0;
+		}
+		if(mPosY > (SCREEN_HEIGHT-40)) //TODO: GET TILE WIDTH
+		{
+			mPosY = 0;
+		}
 	}
 }
 
