@@ -6,26 +6,17 @@
  */
 
 #include "Map.h"
-#include "Tile.h"
-#include "Factory.h"
-#include <fstream>
-
-const int TOTAL_TILES = 192;
-int SCREEN_WIDTH = 640;
-Tile* tileSet[TOTAL_TILES];
-
-Factory* aFactory = NULL;
-std::ifstream map;
 
 //Tile constants
-Map::Map(Factory*& abstractFactory) {
+Map::Map(Factory* abstractFactory) {
 	aFactory = abstractFactory;
 	map.open("Assets/Map.map");
 	if( map.fail() )
 	{
 		printf( "Unable to load map file!\n" );
 	}
-
+	map.seekg(0, ios::end);
+	//totalTiles = map.tellg()/3; //size: no extra 0 or spaces = /3
 }
 
 Map::~Map() {
@@ -33,8 +24,11 @@ Map::~Map() {
 }
 
 void Map::Draw() {
+	// go back to beginning of map
+	map.seekg(0, ios::beg);
+
 	int x = 0, y = 0;
-	for(int tile = 0; tile < TOTAL_TILES; tile++){
+	for(int tile = 0; tile < totalTiles; tile++){
 		int tileType = 0;
 		map >> tileType;
 		tileSet[tile] = aFactory->createTile(x, y, tileType, TILE_WIDTH, TILE_HEIGHT);
@@ -46,8 +40,6 @@ void Map::Draw() {
 			y += TILE_HEIGHT;
 		}
 	}
-	// go back to beginning of map
-	map.seekg(0, ios::beg);
 }
 
 Tile** Map::GetTiles(){

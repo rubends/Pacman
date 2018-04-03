@@ -9,6 +9,7 @@
 #define EVENTHANDLERSDL_H_
 
 #include "EventHandler.h"
+#include <sdl2/SDL.h>
 
 class EventHandlerSDL : public EventHandler{
 public:
@@ -18,6 +19,8 @@ public:
 	bool quitEvent();
 	bool keyDown();
 	int getKeyDown();
+protected:
+	SDL_Event e;
 };
 
 #endif /* EVENTHANDLERSDL_H_ */

@@ -17,6 +17,7 @@ public:
 	virtual void visualize() = 0;
 	virtual int* getBoxInt() = 0;
 	virtual void renderTile(int x, int y, int tileType, int width, int height) = 0;
+	virtual void destroyTile() = 0;
 };
 
 #endif /* TILE_H_ */

@@ -9,6 +9,12 @@
 #define GAME_H_
 
 #include "Factory.h"
+#include "Ghost.h"
+#include "Map.h"
+#include "EventHandlerSDL.h"
+#include "EventHandler.h"
+
+using namespace std;
 
 class Game {
 public:

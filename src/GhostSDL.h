@@ -11,11 +11,25 @@
 #include "Ghost.h"
 #include <iostream>
 
+#include <sdl2/SDL.h>
+#include <sdl2/SDL_image.h>
+
+using namespace std;
+
 class GhostSDL : public Ghost{
 public:
-	GhostSDL();
+	GhostSDL(int ghostType);
 	virtual ~GhostSDL();
-	void visualize(string name);
+	void visualize();
+	void move(Tile* tileSet[]);
+	void moveTo(int x, int y);
+protected:
+	const int SCREEN_WIDTH = 640;
+	const int SCREEN_HEIGHT = 480;
+
+	SDL_Rect ghostSprite[3];
+	SDL_Texture* ghostTexture = NULL;
+	SDL_Rect renderQuadG;
 };
 
 #endif /* GHOSTSDL_H_ */

@@ -12,6 +12,8 @@
 #include <sdl2/SDL_image.h>
 #include "Tile.h"
 
+using namespace std;
+
 class TileSDL : public Tile{
 public:
 	TileSDL();
@@ -19,11 +21,16 @@ public:
 	void visualize();
 	void renderTile(int x, int y, int tileType, int width, int height);
 	int* getBoxInt();
+	void destroyTile();
 	SDL_Rect getBox();
-private:
+protected:
 	//attributes
 	SDL_Rect mBox;
 	int TILETYPE;
+
+	const int PATH = 00;
+	const int WALL = 01;
+	const int PELLET = 02;
 };
 
 #endif /* TILESDL_H_ */

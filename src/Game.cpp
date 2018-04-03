@@ -6,15 +6,9 @@
  */
 
 #include "Game.h"
-#include "Ghost.h"
-#include "Map.h"
-#include "EventHandlerSDL.h"
-#include "EventHandler.h"
-
 
 Game::Game(Factory*& abstractFactory) {
 	aFactory = abstractFactory;
-
 }
 
 Game::~Game(){
@@ -22,12 +16,19 @@ Game::~Game(){
 }
 
 void Game::start(){
-	Map* map = new Map(aFactory);
-	//Ghost* blinky = aFactory->createGhost("Blinky");
+	Map* map = aFactory->createMap();
+	/*for(int i = 1; i < 5; i++){
+		Ghost* ghost = aFactory->createGhost(i);
+	}*/
+	Ghost* ghost1 = aFactory->createGhost(1);
+	Ghost* ghost2 = aFactory->createGhost(2);
+	Ghost* ghost3 = aFactory->createGhost(3);
+	Ghost* ghost4 = aFactory->createGhost(4);
+
 	Pacman* pacman = aFactory->createPacman();
-	pacman->load();
 
 	int key = 0;
+	int fps = 0;
 
 	EventHandler* ev = new EventHandlerSDL();
 	bool quit = false;
@@ -44,15 +45,27 @@ void Game::start(){
 				aFactory->quitVis();
 			} else if(ev->keyDown()){
 				key = ev->getKeyDown();
-				pacman->move(key);
-
-				pacman->checkCollisions(map->GetTiles(), 192);
 			}
 		}
+
+		if(fps >= 60){ //TODO global fps
+			pacman->move(key, map->GetTiles()); //Todo gettiles out of loop
+
+			ghost1->moveTo(pacman->getX(), pacman->getY());
+			ghost2->move(map->GetTiles());
+			ghost3->move(map->GetTiles());
+			ghost4->move(map->GetTiles());
+			fps = 0;
+		}
+		fps++;
+
 		aFactory->ClearScreen();
 		map->Draw();
 		pacman->visualize();
-		pacman->animate();
+		ghost1->visualize();
+		ghost2->visualize();
+		ghost3->visualize();
+		ghost4->visualize();
 		aFactory->UpdateScreen();
 	}
 }

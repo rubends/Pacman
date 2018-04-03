@@ -9,27 +9,20 @@
 #define PACMAN_H_
 
 #include <iostream>
-#include "Tile.h"
+#include "Entity.h"
 using namespace std;
 
-class Factory; //Forward declaration so the compiler knows what Factory is
-class Pacman {
+class Entity;
+class Pacman : public Entity{
 public:
 	Pacman();
 	virtual ~Pacman();
-	void setFactory(Factory* fac);
-	void checkCollisions(Tile* tileSet[], int totalTiles);
+	int getX();
+	int getY();
 	virtual void visualize() = 0;
-	virtual void animate() = 0;
-	virtual void move(int key) = 0;
-	virtual void load() = 0;
-	static const int PACMAN_VEL = 10;
+	virtual void move(int key, Tile* tileSet[]) = 0;
 protected:
-	 int mPosX, mPosY;
-	 int mVelX, mVelY;
-	 int mWidth, mHeight;
-	 Factory* aFactory;
-	 bool collision;
+	 int PACMAN_VEL = 5;
 };
 
 #endif /* PACMAN_H_ */

@@ -6,48 +6,116 @@
  */
 
 #include "GhostSDL.h"
-#include <sdl2/SDL.h>
-#include <sdl2/SDL_image.h>
 
-extern SDL_Window* sdlWindow;
-extern SDL_Surface* sdlScreenSurface;
+extern SDL_Renderer* sdlRendererTEMP; //TODO GET FROM FACTORY
+extern SDL_Surface* loadedSurface;
 
-GhostSDL::GhostSDL(){
+GhostSDL::GhostSDL(int ghostType){
+	ghostTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, loadedSurface );
 
+	mWidth = loadedSurface->w;
+	mHeight = loadedSurface->h;
+
+	ghostSprite[0].x = 455;
+	ghostSprite[0].w = 15;
+	ghostSprite[0].h = 15;
+
+	type = ghostType;
+	if(type == 1) {
+		ghostSprite[0].y = 64;
+		mPosX = 280;
+		mPosY = 200;
+	} else if (type == 2) {
+		ghostSprite[0].y = 80;
+		mPosX = 280;
+		mPosY = 240;
+	} else if (type == 3) {
+		ghostSprite[0].y = 96;
+		mPosX = 320;
+		mPosY = 200;
+	} else if (type == 4) {
+		ghostSprite[0].y = 112;
+		mPosX = 320;
+		mPosY = 240;
+	}
 }
 
 GhostSDL::~GhostSDL(){
 
 }
 
-void GhostSDL::visualize(string name){
-	cout << "\nI'm Visualized.";
+void GhostSDL::visualize(){
+	renderQuadG = { mPosX, mPosY, mWidth, mHeight };
 
-	//The final optimized image
-	SDL_Surface* optimizedSurface = NULL;
+	renderQuadG.w = 40;
+	renderQuadG.h = 40;
 
-	//Load image at specified path
-	string path = string("Assets/") + string(name) + string(".png");
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-	if( loadedSurface == NULL )
-	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+	SDL_RenderCopy( sdlRendererTEMP, ghostTexture, &ghostSprite[0], &renderQuadG );
+}
+
+void GhostSDL::move(Tile* tileSet[]){
+	//int randNum = rand()%(4) + 1;
+	int randNum = 1;
+	this->checkCollisions(tileSet, 192);
+	if(collision){
+		cout << "COLL \n";
 	}
-	else
+	switch(randNum)
 	{
-		//Convert surface to screen format
-		optimizedSurface = SDL_ConvertSurface( loadedSurface, sdlScreenSurface->format, NULL );
-		if( optimizedSurface == NULL )
-		{
-			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface( loadedSurface );
+		case 1:
+			mPosY -= GHOST_VEL;
+			/*this->checkCollisions(tileSet, 192);
+			if(collision){
+				mPosY += GHOST_VEL;
+			}*/
+			break;
+		case 2:
+			mPosY += GHOST_VEL;
+			/*this->checkCollisions(tileSet, 192);
+			if(collision){
+				mPosY -= GHOST_VEL;
+			}*/
+			break;
+		case 3:
+			mPosX -= GHOST_VEL;
+			/*this->checkCollisions(tileSet, 192);
+			if(collision){
+				mPosX += GHOST_VEL;
+			}*/
+			break;
+		case 4:
+			mPosX += GHOST_VEL;
+			/*this->checkCollisions(tileSet, 192);
+			if(collision){
+				mPosX -= GHOST_VEL;
+			}*/
+			break;
+	}
+	if(mPosX < 0)
+	{
+		mPosX = SCREEN_WIDTH;
+	}
+	if(mPosX > (SCREEN_WIDTH-40))
+	{
+		mPosX = 0;
+	}
+	if(mPosY > (SCREEN_HEIGHT-40))
+	{
+		mPosY = 0;
 	}
 
-	SDL_BlitSurface( optimizedSurface, NULL, sdlScreenSurface, NULL );
-	//Update the surface
-	SDL_UpdateWindowSurface( sdlWindow );
+}
 
+void GhostSDL::moveTo(int x, int y){
+	cout << x << " - " << y << "\n";
+	if(mPosX - x > 0){
+		mPosX -= GHOST_VEL;
+	} else {
+		mPosX += GHOST_VEL;
+	}
+	if(mPosY - y > 0){
+		mPosY -= GHOST_VEL;
+	} else {
+		mPosY += GHOST_VEL;
+	}
 }

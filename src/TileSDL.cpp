@@ -6,14 +6,9 @@
  */
 
 #include "TileSDL.h"
-#include <sdl2/SDL.h>
 
-extern SDL_Renderer* sdlRendererTEMP;
+extern SDL_Renderer* sdlRendererTEMP; //TODO get from factory
 
-const int TOTAL_WALLS = 192;
-const int PATH = 00;
-const int WALL = 01;
-const int PELLET = 02;
 TileSDL::TileSDL() {
 	TILETYPE = 0;
 }
@@ -40,6 +35,10 @@ void TileSDL::renderTile(int x, int y, int tileType, int width, int height) {
 		SDL_Rect fillRect2 = { x, y, width, height };
 		SDL_SetRenderDrawColor( sdlRendererTEMP, 0xFF, 0xFF, 0xFF, 0xFF );
 		SDL_RenderFillRect( sdlRendererTEMP, &fillRect2 );
+	} else {
+		SDL_Rect fillRect2 = { x+(width/2)-(width/8), y+(height/2)-(height/8), width/4, height/4 };
+		SDL_SetRenderDrawColor( sdlRendererTEMP, 0xFF, 0xFF, 0xFF, 0xFF );
+		SDL_RenderFillRect( sdlRendererTEMP, &fillRect2 );
 	}
 }
 
@@ -62,5 +61,9 @@ int* TileSDL::getBoxInt()
 	box[3] = mBox.h;
 	box[4] = TILETYPE;
 	return box;
+}
+
+void TileSDL::destroyTile(){
+	cout << "PELLET\n";
 }
 

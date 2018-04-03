@@ -6,16 +6,12 @@
  */
 
 #include "FactorySDL.h"
-#include <sdl2/SDL.h>
-#include <sdl2/SDL_image.h>
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
+SDL_Renderer* sdlRendererTEMP = NULL; //TODO TO PROTECTED, give variables through function
+SDL_Renderer* sdlRenderer = NULL;
+SDL_Surface* loadedSurface = NULL;
 SDL_Window* sdlWindow = NULL;
 SDL_Surface* sdlScreenSurface = NULL;
-SDL_Renderer* sdlRendererTEMP = NULL;
-SDL_Renderer* sdlRenderer = NULL;
 
 FactorySDL::FactorySDL(){
 
@@ -44,6 +40,9 @@ FactorySDL::FactorySDL(){
 			}
 
 			this->ClearScreen();
+
+			loadedSurface = IMG_Load("Assets/sprites.png");
+			SDL_SetColorKey(loadedSurface, SDL_TRUE, 0x000000 );
 		}
 	}
 }
@@ -52,11 +51,8 @@ FactorySDL::~FactorySDL(){
 
 }
 
-Ghost* FactorySDL::createGhost(string name){
-	Ghost* ghost = new GhostSDL();
-	ghost->setName(name);
-	ghost->visualize(name);
-
+Ghost* FactorySDL::createGhost(int type){
+	Ghost* ghost = new GhostSDL(type);
 	return ghost;
 }
 
@@ -73,6 +69,11 @@ Tile* FactorySDL::createTile(int x, int y, int type, int width, int height){
 	return tile;
 }
 
+Map* FactorySDL::createMap() {
+	Map* map = new Map(this);
+	return map;
+}
+
 void FactorySDL::ClearScreen(){
 	SDL_SetRenderDrawColor( sdlRendererTEMP, 0x00, 0x00, 0x00, 0x00 );
 	SDL_RenderClear( sdlRendererTEMP );
@@ -81,6 +82,10 @@ void FactorySDL::ClearScreen(){
 void FactorySDL::UpdateScreen(){
 	sdlRenderer = sdlRendererTEMP;
 	SDL_RenderPresent( sdlRenderer );
+}
+
+SDL_Surface* FactorySDL::getSurface(){
+	return loadedSurface;
 }
 
 void FactorySDL::quitVis(){

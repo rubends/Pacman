@@ -6,10 +6,7 @@
  */
 
 #include "EventHandlerSDL.h"
-#include <sdl2/SDL.h>
 
-
-SDL_Event e;
 EventHandlerSDL::EventHandlerSDL() {
 	// TODO Auto-generated constructor stub
 

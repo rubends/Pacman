@@ -4,13 +4,15 @@
  *  Created on: Mar 12, 2018
  *      Author: ruben
  */
-
-#include <iostream>
 #include "Ghost.h"
-using namespace std;
 
 Ghost::Ghost(){
-
+	type = 0;
+	GHOST_VEL = 5;
+	mPosX = 0;
+	mPosY = 0;
+	mWidth = 0;
+	mHeight = 0;
 }
 
 Ghost::~Ghost() {
