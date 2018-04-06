@@ -27,9 +27,10 @@ void Entity::setFactory(Factory* fac){
 }
 
 
-void Entity::checkCollisions(Tile* tileSet[], int totalTiles){
+bool Entity::checkCollisions(Tile* tileSet[], int totalTiles){
+	collision = false;
 	for(int j = 0; j <= totalTiles; j++){
-		int *tileBoxInt = tileSet[j]->getBoxInt();
+		int* tileBoxInt = tileSet[j]->getBoxInt();
 		int tileBox[4] = {  tileBoxInt[0], tileBoxInt[1], tileBoxInt[2], tileBoxInt[3] };
 
 		int entityBox[4] = { mPosX, mPosY, mWidth, mHeight };
@@ -44,4 +45,5 @@ void Entity::checkCollisions(Tile* tileSet[], int totalTiles){
 			}
 		}
 	}
+	return collision;
 }

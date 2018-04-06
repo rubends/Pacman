@@ -18,7 +18,7 @@ public:
 	Entity();
 	virtual ~Entity();
 	void setFactory(Factory* fac);
-	void checkCollisions(Tile* tileSet[], int totalTiles);
+	bool checkCollisions(Tile* tileSet[], int totalTiles);
 protected:
 	Factory* aFactory;
 	bool collision;

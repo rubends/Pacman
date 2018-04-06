@@ -21,7 +21,7 @@ public:
 	PacmanSDL();
 	virtual ~PacmanSDL();
 	void visualize();
-	void move(int key, Tile* tileSet[]);
+	void move(int key);
 protected:
 	const int SCREEN_WIDTH = 640;
 	const int SCREEN_HEIGHT = 480;

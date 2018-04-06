@@ -12,7 +12,7 @@
 #include "Entity.h"
 using namespace std;
 
-class Entity;
+//class Entity;
 class Pacman : public Entity{
 public:
 	Pacman();
@@ -20,7 +20,7 @@ public:
 	int getX();
 	int getY();
 	virtual void visualize() = 0;
-	virtual void move(int key, Tile* tileSet[]) = 0;
+	virtual void move(int key) = 0;
 protected:
 	 int PACMAN_VEL = 5;
 };

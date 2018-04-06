@@ -17,6 +17,7 @@ using namespace std;
 
 class Map;
 class Pacman;
+class Ghost;
 class Factory {
 public:
 	Factory();
@@ -28,7 +29,10 @@ public:
 	virtual void ClearScreen() = 0;
 	virtual void UpdateScreen() = 0;
 	bool checkCollision(int* a, int* b);
+	Tile** getMapTiles();
 	virtual void quitVis() = 0;
+protected:
+	Map* tileMap;
 };
 
 #endif /* FACTORY_H_ */

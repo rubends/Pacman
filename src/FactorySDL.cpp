@@ -53,6 +53,7 @@ FactorySDL::~FactorySDL(){
 
 Ghost* FactorySDL::createGhost(int type){
 	Ghost* ghost = new GhostSDL(type);
+	ghost->setFactory(this);
 	return ghost;
 }
 
@@ -71,6 +72,7 @@ Tile* FactorySDL::createTile(int x, int y, int type, int width, int height){
 
 Map* FactorySDL::createMap() {
 	Map* map = new Map(this);
+	tileMap = map;
 	return map;
 }
 

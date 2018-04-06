@@ -11,21 +11,17 @@
 #include "Entity.h"
 using namespace std;
 
+class Entity;
 class Ghost : public Entity{
 public:
 	Ghost();
 	virtual ~Ghost();
-	void setName(string givenName);
 	virtual void visualize() = 0;
-	virtual void move(Tile* tileSet[]) = 0;
+	virtual void move() = 0;
 	virtual void moveTo(int x, int y) = 0;
 protected:
 	int type;
-	string name;
-
-	int GHOST_VEL;
-	int mPosX, mPosY;
-	int mWidth, mHeight;
+	int GHOST_VEL = 5;
 };
 
 #endif /* GHOST_H_ */

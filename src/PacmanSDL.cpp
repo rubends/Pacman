@@ -43,7 +43,9 @@ void PacmanSDL::visualize(){
 	SDL_RenderCopy( sdlRendererTEMP, pacTexture, &pacmanSprite[frame], &renderQuad );
 }
 
-void PacmanSDL::move(int key, Tile* tileSet[]){
+void PacmanSDL::move(int key){
+	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
+	tileSet = aFactory->getMapTiles();
 	switch(key) //TODO keep going until next possibility
 	{
 		case 1: //UP

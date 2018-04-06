@@ -10,7 +10,6 @@
 extern SDL_Renderer* sdlRendererTEMP; //TODO get from factory
 
 TileSDL::TileSDL() {
-	TILETYPE = 0;
 }
 
 TileSDL::~TileSDL() {
@@ -18,14 +17,11 @@ TileSDL::~TileSDL() {
 }
 
 void TileSDL::renderTile(int x, int y, int tileType, int width, int height) {
-	//Get the offsets
-	mBox.x = x;
-	mBox.y = y;
-	//Set the collision box
-	mBox.w = width;
-	mBox.h = height;
-
-	TILETYPE = tileType;
+	boxInt[0] = x;
+	boxInt[1] = y;
+	boxInt[2] = width;
+	boxInt[3] = height;
+	boxInt[4] = tileType;
 
 	if(tileType == WALL){
 		SDL_Rect fillRect2 = { x, y, width, height };
@@ -44,23 +40,11 @@ void TileSDL::renderTile(int x, int y, int tileType, int width, int height) {
 
 void TileSDL::visualize()
 {
-	//wallMap.render( mBox.x - camera.x, mBox.y - camera.y, &gTileClips[ mType ] );
-}
-
-SDL_Rect TileSDL::getBox()
-{
-    return mBox;
 }
 
 int* TileSDL::getBoxInt()
 {
-	int* box = new int[5];
-	box[0] = mBox.x;
-	box[1] = mBox.y;
-	box[2] = mBox.w;
-	box[3] = mBox.h;
-	box[4] = TILETYPE;
-	return box;
+	return boxInt;
 }
 
 void TileSDL::destroyTile(){

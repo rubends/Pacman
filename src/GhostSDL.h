@@ -21,7 +21,7 @@ public:
 	GhostSDL(int ghostType);
 	virtual ~GhostSDL();
 	void visualize();
-	void move(Tile* tileSet[]);
+	void move();
 	void moveTo(int x, int y);
 protected:
 	const int SCREEN_WIDTH = 640;

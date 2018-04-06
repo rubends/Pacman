@@ -17,6 +17,7 @@ Game::~Game(){
 
 void Game::start(){
 	Map* map = aFactory->createMap();
+
 	/*for(int i = 1; i < 5; i++){
 		Ghost* ghost = aFactory->createGhost(i);
 	}*/
@@ -49,12 +50,13 @@ void Game::start(){
 		}
 
 		if(fps >= 60){ //TODO global fps
-			pacman->move(key, map->GetTiles()); //Todo gettiles out of loop
+			pacman->move(key); //Todo gettiles out of loop
 
 			ghost1->moveTo(pacman->getX(), pacman->getY());
-			ghost2->move(map->GetTiles());
-			ghost3->move(map->GetTiles());
-			ghost4->move(map->GetTiles());
+			ghost2->move();
+			ghost3->move();
+			ghost4->move();
+
 			fps = 0;
 		}
 		fps++;

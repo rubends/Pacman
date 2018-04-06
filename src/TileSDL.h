@@ -22,11 +22,8 @@ public:
 	void renderTile(int x, int y, int tileType, int width, int height);
 	int* getBoxInt();
 	void destroyTile();
-	SDL_Rect getBox();
 protected:
-	//attributes
-	SDL_Rect mBox;
-	int TILETYPE;
+	int boxInt [5];
 
 	const int PATH = 00;
 	const int WALL = 01;

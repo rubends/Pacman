@@ -14,6 +14,8 @@
 
 using namespace std;
 
+typedef Tile *(*tileArray)[192];
+
 class Factory; //TO USE
 class Map {
 public:

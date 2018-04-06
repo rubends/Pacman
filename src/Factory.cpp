@@ -8,10 +8,15 @@
 #include "Factory.h"
 
 Factory::Factory() {
+	tileMap = NULL;
 }
 
 Factory::~Factory() {
 	// TODO Auto-generated destructor stub
+}
+
+Tile** Factory::getMapTiles() {
+	return tileMap->GetTiles();
 }
 
 bool Factory::checkCollision(int* entityBox, int* tileBox){

@@ -53,7 +53,10 @@ void GhostSDL::visualize(){
 	SDL_RenderCopy( sdlRendererTEMP, ghostTexture, &ghostSprite[0], &renderQuadG );
 }
 
-void GhostSDL::move(Tile* tileSet[]){
+void GhostSDL::move(){
+	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
+	tileSet = aFactory->getMapTiles();
+
 	//int randNum = rand()%(4) + 1;
 	int randNum = 1;
 	this->checkCollisions(tileSet, 192);
@@ -108,14 +111,28 @@ void GhostSDL::move(Tile* tileSet[]){
 
 void GhostSDL::moveTo(int x, int y){
 	cout << x << " - " << y << "\n";
+	int tempPosX = mPosX;
+	int tempPosY = mPosY;
+	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
+	tileSet = aFactory->getMapTiles();
+
 	if(mPosX - x > 0){
 		mPosX -= GHOST_VEL;
 	} else {
 		mPosX += GHOST_VEL;
 	}
+
+	if(this->checkCollisions(tileSet, 192)){
+		mPosX = tempPosX;
+	}
+
 	if(mPosY - y > 0){
 		mPosY -= GHOST_VEL;
 	} else {
 		mPosY += GHOST_VEL;
+	}
+
+	if(this->checkCollisions(tileSet, 192)){
+		mPosY = tempPosY;
 	}
 }
