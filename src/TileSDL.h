@@ -21,13 +21,17 @@ public:
 	void visualize();
 	void renderTile(int x, int y, int tileType, int width, int height);
 	int* getBoxInt();
-	void destroyTile();
 protected:
 	int boxInt [5];
 
 	const int PATH = 00;
-	const int WALL = 01;
-	const int PELLET = 02;
+	const int WALL_VERT = 01;
+	const int WALL_HORI = 02;
+	const int WALL_COR_UP_LR = 03;
+	const int WALL_COR_UP_RL = 04;
+	const int WALL_COR_DOWN_RL = 05;
+	const int WALL_COR_DOWN_LR = 06;
+	const int PELLET = 10;
 };
 
 #endif /* TILESDL_H_ */

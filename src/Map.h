@@ -14,8 +14,6 @@
 
 using namespace std;
 
-typedef Tile *(*tileArray)[192];
-
 class Factory; //TO USE
 class Map {
 public:
@@ -24,13 +22,13 @@ public:
 	Map(Factory* aFactory);
 	void Draw();
 	Tile** GetTiles();
+	void DestroyTile(int tile);
 	virtual ~Map();
 protected:
 	const int totalTiles = 192;
 	int SCREEN_WIDTH = 640;
 	Tile* tileSet[192];
-
-	Factory* aFactory = NULL;
+	Factory* aFactory;
 	std::ifstream map;
 };
 

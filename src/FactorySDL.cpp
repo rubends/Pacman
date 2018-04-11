@@ -13,6 +13,9 @@ SDL_Surface* loadedSurface = NULL;
 SDL_Window* sdlWindow = NULL;
 SDL_Surface* sdlScreenSurface = NULL;
 
+
+SDL_Texture* tileTexture = NULL;
+
 FactorySDL::FactorySDL(){
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
@@ -43,6 +46,8 @@ FactorySDL::FactorySDL(){
 
 			loadedSurface = IMG_Load("Assets/sprites.png");
 			SDL_SetColorKey(loadedSurface, SDL_TRUE, 0x000000 );
+
+			tileTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, loadedSurface );
 		}
 	}
 }
@@ -70,10 +75,13 @@ Tile* FactorySDL::createTile(int x, int y, int type, int width, int height){
 	return tile;
 }
 
+void FactorySDL::DestroyTile(int tile){
+	tileMap->DestroyTile(tile);
+}
+
 Map* FactorySDL::createMap() {
-	Map* map = new Map(this);
-	tileMap = map;
-	return map;
+	tileMap = new Map(this);
+	return tileMap;
 }
 
 void FactorySDL::ClearScreen(){
@@ -91,9 +99,14 @@ SDL_Surface* FactorySDL::getSurface(){
 }
 
 void FactorySDL::quitVis(){
+	SDL_DestroyRenderer( sdlRendererTEMP );
+	SDL_DestroyRenderer( sdlRenderer );
 	SDL_DestroyWindow( sdlWindow );
+	sdlRendererTEMP = NULL;
+	sdlRenderer = NULL;
 	sdlWindow = NULL;
 
 	//Quit SDL subsystems
+	IMG_Quit();
 	SDL_Quit();
 }

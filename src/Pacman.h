@@ -20,7 +20,9 @@ public:
 	int getX();
 	int getY();
 	virtual void visualize() = 0;
-	virtual void move(int key) = 0;
+	virtual void move() = 0;
+	virtual void moveInDir(int direction) = 0;
+	virtual void SetDirection(int key) = 0;
 protected:
 	 int PACMAN_VEL = 5;
 };

@@ -11,7 +11,7 @@
 #include "Entity.h"
 using namespace std;
 
-class Entity;
+//class Entity;
 class Ghost : public Entity{
 public:
 	Ghost();

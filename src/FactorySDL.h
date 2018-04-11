@@ -25,14 +25,14 @@ class FactorySDL : public Factory{
 		Ghost* createGhost(int type);
 		Pacman* createPacman();
 		Tile* createTile(int x, int y, int type, int width, int height);
+		void DestroyTile(int tile);
 		Map* createMap();
 		void ClearScreen();
 		void UpdateScreen();
 		SDL_Surface* getSurface();
 		void quitVis();
 	protected:
-		const int SCREEN_WIDTH = 640;
-		const int SCREEN_HEIGHT = 480;
+
 	};
 
 #endif /* FACTORYSDL_H_ */

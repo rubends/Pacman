@@ -17,18 +17,13 @@ Game::~Game(){
 
 void Game::start(){
 	Map* map = aFactory->createMap();
-
-	/*for(int i = 1; i < 5; i++){
-		Ghost* ghost = aFactory->createGhost(i);
-	}*/
-	Ghost* ghost1 = aFactory->createGhost(1);
-	Ghost* ghost2 = aFactory->createGhost(2);
-	Ghost* ghost3 = aFactory->createGhost(3);
-	Ghost* ghost4 = aFactory->createGhost(4);
+	Ghost* ghosts[numOfGhosts];
+	for(int i = 0; i < numOfGhosts; i++){
+		ghosts[i] = aFactory->createGhost(i);
+	}
 
 	Pacman* pacman = aFactory->createPacman();
 
-	int key = 0;
 	int fps = 0;
 
 	EventHandler* ev = new EventHandlerSDL();
@@ -41,22 +36,22 @@ void Game::start(){
 			if( ev->quitEvent() )
 			{
 				quit = true;
-				//delete blinky;
-				//delete pacman;
+				//delete [] ghosts;
+				delete pacman;
+				delete ev;
 				aFactory->quitVis();
 			} else if(ev->keyDown()){
-				key = ev->getKeyDown();
+				pacman->SetDirection(ev->getKeyDown());
 			}
 		}
 
 		if(fps >= 60){ //TODO global fps
-			pacman->move(key); //Todo gettiles out of loop
+			pacman->move();
 
-			ghost1->moveTo(pacman->getX(), pacman->getY());
-			ghost2->move();
-			ghost3->move();
-			ghost4->move();
-
+			ghosts[0]->moveTo(pacman->getX(), pacman->getY());
+			for(int j=1; j < numOfGhosts;j++){
+				ghosts[j]->move();
+			}
 			fps = 0;
 		}
 		fps++;
@@ -64,10 +59,10 @@ void Game::start(){
 		aFactory->ClearScreen();
 		map->Draw();
 		pacman->visualize();
-		ghost1->visualize();
-		ghost2->visualize();
-		ghost3->visualize();
-		ghost4->visualize();
+		for(int k=0; k < numOfGhosts;k++){
+			ghosts[k]->visualize();
+		}
+
 		aFactory->UpdateScreen();
 	}
 }

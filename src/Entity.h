@@ -18,12 +18,13 @@ public:
 	Entity();
 	virtual ~Entity();
 	void setFactory(Factory* fac);
-	bool checkCollisions(Tile* tileSet[], int totalTiles);
+	bool checkCollisions();
 protected:
 	Factory* aFactory;
 	bool collision;
 	int mPosX, mPosY;
 	int mWidth, mHeight;
+	int isPac;
 };
 
 #endif /* ENTITY_H_ */

@@ -30,6 +30,7 @@ PacmanSDL::PacmanSDL() {
 	pacmanSprite[2].y = 0;
 	pacmanSprite[2].w = 15;
 	pacmanSprite[2].h = 15;
+
 }
 
 PacmanSDL::~PacmanSDL() {
@@ -38,66 +39,36 @@ PacmanSDL::~PacmanSDL() {
 
 void PacmanSDL::visualize(){
 	renderQuad = { mPosX, mPosY, mWidth, mHeight };
-	renderQuad.w = 40;
-	renderQuad.h = 40;
 	SDL_RenderCopy( sdlRendererTEMP, pacTexture, &pacmanSprite[frame], &renderQuad );
 }
 
-void PacmanSDL::move(int key){
-	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
-	tileSet = aFactory->getMapTiles();
-	switch(key) //TODO keep going until next possibility
-	{
-		case 1: //UP
-			mPosY -= PACMAN_VEL;
-			this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosY += PACMAN_VEL;
-			}
-			pacmanSprite[0].x = 455;
-			pacmanSprite[0].y = 32;
-			pacmanSprite[1].x = 471;
-			pacmanSprite[1].y = 32;
-			break;
-		case 2: //DOWN
-			mPosY += PACMAN_VEL;
-			this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosY -= PACMAN_VEL;
-			}
-			pacmanSprite[0].x = 455;
-			pacmanSprite[0].y = 48;
-			pacmanSprite[1].x = 471;
-			pacmanSprite[1].y = 48;
-			break;
-		case 3: //LEFT
-			mPosX -= PACMAN_VEL;
-			this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosX += PACMAN_VEL;
-			}
-			pacmanSprite[0].x = 455;
-			pacmanSprite[0].y = 16;
-			pacmanSprite[1].x = 471;
-			pacmanSprite[1].y = 16;
-			break;
-		case 4: //RIGHT
-			mPosX += PACMAN_VEL;
-			this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosX -= PACMAN_VEL;
-			}
-			pacmanSprite[0].x = 455;
-			pacmanSprite[0].y = 0;
-			pacmanSprite[1].x = 471;
-			pacmanSprite[1].y = 0;
-			break;
-		default:
-			break;
+void PacmanSDL::SetDirection(int key){
+	if(direction != key){
+		direction = key;
 	}
+}
+
+void PacmanSDL::move(){
+	int tempPosX = mPosX;
+	int tempPosY = mPosY;
+	this->moveInDir(direction);
+
+	if(this->checkCollisions()){ //not possible to go to direction
+		mPosX = tempPosX;
+		mPosY = tempPosY;
+
+		this->moveInDir(prevDirection); //keep going prev direction
+		if(this->checkCollisions()){
+			mPosX = tempPosX;
+			mPosY = tempPosY;
+		}
+	} else {
+		prevDirection = direction;
+	}
+
 	if(collision){ //stuck
 		frame = 1;
-	}else if(fps >= 3){ //Anmation: 3 times slower than movement
+	}else if(fps >= 3){
 		frame--;
 		if(frame <= -1){
 			frame = 2;
@@ -105,19 +76,53 @@ void PacmanSDL::move(int key){
 		fps = 0;
 	}
 	fps++;
-	collision = false;
 
-	if(mPosX < 0) //pacman went to far
+	if(mPosX < -30) //pacman went to far
 	{
-		mPosX = SCREEN_WIDTH;
+		mPosX = aFactory->GetScreenWidth();
 	}
-	if(mPosX > (SCREEN_WIDTH-40)) //TODO: GET TILE WIDTH
+	if(mPosX > aFactory->GetScreenWidth())
 	{
-		mPosX = 0;
-	}
-	if(mPosY > (SCREEN_HEIGHT-40)) //TODO: GET TILE WIDTH
-	{
-		mPosY = 0;
+		mPosX = -30;
 	}
 }
+
+void PacmanSDL::moveInDir(int direction){
+	switch(direction)
+	{
+		case 1: //UP
+			mPosY -= PACMAN_VEL;
+
+			pacmanSprite[0].x = 455;
+			pacmanSprite[1].x = 471;
+			pacmanSprite[0].y = 32;
+			pacmanSprite[1].y = 32;
+			break;
+		case 2: //DOWN
+			mPosY += PACMAN_VEL;
+
+			pacmanSprite[0].x = 455;
+			pacmanSprite[1].x = 471;
+			pacmanSprite[0].y = 48;
+			pacmanSprite[1].y = 48;
+			break;
+		case 3: //LEFT
+			mPosX -= PACMAN_VEL;
+			pacmanSprite[0].x = 455;
+			pacmanSprite[1].x = 471;
+			pacmanSprite[0].y = 16;
+			pacmanSprite[1].y = 16;
+			break;
+		case 4: //RIGHT
+			mPosX += PACMAN_VEL;
+			pacmanSprite[0].x = 455;
+			pacmanSprite[1].x = 471;
+			pacmanSprite[0].y = 0;
+			pacmanSprite[1].y = 0;
+			break;
+		default:
+			break;
+	}
+}
+
 

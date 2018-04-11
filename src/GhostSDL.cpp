@@ -21,19 +21,19 @@ GhostSDL::GhostSDL(int ghostType){
 	ghostSprite[0].h = 15;
 
 	type = ghostType;
-	if(type == 1) {
+	if(type == 0) {
 		ghostSprite[0].y = 64;
 		mPosX = 280;
 		mPosY = 200;
-	} else if (type == 2) {
+	} else if (type == 1) {
 		ghostSprite[0].y = 80;
 		mPosX = 280;
 		mPosY = 240;
-	} else if (type == 3) {
+	} else if (type == 2) {
 		ghostSprite[0].y = 96;
 		mPosX = 320;
 		mPosY = 200;
-	} else if (type == 4) {
+	} else {
 		ghostSprite[0].y = 112;
 		mPosX = 320;
 		mPosY = 240;
@@ -53,86 +53,95 @@ void GhostSDL::visualize(){
 	SDL_RenderCopy( sdlRendererTEMP, ghostTexture, &ghostSprite[0], &renderQuadG );
 }
 
-void GhostSDL::move(){
-	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
-	tileSet = aFactory->getMapTiles();
-
-	//int randNum = rand()%(4) + 1;
-	int randNum = 1;
-	this->checkCollisions(tileSet, 192);
-	if(collision){
-		cout << "COLL \n";
+void GhostSDL::move(){ //RANDOM MOVEMENT
+	int tempPosX = mPosX;
+	int tempPosY = mPosY;
+	if(changeDir >= 15 ){ //after x movements change direction
+		dir[type] = rand()%(4) + 1;
+		changeDir = 0;
 	}
-	switch(randNum)
+	changeDir++;
+
+	switch(dir[type])
 	{
 		case 1:
 			mPosY -= GHOST_VEL;
-			/*this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosY += GHOST_VEL;
-			}*/
 			break;
 		case 2:
 			mPosY += GHOST_VEL;
-			/*this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosY -= GHOST_VEL;
-			}*/
 			break;
 		case 3:
 			mPosX -= GHOST_VEL;
-			/*this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosX += GHOST_VEL;
-			}*/
 			break;
 		case 4:
 			mPosX += GHOST_VEL;
-			/*this->checkCollisions(tileSet, 192);
-			if(collision){
-				mPosX -= GHOST_VEL;
-			}*/
+			break;
+		default:
 			break;
 	}
-	if(mPosX < 0)
-	{
-		mPosX = SCREEN_WIDTH;
-	}
-	if(mPosX > (SCREEN_WIDTH-40))
-	{
-		mPosX = 0;
-	}
-	if(mPosY > (SCREEN_HEIGHT-40))
-	{
-		mPosY = 0;
+
+	if(this->checkCollisions()){ //not possible to go to direction
+			mPosX = tempPosX;
+			mPosY = tempPosY;
+
+			switch(prevDir[type])
+			{
+				case 1:
+					mPosY -= GHOST_VEL;
+					break;
+				case 2:
+					mPosY += GHOST_VEL;
+					break;
+				case 3:
+					mPosX -= GHOST_VEL;
+					break;
+				case 4:
+					mPosX += GHOST_VEL;
+					break;
+				default:
+					break;
+			}
+			if(this->checkCollisions()){
+				mPosX = tempPosX;
+				mPosY = tempPosY;
+				dir[type] = rand()%(4) + 1; //if stuck, change direction
+			}
+	} else {
+		prevDir[type] = dir[type];
 	}
 
+	if(mPosX < -30) //ghost went to far
+	{
+		mPosX = aFactory->GetScreenWidth();
+	}
+	if(mPosX > aFactory->GetScreenWidth())
+	{
+		mPosX = -30;
+	}
 }
 
 void GhostSDL::moveTo(int x, int y){
-	cout << x << " - " << y << "\n";
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
-	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
-	tileSet = aFactory->getMapTiles();
 
-	if(mPosX - x > 0){
+	if(mPosX - x > 0){ //TRY HORIZONTALLY;
 		mPosX -= GHOST_VEL;
-	} else {
+	} else if (mPosX - x < 0) {
 		mPosX += GHOST_VEL;
 	}
 
-	if(this->checkCollisions(tileSet, 192)){
+	if(this->checkCollisions()){
 		mPosX = tempPosX;
 	}
 
-	if(mPosY - y > 0){
+
+	if(mPosY - y > 0){ //TRY VERTICALLY
 		mPosY -= GHOST_VEL;
-	} else {
+	} else if (mPosY - y < 0){
 		mPosY += GHOST_VEL;
 	}
 
-	if(this->checkCollisions(tileSet, 192)){
+	if(this->checkCollisions()){
 		mPosY = tempPosY;
 	}
 }

@@ -10,6 +10,8 @@
 Pacman::Pacman() {
 	mPosX = 40;
 	mPosY = 40;
+
+	isPac = 1;
 }
 
 Pacman::~Pacman() {

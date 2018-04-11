@@ -51,3 +51,7 @@ bool Factory::checkCollision(int* entityBox, int* tileBox){
 	return true;
 }
 
+int Factory::GetScreenWidth(){
+	return SCREEN_WIDTH;
+}
+

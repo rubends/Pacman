@@ -16,6 +16,8 @@ Entity::Entity() {
 	mPosY = 0;
 	mWidth = 0;
 	mHeight = 0;
+
+	isPac = 0;
 }
 
 Entity::~Entity() {
@@ -27,20 +29,27 @@ void Entity::setFactory(Factory* fac){
 }
 
 
-bool Entity::checkCollisions(Tile* tileSet[], int totalTiles){
+bool Entity::checkCollisions(){
+	int totalTiles = 192;
+	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
+	tileSet = aFactory->getMapTiles();
 	collision = false;
 	for(int j = 0; j <= totalTiles; j++){
 		int* tileBoxInt = tileSet[j]->getBoxInt();
-		int tileBox[4] = {  tileBoxInt[0], tileBoxInt[1], tileBoxInt[2], tileBoxInt[3] };
+		int tileBox[] = {  tileBoxInt[0], tileBoxInt[1], tileBoxInt[2], tileBoxInt[3] };
 
-		int entityBox[4] = { mPosX, mPosY, mWidth, mHeight };
-		if(tileBoxInt[4] != 0){
-			bool tempCollide = aFactory->checkCollision(entityBox, tileBox);
+		int entityBox[] = { mPosX, mPosY, mWidth, mHeight };
+		bool tempCollide = aFactory->checkCollision(entityBox, tileBox);
 
-			if(!collision && !tempCollide){
+		if(!collision && !tempCollide){
+			if(tileBoxInt[4] > 0 && tileBoxInt[4] < 10){ //is wall
 				collision = true;
-				if(tileBoxInt[4] == 2){
-					tileSet[j]->destroyTile();
+			}
+			if(isPac == 1){ //entity is pacman
+				if(tileBoxInt[4] == 10){ // PELLET
+					aFactory->DestroyTile(j);
+				} else if(tileBoxInt[4] == 0){ //PAC-DOT
+					aFactory->DestroyTile(j);
 				}
 			}
 		}

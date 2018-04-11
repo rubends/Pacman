@@ -13,6 +13,7 @@
 
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
+#include "Factory.h"
 
 using namespace std;
 
@@ -24,12 +25,13 @@ public:
 	void move();
 	void moveTo(int x, int y);
 protected:
-	const int SCREEN_WIDTH = 640;
-	const int SCREEN_HEIGHT = 480;
-
 	SDL_Rect ghostSprite[3];
 	SDL_Texture* ghostTexture = NULL;
 	SDL_Rect renderQuadG;
+
+	int prevDir[4] = { 1, 1, 1, 1 };
+	int dir[4] = { 1, 1, 1, 1 };
+	int changeDir = 0;
 };
 
 #endif /* GHOSTSDL_H_ */

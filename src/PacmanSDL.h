@@ -21,17 +21,18 @@ public:
 	PacmanSDL();
 	virtual ~PacmanSDL();
 	void visualize();
-	void move(int key);
+	void move();
+	void moveInDir(int direction);
+	void SetDirection(int key);
 protected:
-	const int SCREEN_WIDTH = 640;
-	const int SCREEN_HEIGHT = 480;
-
 	SDL_Rect pacmanSprite[3];
 	SDL_Texture* pacTexture = NULL;
 	SDL_Rect renderQuad;
 
 	int frame = 0;
 	int fps = 0;
+	int direction = 4;
+	int prevDirection = 4;
 };
 
 #endif /* PACMANSDL_H_ */

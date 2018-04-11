@@ -7,7 +7,8 @@
 
 #include "Map.h"
 
-//Tile constants
+int destroyedTiles[192] = { };
+
 Map::Map(Factory* abstractFactory) {
 	aFactory = abstractFactory;
 	map.open("Assets/Map.map");
@@ -24,15 +25,15 @@ Map::~Map() {
 }
 
 void Map::Draw() {
-	// go back to beginning of map
-	map.seekg(0, ios::beg);
+	map.seekg(0, ios::beg); // go back to beginning of map
 
 	int x = 0, y = 0;
 	for(int tile = 0; tile < totalTiles; tile++){
 		int tileType = 0;
 		map >> tileType;
-		tileSet[tile] = aFactory->createTile(x, y, tileType, TILE_WIDTH, TILE_HEIGHT);
-
+		if(destroyedTiles[tile] != 1){
+			tileSet[tile] = aFactory->createTile(x, y, tileType, TILE_WIDTH, TILE_HEIGHT);
+		}
 		x += TILE_WIDTH;
 		if(x >= SCREEN_WIDTH)
 		{
@@ -44,4 +45,8 @@ void Map::Draw() {
 
 Tile** Map::GetTiles(){
 	return tileSet;
+}
+
+void Map::DestroyTile(int tile){
+	destroyedTiles[tile] = 1;
 }
