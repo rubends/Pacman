@@ -7,8 +7,6 @@
 
 #include "Map.h"
 
-int destroyedTiles[192] = { };
-
 Map::Map(Factory* abstractFactory) {
 	aFactory = abstractFactory;
 	map.open("Assets/Map.map");
@@ -16,29 +14,36 @@ Map::Map(Factory* abstractFactory) {
 	{
 		printf( "Unable to load map file!\n" );
 	}
-	map.seekg(0, ios::end);
-	//totalTiles = map.tellg()/3; //size: no extra 0 or spaces = /3
-}
 
-Map::~Map() {
-	// TODO Auto-generated destructor stub
-}
-
-void Map::Draw() {
-	map.seekg(0, ios::beg); // go back to beginning of map
-
+	totalTiles = aFactory->GetNumOfTiles();
+	int screenWidth = aFactory->GetScreenWidth();
 	int x = 0, y = 0;
+
 	for(int tile = 0; tile < totalTiles; tile++){
 		int tileType = 0;
 		map >> tileType;
-		if(destroyedTiles[tile] != 1){
-			tileSet[tile] = aFactory->createTile(x, y, tileType, TILE_WIDTH, TILE_HEIGHT);
-		}
+		tileSet[tile] = aFactory->createTile(x, y, tileType, TILE_WIDTH, TILE_HEIGHT);
 		x += TILE_WIDTH;
-		if(x >= SCREEN_WIDTH)
+		if(x >= screenWidth)
 		{
 			x = 0;
 			y += TILE_HEIGHT;
+		}
+	}
+}
+
+Map::~Map() {
+	delete [] destroyedTiles;
+	for(int tile = 0; tile < totalTiles; tile++){
+		delete tileSet[tile];
+	}
+	delete [] tileSet;
+}
+
+void Map::Draw() {
+	for(int tile = 0; tile < totalTiles; tile++){
+		if(destroyedTiles[tile] != 1){
+			tileSet[tile]->visualize();
 		}
 	}
 }

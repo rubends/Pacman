@@ -25,9 +25,10 @@ public:
 	void DestroyTile(int tile);
 	virtual ~Map();
 protected:
-	const int totalTiles = 192;
-	int SCREEN_WIDTH = 640;
-	Tile* tileSet[192];
+	int totalTiles;
+	//Tile* tileSet[192];
+	Tile** tileSet = new Tile*[192]; //Cannot instantiate abstract object
+	int* destroyedTiles = new int [192];
 	Factory* aFactory;
 	std::ifstream map;
 };

@@ -32,10 +32,12 @@ public:
 	bool checkCollision(int* a, int* b);
 	Tile** getMapTiles();
 	int GetScreenWidth();
+	int GetNumOfTiles();
 	virtual void quitVis() = 0;
 protected:
-	const int SCREEN_WIDTH = 640;
+	const int SCREEN_WIDTH = 640; // 640/16 = 40px tiles
 	const int SCREEN_HEIGHT = 480;
+	const int NUM_OF_TILES = 192;
 
 	Map* tileMap;
 };

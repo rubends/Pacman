@@ -16,12 +16,15 @@ using namespace std;
 
 class TileSDL : public Tile{
 public:
-	TileSDL();
+	TileSDL(SDL_Renderer* sdlRendererTEMP, SDL_Texture* tileTexture);
 	virtual ~TileSDL();
 	void visualize();
 	void renderTile(int x, int y, int tileType, int width, int height);
 	int* getBoxInt();
 protected:
+	SDL_Renderer* sdlRenderer;
+	SDL_Texture* texture;
+
 	int boxInt [5];
 
 	const int PATH = 00;

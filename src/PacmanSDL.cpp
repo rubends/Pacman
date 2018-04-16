@@ -7,14 +7,13 @@
 
 #include "PacmanSDL.h"
 
-extern SDL_Renderer* sdlRendererTEMP; //TODO GET FROM FACTORY
-extern SDL_Surface* loadedSurface;
+PacmanSDL::PacmanSDL(SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface) {
+	sdlRenderer = sdlRendererTEMP;
+	surface = loadedSurface;
+	pacTexture = SDL_CreateTextureFromSurface( sdlRenderer, surface );
 
-PacmanSDL::PacmanSDL() {
-	pacTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, loadedSurface );
-
-	mWidth = loadedSurface->w;
-	mHeight = loadedSurface->h;
+	mWidth = 40; //TODO GET TILE WIDTH
+	mHeight = 40;
 
 	pacmanSprite[0].x = 455;
 	pacmanSprite[0].y = 0;
@@ -39,7 +38,7 @@ PacmanSDL::~PacmanSDL() {
 
 void PacmanSDL::visualize(){
 	renderQuad = { mPosX, mPosY, mWidth, mHeight };
-	SDL_RenderCopy( sdlRendererTEMP, pacTexture, &pacmanSprite[frame], &renderQuad );
+	SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
 }
 
 void PacmanSDL::SetDirection(int key){
@@ -51,8 +50,8 @@ void PacmanSDL::SetDirection(int key){
 void PacmanSDL::move(){
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
-	this->moveInDir(direction);
 
+	this->moveInDir(direction);
 	if(this->checkCollisions()){ //not possible to go to direction
 		mPosX = tempPosX;
 		mPosY = tempPosY;

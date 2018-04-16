@@ -7,14 +7,13 @@
 
 #include "GhostSDL.h"
 
-extern SDL_Renderer* sdlRendererTEMP; //TODO GET FROM FACTORY
-extern SDL_Surface* loadedSurface;
+GhostSDL::GhostSDL(int ghostType, SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface){
+	sdlRenderer = sdlRendererTEMP;
+	surface = loadedSurface;
+	ghostTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, surface );
 
-GhostSDL::GhostSDL(int ghostType){
-	ghostTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, loadedSurface );
-
-	mWidth = loadedSurface->w;
-	mHeight = loadedSurface->h;
+	mWidth = 40; //todo get tile size
+	mHeight = 40;
 
 	ghostSprite[0].x = 455;
 	ghostSprite[0].w = 15;
@@ -46,11 +45,7 @@ GhostSDL::~GhostSDL(){
 
 void GhostSDL::visualize(){
 	renderQuadG = { mPosX, mPosY, mWidth, mHeight };
-
-	renderQuadG.w = 40;
-	renderQuadG.h = 40;
-
-	SDL_RenderCopy( sdlRendererTEMP, ghostTexture, &ghostSprite[0], &renderQuadG );
+	SDL_RenderCopy( sdlRenderer, ghostTexture, &ghostSprite[0], &renderQuadG );
 }
 
 void GhostSDL::move(){ //RANDOM MOVEMENT

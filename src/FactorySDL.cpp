@@ -7,15 +7,6 @@
 
 #include "FactorySDL.h"
 
-SDL_Renderer* sdlRendererTEMP = NULL; //TODO TO PROTECTED, give variables through function
-SDL_Renderer* sdlRenderer = NULL;
-SDL_Surface* loadedSurface = NULL;
-SDL_Window* sdlWindow = NULL;
-SDL_Surface* sdlScreenSurface = NULL;
-
-
-SDL_Texture* tileTexture = NULL;
-
 FactorySDL::FactorySDL(){
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
@@ -33,7 +24,7 @@ FactorySDL::FactorySDL(){
 		else
 		{
 			sdlRendererTEMP = SDL_CreateRenderer( sdlWindow, -1, SDL_RENDERER_ACCELERATED );
-			//sdlRenderer = sdlRendererTEMP;
+			sdlRenderer = sdlRendererTEMP;
 			int imgFlags = IMG_INIT_PNG;
 			if( !( IMG_Init( imgFlags ) & imgFlags ) )
 			{
@@ -57,20 +48,20 @@ FactorySDL::~FactorySDL(){
 }
 
 Ghost* FactorySDL::createGhost(int type){
-	Ghost* ghost = new GhostSDL(type);
+	Ghost* ghost = new GhostSDL(type, sdlRendererTEMP, loadedSurface);
 	ghost->setFactory(this);
 	return ghost;
 }
 
 Pacman* FactorySDL::createPacman(){
-	Pacman* pacman = new PacmanSDL();
+	Pacman* pacman = new PacmanSDL(sdlRendererTEMP, loadedSurface);
 	pacman->setFactory(this);
 
 	return pacman;
 }
 
 Tile* FactorySDL::createTile(int x, int y, int type, int width, int height){
-	Tile* tile = new TileSDL();
+	Tile* tile = new TileSDL(sdlRendererTEMP, tileTexture);
 	tile->renderTile(x, y, type, width, height);
 	return tile;
 }

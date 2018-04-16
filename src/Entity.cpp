@@ -11,6 +11,7 @@
 Entity::Entity() {
 	collision = false;
 	aFactory = NULL;
+	totalTiles = 0;
 
 	mPosX = 0;
 	mPosY = 0;
@@ -26,22 +27,25 @@ Entity::~Entity() {
 
 void Entity::setFactory(Factory* fac){
 	aFactory = fac;
+	totalTiles = aFactory->GetNumOfTiles();
 }
 
 
 bool Entity::checkCollisions(){
-	int totalTiles = 192;
-	Tile** tileSet = {0}; //array must be initialized with a brace enclosed initializer
-	tileSet = aFactory->getMapTiles();
+	Tile** tileSet = aFactory->getMapTiles();
+
 	collision = false;
-	for(int j = 0; j <= totalTiles; j++){
-		int* tileBoxInt = tileSet[j]->getBoxInt();
+	int entityBox[] = { mPosX, mPosY, mWidth, mHeight };
+	int* tileBoxInt = 0;
+
+	cout << "ENTITY: " << sizeof(tileSet) << "\n";
+	for(int j = 0; j < totalTiles; j++){
+		tileBoxInt = tileSet[j]->getBoxInt();
 		int tileBox[] = {  tileBoxInt[0], tileBoxInt[1], tileBoxInt[2], tileBoxInt[3] };
 
-		int entityBox[] = { mPosX, mPosY, mWidth, mHeight };
 		bool tempCollide = aFactory->checkCollision(entityBox, tileBox);
 
-		if(!collision && !tempCollide){
+		if(!collision && tempCollide){
 			if(tileBoxInt[4] > 0 && tileBoxInt[4] < 10){ //is wall
 				collision = true;
 			}
@@ -54,5 +58,7 @@ bool Entity::checkCollisions(){
 			}
 		}
 	}
+	//delete tileBoxInt;
+
 	return collision;
 }

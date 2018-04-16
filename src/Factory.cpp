@@ -38,20 +38,24 @@ bool Factory::checkCollision(int* entityBox, int* tileBox){
 	topB = tileBox[1];
 	bottomB = tileBox[1] + height;
 
-	if( bottomA > topB  && topA < bottomB && leftA < rightB && leftA > (leftB-width))
+	/*if( bottomA > topB  && topA < bottomB && leftA < rightB && leftA > (leftB-width))
 	{
-		return false;
+		return true;
+	}*/
+
+	if( rightA > leftB && leftA < rightB && topA < bottomB && bottomA > topB)
+	{
+		return true;
 	}
 
-	if( rightA > leftB && leftA < rightB && topA < bottomB && bottomA > (topB+height))
-	{
-		return false;
-	}
-
-	return true;
+	return false;
 }
 
 int Factory::GetScreenWidth(){
 	return SCREEN_WIDTH;
+}
+
+int Factory::GetNumOfTiles(){
+	return NUM_OF_TILES;
 }
 

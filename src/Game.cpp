@@ -36,16 +36,19 @@ void Game::start(){
 			if( ev->quitEvent() )
 			{
 				quit = true;
+				for(int i = 0; i < numOfGhosts; i++){
+					//delete ghosts[i];
+				}
 				//delete [] ghosts;
-				delete pacman;
-				delete ev;
+				//delete pacman;
+				//delete ev;
 				aFactory->quitVis();
 			} else if(ev->keyDown()){
 				pacman->SetDirection(ev->getKeyDown());
 			}
 		}
 
-		if(fps >= 60){ //TODO global fps
+		if(fps >= 60){ //TODO global fps: clock
 			pacman->move();
 
 			ghosts[0]->moveTo(pacman->getX(), pacman->getY());

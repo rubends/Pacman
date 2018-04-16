@@ -25,6 +25,7 @@ protected:
 	int mPosX, mPosY;
 	int mWidth, mHeight;
 	int isPac;
+	int totalTiles;
 };
 
 #endif /* ENTITY_H_ */

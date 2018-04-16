@@ -32,7 +32,13 @@ class FactorySDL : public Factory{
 		SDL_Surface* getSurface();
 		void quitVis();
 	protected:
+		SDL_Renderer* sdlRendererTEMP;
+		SDL_Renderer* sdlRenderer;
+		SDL_Surface* loadedSurface;
+		SDL_Window* sdlWindow;
+		SDL_Surface* sdlScreenSurface;
 
+		SDL_Texture* tileTexture;
 	};
 
 #endif /* FACTORYSDL_H_ */
