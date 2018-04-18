@@ -24,6 +24,7 @@ public:
 	virtual ~PacmanSDL();
 	void visualize();
 	void move();
+	void Animate();
 	void moveInDir(int direction);
 	void SetDirection(int key);
 protected:
@@ -35,7 +36,6 @@ protected:
 	SDL_Rect renderQuad;
 
 	int frame = 0;
-	int fps = 0;
 	int direction = 4;
 	int prevDirection = 4;
 };

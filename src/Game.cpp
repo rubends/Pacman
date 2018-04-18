@@ -17,17 +17,13 @@ Game::~Game(){
 
 void Game::start(){
 	Map* map = aFactory->createMap();
+	Pacman* pacman = aFactory->createPacman();
 	Ghost* ghosts[numOfGhosts];
 	for(int i = 0; i < numOfGhosts; i++){
 		ghosts[i] = aFactory->createGhost(i);
 	}
 
-	Pacman* pacman = aFactory->createPacman();
-
-	int fps = 0;
-
 	EventHandler* ev = new EventHandlerSDL();
-	bool quit = false;
 	while( !quit )
 	{
 		while( ev->pollEvent() != 0 )
@@ -48,25 +44,31 @@ void Game::start(){
 			}
 		}
 
-		if(fps >= 60){ //TODO global fps: clock
-			pacman->move();
+		ticks = clock(); //#clock ticks since running
+		clock_ms = (ticks/(double)CLOCKS_PER_SEC)*1000.0; //#ms since running
 
+		if(last_frame != clock_ms && clock_ms % mspf == 0){
+			last_frame = clock_ms; //make sure not multiple frames in same ms
+
+			pacman->move(); // calculations before clearing screen
 			ghosts[0]->moveTo(pacman->getX(), pacman->getY());
+
+			aFactory->ClearScreen();
+
+			map->Draw();
+			pacman->visualize();
+			ghosts[0]->visualize();
 			for(int j=1; j < numOfGhosts;j++){
-				ghosts[j]->move();
+				ghosts[j]->move(); //here for less forloops
+				ghosts[j]->visualize();
 			}
-			fps = 0;
-		}
-		fps++;
 
-		aFactory->ClearScreen();
-		map->Draw();
-		pacman->visualize();
-		for(int k=0; k < numOfGhosts;k++){
-			ghosts[k]->visualize();
-		}
+			if(clock_ms % (animationSpeed*mspf) == 0){ //every x frames animation
+				pacman->Animate();
+			}
 
-		aFactory->UpdateScreen();
+			aFactory->UpdateScreen();
+		}
 	}
 }
 

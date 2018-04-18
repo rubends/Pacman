@@ -47,6 +47,17 @@ void PacmanSDL::SetDirection(int key){
 	}
 }
 
+void PacmanSDL::Animate(){
+	if(collision){ //stuck
+		frame = 1;
+	}else {
+		frame--;
+		if(frame <= -1){
+			frame = 2;
+		}
+	}
+}
+
 void PacmanSDL::move(){
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
@@ -64,17 +75,6 @@ void PacmanSDL::move(){
 	} else {
 		prevDirection = direction;
 	}
-
-	if(collision){ //stuck
-		frame = 1;
-	}else if(fps >= 3){
-		frame--;
-		if(frame <= -1){
-			frame = 2;
-		}
-		fps = 0;
-	}
-	fps++;
 
 	if(mPosX < -30) //pacman went to far
 	{

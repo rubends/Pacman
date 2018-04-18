@@ -21,6 +21,7 @@ public:
 	int getY();
 	virtual void visualize() = 0;
 	virtual void move() = 0;
+	virtual void Animate() = 0;
 	virtual void moveInDir(int direction) = 0;
 	virtual void SetDirection(int key) = 0;
 protected:

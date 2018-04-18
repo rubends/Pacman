@@ -38,7 +38,6 @@ bool Entity::checkCollisions(){
 	int entityBox[] = { mPosX, mPosY, mWidth, mHeight };
 	int* tileBoxInt = 0;
 
-	cout << "ENTITY: " << sizeof(tileSet) << "\n";
 	for(int j = 0; j < totalTiles; j++){
 		tileBoxInt = tileSet[j]->getBoxInt();
 		int tileBox[] = {  tileBoxInt[0], tileBoxInt[1], tileBoxInt[2], tileBoxInt[3] };
@@ -58,7 +57,7 @@ bool Entity::checkCollisions(){
 			}
 		}
 	}
-	//delete tileBoxInt;
 
+	delete tileBoxInt;
 	return collision;
 }
