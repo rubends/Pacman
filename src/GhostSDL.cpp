@@ -15,25 +15,21 @@ GhostSDL::GhostSDL(int ghostType, SDL_Renderer* sdlRendererTEMP, SDL_Surface* lo
 	mWidth = 40; //todo get tile size
 	mHeight = 40;
 
-	ghostSprite[0].x = 455;
+	type = ghostType;
+
 	ghostSprite[0].w = 15;
 	ghostSprite[0].h = 15;
 
-	type = ghostType;
 	if(type == 0) {
-		ghostSprite[0].y = 64;
 		mPosX = 280;
 		mPosY = 200;
 	} else if (type == 1) {
-		ghostSprite[0].y = 80;
 		mPosX = 280;
 		mPosY = 240;
 	} else if (type == 2) {
-		ghostSprite[0].y = 96;
 		mPosX = 320;
 		mPosY = 200;
 	} else {
-		ghostSprite[0].y = 112;
 		mPosX = 320;
 		mPosY = 240;
 	}
@@ -43,12 +39,32 @@ GhostSDL::~GhostSDL(){
 
 }
 
-void GhostSDL::visualize(){
+void GhostSDL::Visualize(){
+	if(attacking){
+		ghostSprite[0].x = 455;
+		if(type == 0) {
+			ghostSprite[0].y = 64;
+		} else if (type == 1) {
+			ghostSprite[0].y = 80;
+		} else if (type == 2) {
+			ghostSprite[0].y = 96;
+		} else {
+			ghostSprite[0].y = 112;
+		}
+	} else {
+		ghostSprite[0].x = 584;
+		if(living){
+			ghostSprite[0].y = 64;
+		} else {
+			ghostSprite[0].y = 80;
+		}
+	}
+
 	renderQuadG = { mPosX, mPosY, mWidth, mHeight };
 	SDL_RenderCopy( sdlRenderer, ghostTexture, &ghostSprite[0], &renderQuadG );
 }
 
-void GhostSDL::move(){ //RANDOM MOVEMENT
+void GhostSDL::Move(){ //RANDOM MOVEMENT
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
 	if(changeDir >= 15 ){ //after x movements change direction
@@ -113,9 +129,11 @@ void GhostSDL::move(){ //RANDOM MOVEMENT
 	{
 		mPosX = -30;
 	}
+
+	this->Visualize();
 }
 
-void GhostSDL::moveTo(int x, int y){
+void GhostSDL::MoveTo(int x, int y){
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
 
@@ -139,4 +157,6 @@ void GhostSDL::moveTo(int x, int y){
 	if(this->checkCollisions()){
 		mPosY = tempPosY;
 	}
+
+	this->Visualize();
 }

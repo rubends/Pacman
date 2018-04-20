@@ -19,11 +19,13 @@ public:
 	virtual ~Entity();
 	void setFactory(Factory* fac);
 	bool checkCollisions();
+	int* GetCollisionBox();
 protected:
 	Factory* aFactory;
 	bool collision;
 	int mPosX, mPosY;
 	int mWidth, mHeight;
+	int* entityBox = new int [4];
 	int isPac;
 	int totalTiles;
 };

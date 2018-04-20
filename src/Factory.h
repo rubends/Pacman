@@ -33,11 +33,12 @@ public:
 	Tile** getMapTiles();
 	int GetScreenWidth();
 	int GetNumOfTiles();
+	void SetNumOfTiles(int tiles);
 	virtual void quitVis() = 0;
 protected:
 	const int SCREEN_WIDTH = 640; // 640/16 = 40px tiles
 	const int SCREEN_HEIGHT = 480;
-	const int NUM_OF_TILES = 192;
+	int numOftiles = 0;
 
 	Map* tileMap;
 };

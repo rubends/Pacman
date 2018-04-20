@@ -10,22 +10,27 @@
 
 #include <iostream>
 #include "Entity.h"
+#include "Ghost.h"
 using namespace std;
 
-//class Entity;
 class Pacman : public Entity{
 public:
 	Pacman();
 	virtual ~Pacman();
-	int getX();
-	int getY();
-	virtual void visualize() = 0;
-	virtual void move() = 0;
+	int GetX();
+	int GetY();
+	void SetDirection(int key);
+
+	virtual void Visualize() = 0;
 	virtual void Animate() = 0;
-	virtual void moveInDir(int direction) = 0;
-	virtual void SetDirection(int key) = 0;
+	virtual void MoveInDir(int direction) = 0;
+	virtual void Move() = 0;
+	virtual void GotCaptured(Ghost* ghosts[], int numOfGhosts) = 0;
 protected:
-	 int PACMAN_VEL = 5;
+	int PACMAN_VEL = 5;
+	bool living = true;
+	int direction = 4;
+	int prevDirection = 4;
 };
 
 #endif /* PACMAN_H_ */

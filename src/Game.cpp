@@ -6,13 +6,19 @@
  */
 
 #include "Game.h"
+#include <fstream>
 
 Game::Game(Factory*& abstractFactory) {
 	aFactory = abstractFactory;
+	//this->GetSettings(); todo
 }
 
 Game::~Game(){
 
+}
+
+void Game::GetSettings(){
+	std::ifstream configFile("Assets/config.json", std::ifstream::binary);
 }
 
 void Game::start(){
@@ -50,17 +56,13 @@ void Game::start(){
 		if(last_frame != clock_ms && clock_ms % mspf == 0){
 			last_frame = clock_ms; //make sure not multiple frames in same ms
 
-			pacman->move(); // calculations before clearing screen
-			ghosts[0]->moveTo(pacman->getX(), pacman->getY());
-
 			aFactory->ClearScreen();
-
 			map->Draw();
-			pacman->visualize();
-			ghosts[0]->visualize();
+			pacman->Move();
+			ghosts[0]->MoveTo(pacman->GetX(), pacman->GetY());
+			pacman->GotCaptured(ghosts, numOfGhosts);
 			for(int j=1; j < numOfGhosts;j++){
-				ghosts[j]->move(); //here for less forloops
-				ghosts[j]->visualize();
+				ghosts[j]->Move();
 			}
 
 			if(clock_ms % (animationSpeed*mspf) == 0){ //every x frames animation

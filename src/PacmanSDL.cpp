@@ -15,59 +15,54 @@ PacmanSDL::PacmanSDL(SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface) 
 	mWidth = 40; //TODO GET TILE WIDTH
 	mHeight = 40;
 
-	pacmanSprite[0].x = 455;
-	pacmanSprite[0].y = 0;
-	pacmanSprite[0].w = 15;
-	pacmanSprite[0].h = 15;
-
-	pacmanSprite[1].x = 471;
-	pacmanSprite[1].y = 0;
-	pacmanSprite[1].w = 15;
-	pacmanSprite[1].h = 15;
-
-	pacmanSprite[2].x = 487;
-	pacmanSprite[2].y = 0;
-	pacmanSprite[2].w = 15;
-	pacmanSprite[2].h = 15;
-
+	//SPRITES
+	//living: 0-2
+	//dead: 3-11
+	for(int i = 0; i <= 14; i++){
+		pacmanSprite[i].x = 455+(16*i);
+		pacmanSprite[i].y = 0;
+		pacmanSprite[i].w = 15;
+		pacmanSprite[i].h = 15;
+	}
 }
 
 PacmanSDL::~PacmanSDL() {
 	// TODO Auto-generated destructor stub
 }
 
-void PacmanSDL::visualize(){
+void PacmanSDL::Visualize(){
 	renderQuad = { mPosX, mPosY, mWidth, mHeight };
 	SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
 }
 
-void PacmanSDL::SetDirection(int key){
-	if(direction != key){
-		direction = key;
-	}
-}
-
 void PacmanSDL::Animate(){
-	if(collision){ //stuck
-		frame = 1;
-	}else {
-		frame--;
-		if(frame <= -1){
+	if(living){
+		if(collision){ //stuck
+			frame = 1;
+		}else {
+			frame++;
+			if(frame > 2){
+				frame = 0;
+			}
+		}
+	} else {
+		frame++;
+		if(frame > 14){
 			frame = 2;
 		}
 	}
 }
 
-void PacmanSDL::move(){
+void PacmanSDL::Move(){
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
 
-	this->moveInDir(direction);
+	this->MoveInDir(direction);
 	if(this->checkCollisions()){ //not possible to go to direction
 		mPosX = tempPosX;
 		mPosY = tempPosY;
 
-		this->moveInDir(prevDirection); //keep going prev direction
+		this->MoveInDir(prevDirection); //keep going prev direction
 		if(this->checkCollisions()){
 			mPosX = tempPosX;
 			mPosY = tempPosY;
@@ -76,22 +71,23 @@ void PacmanSDL::move(){
 		prevDirection = direction;
 	}
 
-	if(mPosX < -30) //pacman went to far
+	if(mPosX < -20) //pacman went to far
 	{
 		mPosX = aFactory->GetScreenWidth();
 	}
 	if(mPosX > aFactory->GetScreenWidth())
 	{
-		mPosX = -30;
+		mPosX = -20;
 	}
+
+	this->Visualize();
 }
 
-void PacmanSDL::moveInDir(int direction){
+void PacmanSDL::MoveInDir(int direction){
 	switch(direction)
 	{
 		case 1: //UP
 			mPosY -= PACMAN_VEL;
-
 			pacmanSprite[0].x = 455;
 			pacmanSprite[1].x = 471;
 			pacmanSprite[0].y = 32;
@@ -121,6 +117,20 @@ void PacmanSDL::moveInDir(int direction){
 			break;
 		default:
 			break;
+	}
+}
+
+void PacmanSDL::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
+	for(int i = 0; i<numOfGhosts; i++){
+		int* ghostBoxInt = ghosts[i]->GetCollisionBox();
+		bool captured = aFactory->checkCollision(this->GetCollisionBox(), ghostBoxInt);
+		if(captured){
+			if(ghosts[i]->GetAttackingState()){
+				living = false;
+			} else {
+				ghosts[i]->setLivingState(false);
+			}
+		}
 	}
 }
 

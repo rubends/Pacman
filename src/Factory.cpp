@@ -56,6 +56,10 @@ int Factory::GetScreenWidth(){
 }
 
 int Factory::GetNumOfTiles(){
-	return NUM_OF_TILES;
+	return numOftiles;
+}
+
+void Factory::SetNumOfTiles(int tiles){
+	numOftiles = tiles;
 }
 

@@ -18,11 +18,16 @@ Pacman::~Pacman() {
 	// TODO Auto-generated destructor stub
 }
 
-int Pacman::getX() {
+int Pacman::GetX() {
 	return mPosX;
 }
 
-int Pacman::getY() {
+int Pacman::GetY() {
 	return mPosY;
 }
 
+void Pacman::SetDirection(int key){
+	if(direction != key){
+		direction = key;
+	}
+}

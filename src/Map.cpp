@@ -9,16 +9,19 @@
 
 Map::Map(Factory* abstractFactory) {
 	aFactory = abstractFactory;
-	map.open("Assets/Map.map");
+	map.open("Assets/Map2.map", std::ios::binary);
 	if( map.fail() )
 	{
 		printf( "Unable to load map file!\n" );
 	}
+	map.seekg(0, ios::end); //to the end of the file
+	totalTiles = map.tellg()/2; //get the number of tiles
+	aFactory->SetNumOfTiles(totalTiles);
 
-	totalTiles = aFactory->GetNumOfTiles();
 	int screenWidth = aFactory->GetScreenWidth();
 	int x = 0, y = 0;
 
+	map.seekg(0, ios::beg);
 	for(int tile = 0; tile < totalTiles; tile++){
 		int tileType = 0;
 		map >> tileType;

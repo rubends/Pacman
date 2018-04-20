@@ -22,22 +22,21 @@ class PacmanSDL : public Pacman{
 public:
 	PacmanSDL(SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface);
 	virtual ~PacmanSDL();
-	void visualize();
-	void move();
+	void Visualize();
+	void Move();
 	void Animate();
-	void moveInDir(int direction);
+	void MoveInDir(int direction);
 	void SetDirection(int key);
+	void GotCaptured(Ghost* ghosts[], int numOfGhosts);
 protected:
 	SDL_Renderer* sdlRenderer;
 	SDL_Surface* surface;
 
-	SDL_Rect pacmanSprite[3];
+	SDL_Rect pacmanSprite[15];
 	SDL_Texture* pacTexture = NULL;
 	SDL_Rect renderQuad;
 
 	int frame = 0;
-	int direction = 4;
-	int prevDirection = 4;
 };
 
 #endif /* PACMANSDL_H_ */

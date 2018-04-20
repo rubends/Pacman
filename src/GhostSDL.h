@@ -21,9 +21,9 @@ class GhostSDL : public Ghost{
 public:
 	GhostSDL(int ghostType, SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface);
 	virtual ~GhostSDL();
-	void visualize();
-	void move();
-	void moveTo(int x, int y);
+	void Visualize();
+	void Move();
+	void MoveTo(int x, int y);
 protected:
 	SDL_Renderer* sdlRenderer;
 	SDL_Surface* surface;

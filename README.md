@@ -4,13 +4,14 @@ Programming pattern: Abstract Factory.
 
 ## Todo:
 - Dynamic screen (every lvl another dimension?)
-- Map size dynamic (tiles = 192)
-- Put non SDL stuff from SDL classes in non SDL function
-- check all functions caps --> camelcase
-- Make variable file: WALL, PELLET, ...
+- check all functions caps --> camelcase, check SDL stuff in SDL classes
+- Make variable/config file: WALL, PELLET, ...
 - Namespaces
 - Sound effects
-- Config file ??
+- Ghost state -> entity set ghosts attacking to false
+- Pacman lives
+- Points + Cherries
+
 
 ## PPT
 - Zelfgemaakt klassediagram laten zien

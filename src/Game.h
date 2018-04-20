@@ -22,6 +22,7 @@ public:
 	Factory* aFactory;
 	Game(Factory*& abstractFactory);
 	virtual ~Game();
+	void GetSettings();
 	void start();
 protected:
 	int numOfGhosts = 4;

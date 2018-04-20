@@ -1,0 +1,10 @@
+{
+	"Game": {
+		"numberOfGhosts": 4,
+		"fps": 30,
+		"animationSpeed": 
+	},
+	"Map": {
+	
+	}
+}

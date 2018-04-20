@@ -27,14 +27,15 @@ protected:
 
 	int boxInt [5];
 
-	const int PATH = 00;
-	const int WALL_VERT = 01;
-	const int WALL_HORI = 02;
-	const int WALL_COR_UP_LR = 03;
-	const int WALL_COR_UP_RL = 04;
-	const int WALL_COR_DOWN_RL = 05;
-	const int WALL_COR_DOWN_LR = 06;
-	const int PELLET = 10;
+	const int PATH = 0;
+	const int WALL_VERT = 1;
+	const int WALL_HORI = 2;
+	const int WALL_COR_UP_LR = 3;
+	const int WALL_COR_UP_RL = 4;
+	const int WALL_COR_DOWN_RL = 5;
+	const int WALL_COR_DOWN_LR = 6;
+
+	const int PELLET = 9;
 };
 
 #endif /* TILESDL_H_ */
