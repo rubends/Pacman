@@ -17,9 +17,9 @@ public:
 	Ghost();
 	virtual ~Ghost();
 	bool GetAttackingState();
-	void setAttackingState(bool attack);
+	void SetAttackingState(bool attack);
 	bool GetLivingState();
-	void setLivingState(bool live);
+	void SetLivingState(bool live);
 	virtual void Visualize() = 0;
 	virtual void Move() = 0;
 	virtual void MoveTo(int x, int y) = 0;

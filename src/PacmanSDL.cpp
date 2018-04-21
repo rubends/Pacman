@@ -126,9 +126,10 @@ void PacmanSDL::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
 		bool captured = aFactory->checkCollision(this->GetCollisionBox(), ghostBoxInt);
 		if(captured){
 			if(ghosts[i]->GetAttackingState()){
+				lives--;
 				living = false;
 			} else {
-				ghosts[i]->setLivingState(false);
+				ghosts[i]->SetLivingState(false);
 			}
 		}
 	}

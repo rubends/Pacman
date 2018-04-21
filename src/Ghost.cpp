@@ -18,7 +18,7 @@ bool Ghost::GetAttackingState() {
 	return attacking;
 }
 
-void Ghost::setAttackingState(bool attack) {
+void Ghost::SetAttackingState(bool attack) {
 	attacking = attack;
 }
 
@@ -26,7 +26,7 @@ bool Ghost::GetLivingState() {
 	return living;
 }
 
-void Ghost::setLivingState(bool live) {
+void Ghost::SetLivingState(bool live) {
 	living = live;
 }
 

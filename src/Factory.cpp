@@ -25,18 +25,15 @@ bool Factory::checkCollision(int* entityBox, int* tileBox){
 	int topA, topB;
 	int bottomA, bottomB;
 
-	int width = tileBox[2];
-	int height = tileBox[3];
-
 	leftA = entityBox[0];
-	rightA = entityBox[0] + width;
+	rightA = entityBox[0] + entityBox[2]; // + width
 	topA = entityBox[1];
-	bottomA = entityBox[1] + height;
+	bottomA = entityBox[1] + entityBox[3]; // + height
 
 	leftB = tileBox[0];
-	rightB = tileBox[0] + width;
+	rightB = tileBox[0] + tileBox[2]; // + width
 	topB = tileBox[1];
-	bottomB = tileBox[1] + height;
+	bottomB = tileBox[1] + tileBox[3]; // + height
 
 	/*if( bottomA > topB  && topA < bottomB && leftA < rightB && leftA > (leftB-width))
 	{
@@ -61,5 +58,17 @@ int Factory::GetNumOfTiles(){
 
 void Factory::SetNumOfTiles(int tiles){
 	numOftiles = tiles;
+}
+
+int Factory::GetScore(){
+	return score;
+}
+
+void Factory::AddToScore(int addition){
+	score = score + addition;
+}
+
+std::vector<Ghost*> Factory::GetGhosts(){
+	return ghosts;
 }
 

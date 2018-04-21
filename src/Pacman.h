@@ -31,6 +31,7 @@ protected:
 	bool living = true;
 	int direction = 4;
 	int prevDirection = 4;
+	int lives = 5;
 };
 
 #endif /* PACMAN_H_ */

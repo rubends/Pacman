@@ -8,9 +8,9 @@ Programming pattern: Abstract Factory.
 - Make variable/config file: WALL, PELLET, ...
 - Namespaces
 - Sound effects
-- Ghost state -> entity set ghosts attacking to false
+- Ghost return
 - Pacman lives
-- Points + Cherries
+- show Points + Cherries
 
 
 ## PPT

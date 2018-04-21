@@ -43,8 +43,6 @@ void TileSDL::renderTile(int x, int y, int tileType, int width, int height) {
 
 void TileSDL::visualize()
 {
-	SDL_Rect tileSprite;
-
 	if(boxInt[4] == WALL_VERT){
 		tileSprite.x = 228;
 		tileSprite.y = 12;
@@ -82,7 +80,7 @@ void TileSDL::visualize()
 		tileSprite.h = 8;
 	}
 
-	SDL_Rect tileRect = { boxInt[0], boxInt[1], boxInt[2], boxInt[3] };
+	tileRect = { boxInt[0], boxInt[1], boxInt[2], boxInt[3] };
 	SDL_RenderCopy( sdlRenderer, texture, &tileSprite, &tileRect );
 }
 

@@ -50,6 +50,7 @@ FactorySDL::~FactorySDL(){
 Ghost* FactorySDL::createGhost(int type){
 	Ghost* ghost = new GhostSDL(type, sdlRendererTEMP, loadedSurface);
 	ghost->setFactory(this);
+	ghosts.push_back(ghost);
 	return ghost;
 }
 

@@ -13,6 +13,7 @@
 #include "Map.h"
 #include "Tile.h"
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Map;
@@ -34,13 +35,18 @@ public:
 	int GetScreenWidth();
 	int GetNumOfTiles();
 	void SetNumOfTiles(int tiles);
+	int GetScore();
+	void AddToScore(int addition);
+	std::vector<Ghost*> GetGhosts();
 	virtual void quitVis() = 0;
 protected:
 	const int SCREEN_WIDTH = 640; // 640/16 = 40px tiles
 	const int SCREEN_HEIGHT = 480;
 	int numOftiles = 0;
+	int score = 0;
 
 	Map* tileMap;
+	std::vector<Ghost*> ghosts;
 };
 
 #endif /* FACTORY_H_ */

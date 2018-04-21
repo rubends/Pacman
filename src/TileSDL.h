@@ -25,6 +25,9 @@ protected:
 	SDL_Renderer* sdlRenderer;
 	SDL_Texture* texture;
 
+	SDL_Rect tileSprite;
+	SDL_Rect tileRect;
+
 	int boxInt [5];
 
 	const int PATH = 0;
