@@ -28,8 +28,6 @@ protected:
 	SDL_Rect tileSprite;
 	SDL_Rect tileRect;
 
-	int boxInt [5];
-
 	const int PATH = 0;
 	const int WALL_VERT = 1;
 	const int WALL_HORI = 2;
@@ -38,6 +36,7 @@ protected:
 	const int WALL_COR_DOWN_RL = 5;
 	const int WALL_COR_DOWN_LR = 6;
 
+	const int CHERRY = 8;
 	const int PELLET = 9;
 };
 

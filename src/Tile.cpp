@@ -13,3 +13,7 @@ Tile::Tile() {
 Tile::~Tile() {
 	// TODO Auto-generated destructor stub
 }
+
+void Tile::SetTileType(int type){
+	boxInt[4] = type;
+}

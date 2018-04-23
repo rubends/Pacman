@@ -14,9 +14,12 @@ class Tile {
 public:
 	Tile();
 	virtual ~Tile();
+	void SetTileType(int type);
 	virtual void visualize() = 0;
 	virtual int* getBoxInt() = 0;
 	virtual void renderTile(int x, int y, int tileType, int width, int height) = 0;
+protected:
+	int boxInt [5];
 };
 
 #endif /* TILE_H_ */

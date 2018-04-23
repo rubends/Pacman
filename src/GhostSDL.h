@@ -24,6 +24,8 @@ public:
 	void Visualize();
 	void Move();
 	void MoveTo(int x, int y);
+	void ReturnToCenter();
+	void MoveToCoordinates(int x, int y);
 protected:
 	SDL_Renderer* sdlRenderer;
 	SDL_Surface* surface;

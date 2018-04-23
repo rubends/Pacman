@@ -17,8 +17,6 @@ using namespace std;
 class Factory; //TO USE
 class Map {
 public:
-	const int TILE_WIDTH = 40;
-	const int TILE_HEIGHT = 40;
 	Map(Factory* aFactory);
 	void Draw();
 	Tile** GetTiles();
@@ -26,9 +24,9 @@ public:
 	virtual ~Map();
 protected:
 	int totalTiles;
-	//Tile* tileSet[192];
-	Tile** tileSet = new Tile*[192]; //Cannot instantiate abstract object
-	int* destroyedTiles = new int [192];
+	//TODO tile array variable size
+	Tile** tileSet = new Tile*[868]; //** --> Cannot instantiate abstract object
+	int* destroyedTiles = new int [868];
 	Factory* aFactory;
 	std::ifstream map;
 };

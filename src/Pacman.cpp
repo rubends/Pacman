@@ -8,10 +8,10 @@
 #include "Pacman.h"
 
 Pacman::Pacman() {
-	mPosX = 40;
-	mPosY = 40;
+	mPosX = mWidth; // todo get variable
+	mPosY = mHeight;
 
-	isPac = 1;
+	isPac = true;
 }
 
 Pacman::~Pacman() {

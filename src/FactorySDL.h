@@ -15,7 +15,7 @@
 
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
-//#include <SDL_ttf.h>
+#include <sdl2/SDL_ttf.h>
 
 using namespace std;
 
@@ -28,6 +28,7 @@ class FactorySDL : public Factory{
 		Tile* createTile(int x, int y, int type, int width, int height);
 		void DestroyTile(int tile);
 		Map* createMap();
+		void UpdateText();
 		void ClearScreen();
 		void UpdateScreen();
 		SDL_Surface* getSurface();
@@ -38,6 +39,9 @@ class FactorySDL : public Factory{
 		SDL_Surface* loadedSurface;
 		SDL_Window* sdlWindow;
 		SDL_Surface* sdlScreenSurface;
+
+		TTF_Font* font;
+		SDL_Color white;
 
 		SDL_Texture* tileTexture;
 	};

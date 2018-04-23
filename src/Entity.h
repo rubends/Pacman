@@ -26,8 +26,10 @@ protected:
 	int mPosX, mPosY;
 	int mWidth, mHeight;
 	int* entityBox = new int [4];
-	int isPac;
-	int totalTiles;
+	bool isPac = false;
+	int totalTiles = 0;
+	int screenWidth = 0;
+	int screenHeight = 0;
 };
 
 #endif /* ENTITY_H_ */

@@ -12,9 +12,6 @@ PacmanSDL::PacmanSDL(SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface) 
 	surface = loadedSurface;
 	pacTexture = SDL_CreateTextureFromSurface( sdlRenderer, surface );
 
-	mWidth = 40; //TODO GET TILE WIDTH
-	mHeight = 40;
-
 	//SPRITES
 	//living: 0-2
 	//dead: 3-11
@@ -126,7 +123,7 @@ void PacmanSDL::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
 		bool captured = aFactory->checkCollision(this->GetCollisionBox(), ghostBoxInt);
 		if(captured){
 			if(ghosts[i]->GetAttackingState()){
-				lives--;
+				aFactory->SubtractLives(1);
 				living = false;
 			} else {
 				ghosts[i]->SetLivingState(false);

@@ -16,7 +16,7 @@ FactorySDL::FactorySDL(){
 		{
 			printf( "Warning: Linear texture filtering not enabled!" );
 		}
-		sdlWindow = SDL_CreateWindow( "PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		sdlWindow = SDL_CreateWindow( "PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_SHOWN );
 		if( sdlWindow == NULL )
 		{
 			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
@@ -31,6 +31,13 @@ FactorySDL::FactorySDL(){
 				printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
 			} else {
 				sdlScreenSurface = SDL_GetWindowSurface( sdlWindow );
+			}
+
+			if(TTF_Init() < 0){
+				printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", IMG_GetError() );
+			} else {
+				font = TTF_OpenFont("Fonts/emulogic.ttf", 10);
+				white = {255, 255, 255};
 			}
 
 			this->ClearScreen();
@@ -76,6 +83,15 @@ Map* FactorySDL::createMap() {
 	return tileMap;
 }
 
+void FactorySDL::UpdateText(){
+	std::string scoreTxt = "Score: " + std::to_string(score);
+	SDL_Surface* textSurface = TTF_RenderText_Solid( font, scoreTxt.c_str(), white);
+	SDL_Texture* messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
+
+	SDL_Rect messageRect = {20, 0, textSurface->w, textSurface->h};
+	SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+}
+
 void FactorySDL::ClearScreen(){
 	SDL_SetRenderDrawColor( sdlRendererTEMP, 0x00, 0x00, 0x00, 0x00 );
 	SDL_RenderClear( sdlRendererTEMP );
@@ -101,4 +117,5 @@ void FactorySDL::quitVis(){
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
+	TTF_Quit();
 }

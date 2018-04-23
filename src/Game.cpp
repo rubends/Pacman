@@ -58,10 +58,12 @@ void Game::start(){
 
 			aFactory->ClearScreen();
 			map->Draw();
+			aFactory->UpdateText();
 			pacman->Move();
 			ghosts[0]->MoveTo(pacman->GetX(), pacman->GetY());
+			ghosts[1]->MoveTo(pacman->GetX()+80, pacman->GetY()+80); // todo verbeteren
 			pacman->GotCaptured(ghosts, numOfGhosts);
-			for(int j=1; j < numOfGhosts;j++){
+			for(int j=2; j < numOfGhosts;j++){
 				ghosts[j]->Move();
 			}
 

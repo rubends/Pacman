@@ -11,14 +11,11 @@
 Entity::Entity() {
 	collision = false;
 	aFactory = NULL;
-	totalTiles = 0;
 
 	mPosX = 0;
 	mPosY = 0;
 	mWidth = 0;
 	mHeight = 0;
-
-	isPac = 0;
 }
 
 Entity::~Entity() {
@@ -28,6 +25,10 @@ Entity::~Entity() {
 void Entity::setFactory(Factory* fac){
 	aFactory = fac;
 	totalTiles = aFactory->GetNumOfTiles();
+	screenWidth = aFactory->GetScreenWidth();
+	screenHeight = aFactory->GetScreenHeight();
+	mWidth = aFactory->GetTileSize();
+	mHeight = aFactory->GetTileSize();
 }
 
 int* Entity::GetCollisionBox(){
@@ -55,14 +56,16 @@ bool Entity::checkCollisions(){
 			if(tileBoxInt[4] > 0 && tileBoxInt[4] <= 6){ //is wall
 				collision = true;
 			}
-			if(isPac == 1){ //entity is pacman
+			if(isPac){ //entity is pacman
 				if(tileBoxInt[4] == 9){ // PELLET TODO get variable int of pellet
 					aFactory->DestroyTile(j);
 					std::vector<Ghost*>ghosts = aFactory->GetGhosts();
 					for(size_t i = 0; i <= (ghosts.size()-1); i++){
 						ghosts[i]->SetAttackingState(false);
 					}
-					//set ghost attacking to false
+				} else if(tileBoxInt[4] == 8){ // CHERRY
+					aFactory->DestroyTile(j);
+					aFactory->AddToScore(10);
 				} else if(tileBoxInt[4] == 0){ //PAC-DOT
 					aFactory->DestroyTile(j);
 					aFactory->AddToScore(1);

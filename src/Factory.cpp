@@ -9,6 +9,22 @@
 
 Factory::Factory() {
 	tileMap = NULL;
+
+	mapStream.open("Assets/Map2.map", std::ios::binary);
+	if( mapStream.fail() )
+	{
+		printf( "Unable to load map file!\n" );
+	}
+
+	char line[256];
+	mapStream.getline(line, 256); //get position at first line
+	int lineLength = mapStream.tellg()/2;
+
+	mapStream.seekg(0, ios::end); //to the end of the file
+	numOftiles = mapStream.tellg()/2; //get the number of tiles
+
+	screenWidth = lineLength * tileSize;
+	screenHeight = (numOftiles/lineLength) * tileSize;
 }
 
 Factory::~Factory() {
@@ -35,11 +51,6 @@ bool Factory::checkCollision(int* entityBox, int* tileBox){
 	topB = tileBox[1];
 	bottomB = tileBox[1] + tileBox[3]; // + height
 
-	/*if( bottomA > topB  && topA < bottomB && leftA < rightB && leftA > (leftB-width))
-	{
-		return true;
-	}*/
-
 	if( rightA > leftB && leftA < rightB && topA < bottomB && bottomA > topB)
 	{
 		return true;
@@ -49,23 +60,41 @@ bool Factory::checkCollision(int* entityBox, int* tileBox){
 }
 
 int Factory::GetScreenWidth(){
-	return SCREEN_WIDTH;
+	return screenWidth;
+}
+
+int Factory::GetScreenHeight(){
+	return screenHeight;
 }
 
 int Factory::GetNumOfTiles(){
 	return numOftiles;
 }
 
-void Factory::SetNumOfTiles(int tiles){
-	numOftiles = tiles;
-}
-
 int Factory::GetScore(){
 	return score;
 }
 
-void Factory::AddToScore(int addition){
+int Factory::GetLives(){
+	return lives;
+}
+
+int Factory::SubtractLives(int subtraction){
+	lives = lives + subtraction;
+	return lives;
+}
+
+std::ifstream Factory::GetMapStream(){
+	return mapStream;
+}
+
+int Factory::AddToScore(int addition){
 	score = score + addition;
+	return score;
+}
+
+int Factory::GetTileSize(){
+	return tileSize;
 }
 
 std::vector<Ghost*> Factory::GetGhosts(){

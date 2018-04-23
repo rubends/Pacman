@@ -73,6 +73,11 @@ void TileSDL::visualize()
 		tileSprite.y = 75;
 		tileSprite.w = 5;
 		tileSprite.h = 15;
+	} else if(boxInt[4] == CHERRY){
+		tileSprite.x = 487;
+		tileSprite.y = 48;
+		tileSprite.w = 15;
+		tileSprite.h = 15;
 	} else { //PELLET OR DOT
 		tileSprite.x = 8;
 		tileSprite.y = 24;

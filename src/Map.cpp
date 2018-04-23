@@ -9,28 +9,24 @@
 
 Map::Map(Factory* abstractFactory) {
 	aFactory = abstractFactory;
-	map.open("Assets/Map2.map", std::ios::binary);
-	if( map.fail() )
-	{
-		printf( "Unable to load map file!\n" );
-	}
-	map.seekg(0, ios::end); //to the end of the file
-	totalTiles = map.tellg()/2; //get the number of tiles
-	aFactory->SetNumOfTiles(totalTiles);
 
+	map = aFactory->GetMapStream();
+	totalTiles = aFactory->GetNumOfTiles();
 	int screenWidth = aFactory->GetScreenWidth();
+	int tileWidth = aFactory->GetTileSize();
+	int tileHeight = aFactory->GetTileSize();
 	int x = 0, y = 0;
 
 	map.seekg(0, ios::beg);
 	for(int tile = 0; tile < totalTiles; tile++){
 		int tileType = 0;
 		map >> tileType;
-		tileSet[tile] = aFactory->createTile(x, y, tileType, TILE_WIDTH, TILE_HEIGHT);
-		x += TILE_WIDTH;
+		tileSet[tile] = aFactory->createTile(x, y, tileType, tileWidth, tileHeight);
+		x += tileWidth;
 		if(x >= screenWidth)
 		{
 			x = 0;
-			y += TILE_HEIGHT;
+			y += tileHeight;
 		}
 	}
 }
@@ -57,4 +53,5 @@ Tile** Map::GetTiles(){
 
 void Map::DestroyTile(int tile){
 	destroyedTiles[tile] = 1;
+	tileSet[tile]->SetTileType(-1); //collision happens only once
 }

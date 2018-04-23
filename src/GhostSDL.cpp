@@ -12,27 +12,10 @@ GhostSDL::GhostSDL(int ghostType, SDL_Renderer* sdlRendererTEMP, SDL_Surface* lo
 	surface = loadedSurface;
 	ghostTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, surface );
 
-	mWidth = 40; //todo get tile size
-	mHeight = 40;
-
 	type = ghostType;
 
 	ghostSprite[0].w = 15;
 	ghostSprite[0].h = 15;
-
-	if(type == 0) {
-		mPosX = 280;
-		mPosY = 200;
-	} else if (type == 1) {
-		mPosX = 280;
-		mPosY = 240;
-	} else if (type == 2) {
-		mPosX = 320;
-		mPosY = 200;
-	} else {
-		mPosX = 320;
-		mPosY = 240;
-	}
 }
 
 GhostSDL::~GhostSDL(){
@@ -40,6 +23,10 @@ GhostSDL::~GhostSDL(){
 }
 
 void GhostSDL::Visualize(){
+	if(mPosX == 0 && mPosY == 0){ //default setting when factory was unknown
+		mPosX = (screenWidth-mWidth)/2;
+		mPosY = (screenHeight-mHeight)/2;
+	}
 	if(attacking){
 		ghostSprite[0].x = 455;
 		if(type == 0) {
@@ -65,60 +52,65 @@ void GhostSDL::Visualize(){
 }
 
 void GhostSDL::Move(){ //RANDOM MOVEMENT
-	int tempPosX = mPosX;
-	int tempPosY = mPosY;
-	if(changeDir >= 15 ){ //after x movements change direction
-		dir[type] = rand()%(4) + 1;
-		changeDir = 0;
-	}
-	changeDir++;
-
-	switch(dir[type])
+	if(living)
 	{
-		case 1:
-			mPosY -= GHOST_VEL;
-			break;
-		case 2:
-			mPosY += GHOST_VEL;
-			break;
-		case 3:
-			mPosX -= GHOST_VEL;
-			break;
-		case 4:
-			mPosX += GHOST_VEL;
-			break;
-		default:
-			break;
-	}
+		int tempPosX = mPosX;
+		int tempPosY = mPosY;
+		if(changeDir >= 15 ){ //after x movements change direction
+			dir[type] = rand()%(4) + 1;
+			changeDir = 0;
+		}
+		changeDir++;
 
-	if(this->checkCollisions()){ //not possible to go to direction
-			mPosX = tempPosX;
-			mPosY = tempPosY;
+		switch(dir[type])
+		{
+			case 1:
+				mPosY -= GHOST_VEL;
+				break;
+			case 2:
+				mPosY += GHOST_VEL;
+				break;
+			case 3:
+				mPosX -= GHOST_VEL;
+				break;
+			case 4:
+				mPosX += GHOST_VEL;
+				break;
+			default:
+				break;
+		}
 
-			switch(prevDir[type])
-			{
-				case 1:
-					mPosY -= GHOST_VEL;
-					break;
-				case 2:
-					mPosY += GHOST_VEL;
-					break;
-				case 3:
-					mPosX -= GHOST_VEL;
-					break;
-				case 4:
-					mPosX += GHOST_VEL;
-					break;
-				default:
-					break;
-			}
-			if(this->checkCollisions()){
+		if(this->checkCollisions()){ //not possible to go to direction
 				mPosX = tempPosX;
 				mPosY = tempPosY;
-				dir[type] = rand()%(4) + 1; //if stuck, change direction
-			}
+
+				switch(prevDir[type])
+				{
+					case 1:
+						mPosY -= GHOST_VEL;
+						break;
+					case 2:
+						mPosY += GHOST_VEL;
+						break;
+					case 3:
+						mPosX -= GHOST_VEL;
+						break;
+					case 4:
+						mPosX += GHOST_VEL;
+						break;
+					default:
+						break;
+				}
+				if(this->checkCollisions()){
+					mPosX = tempPosX;
+					mPosY = tempPosY;
+					dir[type] = rand()%(4) + 1; //if stuck, change direction
+				}
+		} else {
+			prevDir[type] = dir[type];
+		}
 	} else {
-		prevDir[type] = dir[type];
+		this->ReturnToCenter();
 	}
 
 	if(mPosX < -30) //ghost went to far
@@ -133,7 +125,29 @@ void GhostSDL::Move(){ //RANDOM MOVEMENT
 	this->Visualize();
 }
 
+void GhostSDL::ReturnToCenter(){
+	int x = (screenWidth-mWidth)/2;
+	int y = (screenHeight-mHeight)/2;
+
+	this->MoveToCoordinates(x, y);
+
+	if(mPosX == x && mPosY == y){
+		living = true;
+		attacking = true;
+	}
+}
+
 void GhostSDL::MoveTo(int x, int y){
+	if(living){
+		this->MoveToCoordinates(x, y);
+	} else {
+		this->ReturnToCenter();
+	}
+
+	this->Visualize();
+}
+
+void GhostSDL::MoveToCoordinates(int x, int y){
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
 
@@ -157,6 +171,4 @@ void GhostSDL::MoveTo(int x, int y){
 	if(this->checkCollisions()){
 		mPosY = tempPosY;
 	}
-
-	this->Visualize();
 }
