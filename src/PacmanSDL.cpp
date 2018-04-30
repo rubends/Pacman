@@ -124,6 +124,7 @@ void PacmanSDL::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
 		if(captured){
 			if(ghosts[i]->GetAttackingState()){
 				aFactory->SubtractLives(1);
+				aFactory->SetPlaying(false, "Dead");
 				living = false;
 			} else {
 				ghosts[i]->SetLivingState(false);

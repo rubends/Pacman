@@ -24,8 +24,8 @@ GhostSDL::~GhostSDL(){
 
 void GhostSDL::Visualize(){
 	if(mPosX == 0 && mPosY == 0){ //default setting when factory was unknown
-		mPosX = (screenWidth-mWidth)/2;
-		mPosY = (screenHeight-mHeight)/2;
+		mPosX = 15*mWidth;
+		mPosY = 15*mHeight;
 	}
 	if(attacking){
 		ghostSprite[0].x = 455;
@@ -126,8 +126,8 @@ void GhostSDL::Move(){ //RANDOM MOVEMENT
 }
 
 void GhostSDL::ReturnToCenter(){
-	int x = (screenWidth-mWidth)/2;
-	int y = (screenHeight-mHeight)/2;
+	int x = 15*mWidth;
+	int y = 15*mHeight;
 
 	this->MoveToCoordinates(x, y);
 

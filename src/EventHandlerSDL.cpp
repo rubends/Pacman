@@ -45,7 +45,8 @@ int EventHandlerSDL::getKeyDown() {
 	    KEY_PRESS_SURFACE_DOWN,
 	    KEY_PRESS_SURFACE_LEFT,
 	    KEY_PRESS_SURFACE_RIGHT,
-	    KEY_PRESS_SURFACE_TOTAL
+	    KEY_PRESS_SURFACE_TOTAL,
+		KEY_PRESS_ENTER
 	};
 
 	switch( e.key.keysym.sym )
@@ -64,6 +65,10 @@ int EventHandlerSDL::getKeyDown() {
 
 		case SDLK_RIGHT:
 			key = KEY_PRESS_SURFACE_RIGHT;
+			break;
+
+		case SDLK_RETURN:
+			key = KEY_PRESS_ENTER;
 			break;
 
 		default:

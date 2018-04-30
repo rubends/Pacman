@@ -46,9 +46,18 @@ void Game::start(){
 				//delete ev;
 				aFactory->quitVis();
 			} else if(ev->keyDown()){
-				pacman->SetDirection(ev->getKeyDown());
+				if(ev->getKeyDown() == 6){ //pressed enter
+					aFactory->SetPlaying(!aFactory->GetPlaying(), "Paused");
+
+					if(!pacman->GetLiving()){
+						pacman->SetLiving(true);
+					}
+				} else if (aFactory->GetPlaying()) { //not changing direction while paused
+					pacman->SetDirection(ev->getKeyDown());
+				}
 			}
 		}
+
 
 		ticks = clock(); //#clock ticks since running
 		clock_ms = (ticks/(double)CLOCKS_PER_SEC)*1000.0; //#ms since running
@@ -58,19 +67,25 @@ void Game::start(){
 
 			aFactory->ClearScreen();
 			map->Draw();
-			aFactory->UpdateText();
-			pacman->Move();
-			ghosts[0]->MoveTo(pacman->GetX(), pacman->GetY());
-			ghosts[1]->MoveTo(pacman->GetX()+80, pacman->GetY()+80); // todo verbeteren
-			pacman->GotCaptured(ghosts, numOfGhosts);
-			for(int j=2; j < numOfGhosts;j++){
-				ghosts[j]->Move();
+			if(aFactory->GetPlaying())
+			{
+				pacman->Move();
+				ghosts[0]->MoveTo(pacman->GetX(), pacman->GetY());
+				ghosts[1]->MoveTo(pacman->GetX()+80, pacman->GetY()+80); // todo verbeteren
+				pacman->GotCaptured(ghosts, numOfGhosts);
+				for(int j=2; j < numOfGhosts;j++){
+					ghosts[j]->Move();
+				}
+			} else {
+				pacman->Visualize();
+				for(int j=0; j < numOfGhosts;j++){
+					ghosts[j]->Visualize();
+				}
 			}
-
 			if(clock_ms % (animationSpeed*mspf) == 0){ //every x frames animation
 				pacman->Animate();
 			}
-
+			aFactory->UpdateText();
 			aFactory->UpdateScreen();
 		}
 	}

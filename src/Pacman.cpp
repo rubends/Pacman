@@ -8,8 +8,8 @@
 #include "Pacman.h"
 
 Pacman::Pacman() {
-	mPosX = mWidth; // todo get variable
-	mPosY = mHeight;
+	mPosX = 20; // todo get variable
+	mPosY = 40;
 
 	isPac = true;
 }
@@ -30,4 +30,17 @@ void Pacman::SetDirection(int key){
 	if(direction != key){
 		direction = key;
 	}
+}
+
+bool Pacman::GetLiving(){
+	return living;
+}
+
+bool Pacman::SetLiving(bool alive){
+	living = alive;
+	if(alive){
+		mPosX = 20; //todo get variable
+		mPosY = 40;
+	}
+	return living;
 }

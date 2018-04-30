@@ -25,7 +25,7 @@ public:
 	virtual void MoveTo(int x, int y) = 0;
 protected:
 	int type;
-	int GHOST_VEL = 3;
+	int GHOST_VEL = 4;
 	bool attacking = true;
 	bool living = true;
 };

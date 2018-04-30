@@ -10,14 +10,13 @@
 Map::Map(Factory* abstractFactory) {
 	aFactory = abstractFactory;
 
-	map = aFactory->GetMapStream();
+	map.open(aFactory->GetMapName(), std::ios::binary);
 	totalTiles = aFactory->GetNumOfTiles();
 	int screenWidth = aFactory->GetScreenWidth();
 	int tileWidth = aFactory->GetTileSize();
 	int tileHeight = aFactory->GetTileSize();
 	int x = 0, y = 0;
 
-	map.seekg(0, ios::beg);
 	for(int tile = 0; tile < totalTiles; tile++){
 		int tileType = 0;
 		map >> tileType;

@@ -47,38 +47,38 @@ void TileSDL::visualize()
 		tileSprite.x = 228;
 		tileSprite.y = 12;
 		tileSprite.w = 5;
-		tileSprite.h = 15;
+		tileSprite.h = 5;
 	} else if(boxInt[4] == WALL_HORI){
 		tileSprite.x = 234;
 		tileSprite.y = 0;
-		tileSprite.w = 15;
+		tileSprite.w = 5;
 		tileSprite.h = 5;
 	} else if(boxInt[4] == WALL_COR_UP_LR){
 		tileSprite.x = 228;
 		tileSprite.y = 0;
 		tileSprite.w = 5;
-		tileSprite.h = 15;
+		tileSprite.h = 5;
 	} else if(boxInt[4] == WALL_COR_UP_RL){
-		tileSprite.x = 447;
+		tileSprite.x = 448;
 		tileSprite.y = 0;
 		tileSprite.w = 5;
-		tileSprite.h = 15;
+		tileSprite.h = 5;
 	} else if(boxInt[4] == WALL_COR_DOWN_RL){
-		tileSprite.x = 447;
-		tileSprite.y = 75;
+		tileSprite.x = 448;
+		tileSprite.y = 74;
 		tileSprite.w = 5;
-		tileSprite.h = 15;
+		tileSprite.h = 5;
 	} else if(boxInt[4] == WALL_COR_DOWN_LR){
 		tileSprite.x = 228;
-		tileSprite.y = 75;
+		tileSprite.y = 74;
 		tileSprite.w = 5;
-		tileSprite.h = 15;
+		tileSprite.h = 5;
 	} else if(boxInt[4] == CHERRY){
 		tileSprite.x = 487;
 		tileSprite.y = 48;
 		tileSprite.w = 15;
 		tileSprite.h = 15;
-	} else { //PELLET OR DOT
+	} else if((boxInt[4] == PELLET)||(boxInt[4] == PATH)){ //PELLET OR DOT
 		tileSprite.x = 8;
 		tileSprite.y = 24;
 		tileSprite.w = 8;

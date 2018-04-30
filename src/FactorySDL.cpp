@@ -37,6 +37,7 @@ FactorySDL::FactorySDL(){
 				printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", IMG_GetError() );
 			} else {
 				font = TTF_OpenFont("Fonts/emulogic.ttf", 10);
+				fontBig = TTF_OpenFont("Fonts/emulogic.ttf", 40);
 				white = {255, 255, 255};
 			}
 
@@ -85,11 +86,30 @@ Map* FactorySDL::createMap() {
 
 void FactorySDL::UpdateText(){
 	std::string scoreTxt = "Score: " + std::to_string(score);
-	SDL_Surface* textSurface = TTF_RenderText_Solid( font, scoreTxt.c_str(), white);
-	SDL_Texture* messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
+	textSurface = TTF_RenderText_Solid( font, scoreTxt.c_str(), white);
+	messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
 
-	SDL_Rect messageRect = {20, 0, textSurface->w, textSurface->h};
+	messageRect = {20, 0, textSurface->w, textSurface->h};
 	SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+
+	std::string livesTxt = "Lives: " + std::to_string(lives);
+	textSurface = TTF_RenderText_Solid( font, livesTxt.c_str(), white);
+	messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
+
+	messageRect = {screenWidth - textSurface->w - 20, 0, textSurface->w, textSurface->h};
+	SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+
+	if(!playing){
+		textSurface = TTF_RenderText_Solid( fontBig, startText.c_str(), white);
+		messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
+		messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2) - 50, textSurface->w, textSurface->h};
+		SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+
+		textSurface = TTF_RenderText_Solid( font, "Press 'enter' to play", white);
+		messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
+		messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2), textSurface->w, textSurface->h};
+		SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+	}
 }
 
 void FactorySDL::ClearScreen(){

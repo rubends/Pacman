@@ -10,7 +10,7 @@
 Factory::Factory() {
 	tileMap = NULL;
 
-	mapStream.open("Assets/Map2.map", std::ios::binary);
+	mapStream.open(mapName, std::ios::binary); // GET MAP RESOLUTION BEFORE LOADING SDL
 	if( mapStream.fail() )
 	{
 		printf( "Unable to load map file!\n" );
@@ -22,6 +22,7 @@ Factory::Factory() {
 
 	mapStream.seekg(0, ios::end); //to the end of the file
 	numOftiles = mapStream.tellg()/2; //get the number of tiles
+	mapStream.close();
 
 	screenWidth = lineLength * tileSize;
 	screenHeight = (numOftiles/lineLength) * tileSize;
@@ -80,12 +81,12 @@ int Factory::GetLives(){
 }
 
 int Factory::SubtractLives(int subtraction){
-	lives = lives + subtraction;
+	lives = lives - subtraction;
 	return lives;
 }
 
-std::ifstream Factory::GetMapStream(){
-	return mapStream;
+string Factory::GetMapName(){
+	return mapName;
 }
 
 int Factory::AddToScore(int addition){
@@ -101,3 +102,17 @@ std::vector<Ghost*> Factory::GetGhosts(){
 	return ghosts;
 }
 
+bool Factory::GetPlaying(){
+	return playing;
+}
+
+bool Factory::SetPlaying(bool play, string text){
+	if(lives <= 0){
+		playing = false;
+		startText = "Game Over";
+	} else {
+		playing = play;
+		startText = text;
+	}
+	return playing;
+}

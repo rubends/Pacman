@@ -20,6 +20,8 @@ public:
 	int GetX();
 	int GetY();
 	void SetDirection(int key);
+	bool GetLiving();
+	bool SetLiving(bool alive);
 
 	virtual void Visualize() = 0;
 	virtual void Animate() = 0;
@@ -27,7 +29,7 @@ public:
 	virtual void Move() = 0;
 	virtual void GotCaptured(Ghost* ghosts[], int numOfGhosts) = 0;
 protected:
-	int PACMAN_VEL = 4;
+	int PACMAN_VEL = 4; // = tilesize / 5
 	bool living = true;
 	int direction = 4;
 	int prevDirection = 4;

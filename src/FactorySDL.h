@@ -41,7 +41,11 @@ class FactorySDL : public Factory{
 		SDL_Surface* sdlScreenSurface;
 
 		TTF_Font* font;
+		TTF_Font* fontBig;
 		SDL_Color white;
+		SDL_Surface* textSurface;
+		SDL_Texture* messageTexture;
+		SDL_Rect messageRect;
 
 		SDL_Texture* tileTexture;
 	};

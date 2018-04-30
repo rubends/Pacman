@@ -30,13 +30,15 @@ public:
 	int GetScreenWidth();
 	int GetScreenHeight();
 	int GetNumOfTiles();
-	std::ifstream GetMapStream();
+	string GetMapName();
 	int GetScore();
 	int AddToScore(int addition);
 	int GetLives();
 	int SubtractLives(int subtraction);
 	int GetTileSize();
 	std::vector<Ghost*> GetGhosts();
+	bool GetPlaying();
+	bool SetPlaying(bool play, string text);
 
 	virtual Ghost* createGhost(int type) = 0;
 	virtual Pacman* createPacman() = 0;
@@ -57,7 +59,10 @@ protected:
 
 	int tileSize = 20;
 	int score = 0;
-	int lives = 5;
+	int lives = 3;
+	bool playing = false;
+	string startText = "Start";
+	string mapName = "Assets/Map2.map";
 };
 
 #endif /* FACTORY_H_ */
