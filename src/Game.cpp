@@ -30,6 +30,12 @@ void Game::start(){
 	}
 
 	EventHandler* ev = new EventHandlerSDL();
+	int last_frame = 0;
+	clock_t ticks = 0;
+	int clock_ms = 0; //clock in ms
+	int countingAttack = 0;
+	bool quit = false;
+
 	while( !quit )
 	{
 		while( ev->pollEvent() != 0 )
@@ -51,6 +57,13 @@ void Game::start(){
 
 					if(!pacman->GetLiving()){
 						pacman->SetLiving(true);
+						for(int j=0; j < numOfGhosts;j++){
+							ghosts[j]->ResetGhost();
+						}
+						if(aFactory->GetLives() <= 0){
+							aFactory->ResetGame();
+							pacman->SetDirection(4);
+						}
 					}
 				} else if (aFactory->GetPlaying()) { //not changing direction while paused
 					pacman->SetDirection(ev->getKeyDown());
@@ -58,6 +71,15 @@ void Game::start(){
 			}
 		}
 
+		if(!ghosts[0]->GetAttackingState()){ //if ghosts vulnerable
+			if(countingAttack == 0){
+				countingAttack = countToAttacking;
+			} else if(countingAttack == 1){
+				for(int j=0; j < numOfGhosts;j++){ // set ghosts back to attacking
+					ghosts[j]->SetAttackingState(true);
+				}
+			}
+		}
 
 		ticks = clock(); //#clock ticks since running
 		clock_ms = (ticks/(double)CLOCKS_PER_SEC)*1000.0; //#ms since running
@@ -85,6 +107,16 @@ void Game::start(){
 			if(clock_ms % (animationSpeed*mspf) == 0){ //every x frames animation
 				pacman->Animate();
 			}
+
+			if(countingAttack > 0){
+				countingAttack--;
+				if(countingAttack <= 30 && clock_ms % (animationSpeed*mspf) == 0){
+					for(int j=0; j < numOfGhosts;j++){
+						ghosts[j]->SetFlashingState(!ghosts[j]->GetFlashingState());
+					}
+				}
+			}
+
 			aFactory->UpdateText();
 			aFactory->UpdateScreen();
 		}

@@ -39,6 +39,8 @@ FactorySDL::FactorySDL(){
 				font = TTF_OpenFont("Fonts/emulogic.ttf", 10);
 				fontBig = TTF_OpenFont("Fonts/emulogic.ttf", 40);
 				white = {255, 255, 255};
+				messageTexture = NULL;
+				textSurface = NULL;
 			}
 
 			this->ClearScreen();
@@ -102,13 +104,21 @@ void FactorySDL::UpdateText(){
 	if(!playing){
 		textSurface = TTF_RenderText_Solid( fontBig, startText.c_str(), white);
 		messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
-		messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2) - 50, textSurface->w, textSurface->h};
+		messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2) - 40, textSurface->w, textSurface->h};
 		SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
 
 		textSurface = TTF_RenderText_Solid( font, "Press 'enter' to play", white);
 		messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
 		messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2), textSurface->w, textSurface->h};
 		SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+
+		if(lives <= 0){
+			std::string highscoreTxt = "High score: " + std::to_string(highScore);
+			textSurface = TTF_RenderText_Solid( font, highscoreTxt.c_str(), white);
+			messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
+			messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2) + 20, textSurface->w, textSurface->h};
+			SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+		}
 	}
 }
 

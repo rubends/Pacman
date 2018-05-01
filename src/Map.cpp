@@ -9,7 +9,6 @@
 
 Map::Map(Factory* abstractFactory) {
 	aFactory = abstractFactory;
-
 	map.open(aFactory->GetMapName(), std::ios::binary);
 	totalTiles = aFactory->GetNumOfTiles();
 	int screenWidth = aFactory->GetScreenWidth();
@@ -38,6 +37,13 @@ Map::~Map() {
 	delete [] tileSet;
 }
 
+void Map::Load() {
+	cout << "RELOAD";
+	for(int tile = 0; tile < totalTiles; tile++){
+		destroyedTiles[tile] = 0;
+	}
+}
+
 void Map::Draw() {
 	for(int tile = 0; tile < totalTiles; tile++){
 		if(destroyedTiles[tile] != 1){
@@ -51,6 +57,21 @@ Tile** Map::GetTiles(){
 }
 
 void Map::DestroyTile(int tile){
-	destroyedTiles[tile] = 1;
-	tileSet[tile]->SetTileType(-1); //collision happens only once
+	if(destroyedTiles[tile] != 1){
+		int* tileBoxInt = tileSet[tile]->getBoxInt();
+		if(tileBoxInt[4] == 9){ // PELLET TODO get variable int of pellet
+			std::vector<Ghost*>ghosts = aFactory->GetGhosts();
+			for(size_t i = 0; i <= (ghosts.size()-1); i++){
+				ghosts[i]->SetAttackingState(false);
+			}
+			destroyedTiles[tile] = 1;
+		} else if(tileBoxInt[4] == 8){ // CHERRY
+			aFactory->AddToScore(10);
+			destroyedTiles[tile] = 1;
+		} else if(tileBoxInt[4] == 0){ //PAC-DOT
+			aFactory->AddToScore(1);
+			destroyedTiles[tile] = 1;
+		}
+		delete tileBoxInt;
+	}
 }

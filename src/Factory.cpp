@@ -110,9 +110,19 @@ bool Factory::SetPlaying(bool play, string text){
 	if(lives <= 0){
 		playing = false;
 		startText = "Game Over";
+		if(score > highScore){
+			highScore = score;
+		}
 	} else {
 		playing = play;
 		startText = text;
 	}
 	return playing;
+}
+
+void Factory::ResetGame(){
+	score = 0;
+	lives = 3; //todo get this
+	startText = "Start again";
+	tileMap->Load();
 }

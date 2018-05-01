@@ -9,7 +9,7 @@ Programming pattern: Abstract Factory.
 - Namespaces
 - Sound effects
 - ghost movement improvement
-- ghost start with attacking again of x sec
+- alle todos
 
 
 ## PPT

@@ -30,4 +30,19 @@ void Ghost::SetLivingState(bool live) {
 	living = live;
 }
 
+void Ghost::ResetGhost(){
+	mPosX = 15*mWidth;
+	mPosY = 15*mHeight;
+	living = true;
+	attacking = true;
+}
+
+bool Ghost::GetFlashingState() {
+	return flashing;
+}
+
+bool Ghost::SetFlashingState(bool flash) {
+	flashing = flash;
+	return flashing;
+}
 

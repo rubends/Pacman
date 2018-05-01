@@ -39,6 +39,7 @@ public:
 	std::vector<Ghost*> GetGhosts();
 	bool GetPlaying();
 	bool SetPlaying(bool play, string text);
+	void ResetGame();
 
 	virtual Ghost* createGhost(int type) = 0;
 	virtual Pacman* createPacman() = 0;
@@ -58,6 +59,7 @@ protected:
 	std::vector<Ghost*> ghosts;
 
 	int tileSize = 20;
+	int highScore = 0;
 	int score = 0;
 	int lives = 3;
 	bool playing = false;

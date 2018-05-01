@@ -57,19 +57,7 @@ bool Entity::checkCollisions(){
 				collision = true;
 			}
 			if(isPac){ //entity is pacman
-				if(tileBoxInt[4] == 9){ // PELLET TODO get variable int of pellet
-					aFactory->DestroyTile(j);
-					std::vector<Ghost*>ghosts = aFactory->GetGhosts();
-					for(size_t i = 0; i <= (ghosts.size()-1); i++){
-						ghosts[i]->SetAttackingState(false);
-					}
-				} else if(tileBoxInt[4] == 8){ // CHERRY
-					aFactory->DestroyTile(j);
-					aFactory->AddToScore(10);
-				} else if(tileBoxInt[4] == 0){ //PAC-DOT
-					aFactory->DestroyTile(j);
-					aFactory->AddToScore(1);
-				}
+				aFactory->DestroyTile(j);
 			}
 		}
 	}

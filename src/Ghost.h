@@ -20,6 +20,9 @@ public:
 	void SetAttackingState(bool attack);
 	bool GetLivingState();
 	void SetLivingState(bool live);
+	void ResetGhost();
+	bool SetFlashingState(bool flash);
+	bool GetFlashingState();
 	virtual void Visualize() = 0;
 	virtual void Move() = 0;
 	virtual void MoveTo(int x, int y) = 0;
@@ -27,6 +30,7 @@ protected:
 	int type;
 	int GHOST_VEL = 4;
 	bool attacking = true;
+	bool flashing = false;
 	bool living = true;
 };
 

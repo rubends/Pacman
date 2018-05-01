@@ -21,12 +21,13 @@ public:
 	void Draw();
 	Tile** GetTiles();
 	void DestroyTile(int tile);
+	void Load();
 	virtual ~Map();
 protected:
 	int totalTiles;
 	//TODO tile array variable size
-	Tile** tileSet = new Tile*[868]; //** --> Cannot instantiate abstract object
-	int* destroyedTiles = new int [868];
+	Tile** tileSet = new Tile*[911]; //** --> Cannot instantiate abstract object
+	int* destroyedTiles = new int [911];
 	Factory* aFactory;
 	std::ifstream map;
 };
