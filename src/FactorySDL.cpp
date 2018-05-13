@@ -83,37 +83,47 @@ Map* FactorySDL::CreateMap() {
 }
 
 void FactorySDL::UpdateText(){
-	std::string scoreTxt = "Score: " + std::to_string(score);
-	textSurface = TTF_RenderText_Solid( font, scoreTxt.c_str(), white);
+	printTxt = "Score: " + std::to_string(score);
+	textSurface = TTF_RenderText_Solid( font, printTxt.c_str(), white);
 	messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
 
 	messageRect = {20, 0, textSurface->w, textSurface->h};
 	SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+	SDL_DestroyTexture(messageTexture); // MEMORY LEAKS OTHERWISE
+	SDL_FreeSurface(textSurface);
 
-	std::string livesTxt = "Lives: " + std::to_string(lives);
-	textSurface = TTF_RenderText_Solid( font, livesTxt.c_str(), white);
+	printTxt = "Lives: " + std::to_string(lives);
+	textSurface = TTF_RenderText_Solid( font, printTxt.c_str(), white);
 	messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
 
 	messageRect = {screenWidth - textSurface->w - 20, 0, textSurface->w, textSurface->h};
 	SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+	SDL_DestroyTexture(messageTexture);
+	SDL_FreeSurface(textSurface);
 
 	if(!playing){
 		textSurface = TTF_RenderText_Solid( fontBig, startText.c_str(), white);
 		messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
 		messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2) - 40, textSurface->w, textSurface->h};
 		SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+		SDL_DestroyTexture(messageTexture);
+		SDL_FreeSurface(textSurface);
 
 		textSurface = TTF_RenderText_Solid( font, "Press 'enter' to play", white);
 		messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
 		messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2), textSurface->w, textSurface->h};
 		SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+		SDL_DestroyTexture(messageTexture);
+		SDL_FreeSurface(textSurface);
 
 		if(lives <= 0){
-			std::string highscoreTxt = "High score: " + std::to_string(highScore);
-			textSurface = TTF_RenderText_Solid( font, highscoreTxt.c_str(), white);
+			printTxt = "High score: " + std::to_string(highScore);
+			textSurface = TTF_RenderText_Solid( font, printTxt.c_str(), white);
 			messageTexture = SDL_CreateTextureFromSurface( sdlRendererTEMP, textSurface );
 			messageRect = {screenWidth/2 - (textSurface->w/2), screenHeight/2 - (textSurface->h/2) + 20, textSurface->w, textSurface->h};
 			SDL_RenderCopy(sdlRendererTEMP, messageTexture, NULL, &messageRect);
+			SDL_DestroyTexture(messageTexture);
+			SDL_FreeSurface(textSurface);
 		}
 	}
 }

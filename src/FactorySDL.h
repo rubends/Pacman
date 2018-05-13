@@ -47,6 +47,9 @@ class FactorySDL : public Factory{
 		SDL_Rect messageRect;
 
 		SDL_Texture* tileTexture;
+
+		std::string printTxt = "";
+
 	};
 
 #endif /* FACTORYSDL_H_ */
