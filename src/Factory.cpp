@@ -10,7 +10,12 @@
 Factory::Factory() {
 	tileMap = NULL;
 
-	mapStream.open(MAP_NAME, std::ios::binary); // GET MAP RESOLUTION BEFORE LOADING SDL
+	cFile = new Config();
+	mapName = cFile->getMapName();
+	tileSize = cFile->getTileSize();
+	lives = cFile->getLives();
+
+	mapStream.open(mapName, std::ios::binary); // GET MAP RESOLUTION BEFORE LOADING SDL
 	if( mapStream.fail() )
 	{
 		printf( "Unable to load map file!\n" );
@@ -24,8 +29,8 @@ Factory::Factory() {
 	numOftiles = mapStream.tellg()/2; //get the number of tiles
 	mapStream.close();
 
-	screenWidth = lineLength * TILE_SIZE;
-	screenHeight = (numOftiles/lineLength) * TILE_SIZE;
+	screenWidth = lineLength * tileSize;
+	screenHeight = (numOftiles/lineLength) * tileSize;
 }
 
 Factory::~Factory() {
@@ -86,7 +91,7 @@ int Factory::SubtractLives(int subtraction){
 }
 
 string Factory::GetMapName(){
-	return MAP_NAME;
+	return mapName;
 }
 
 int Factory::AddToScore(int addition){
@@ -95,7 +100,7 @@ int Factory::AddToScore(int addition){
 }
 
 int Factory::GetTileSize(){
-	return TILE_SIZE;
+	return tileSize;
 }
 
 void Factory::DestroyTile(int tile){
@@ -129,4 +134,8 @@ void Factory::ResetGame(){
 	lives = 3; //todo get this
 	startText = "Start again";
 	tileMap->Load();
+}
+
+Config* Factory::GetConfig() {
+	return cFile;
 }

@@ -12,6 +12,7 @@
 #include "Pacman.h"
 #include "Map.h"
 #include "Tile.h"
+#include "Config.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -41,6 +42,7 @@ public:
 	bool GetPlaying();
 	bool SetPlaying(bool play, string text);
 	void ResetGame();
+	Config* GetConfig();
 
 	virtual Ghost* CreateGhost(int type) = 0;
 	virtual Pacman* CreatePacman() = 0;
@@ -57,15 +59,16 @@ protected:
 	std::ifstream mapStream;
 	Map* tileMap;
 	std::vector<Ghost*> ghosts;
+	Config* cFile;
 
 	int highScore = 0;
 	int score = 0;
-	int lives = 3;
 	bool playing = false;
 	string startText = "Start";
 
-	const string MAP_NAME = "Assets/Map2.map";
-	const int TILE_SIZE = 20;
+	string mapName;
+	int tileSize;
+	int lives;
 };
 
 #endif /* FACTORY_H_ */

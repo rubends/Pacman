@@ -14,5 +14,6 @@ Programming pattern: Abstract Factory.
 
 ## PPT
 - Zelfgemaakt klassediagram laten zien
+- Zeker geen mem leaks meer
 
 Check evaluatie critera ppt BB
