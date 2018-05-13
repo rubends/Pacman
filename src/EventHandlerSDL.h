@@ -15,10 +15,10 @@ class EventHandlerSDL : public EventHandler{
 public:
 	EventHandlerSDL();
 	virtual ~EventHandlerSDL();
-	int pollEvent();
-	bool quitEvent();
-	bool keyDown();
-	int getKeyDown();
+	int PollEvent();
+	bool QuitEvent();
+	bool KeyDown();
+	int GetKeyDown();
 protected:
 	SDL_Event e;
 };

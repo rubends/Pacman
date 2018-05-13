@@ -16,11 +16,11 @@ EventHandlerSDL::~EventHandlerSDL() {
 	// TODO Auto-generated destructor stub
 }
 
-int EventHandlerSDL::pollEvent() {
+int EventHandlerSDL::PollEvent() {
 	return SDL_PollEvent( &e );
 }
 
-bool EventHandlerSDL::quitEvent() {
+bool EventHandlerSDL::QuitEvent() {
 	if( e.type == SDL_QUIT )
 	{
 		return true;
@@ -28,14 +28,14 @@ bool EventHandlerSDL::quitEvent() {
 	return false;
 }
 
-bool EventHandlerSDL::keyDown() {
+bool EventHandlerSDL::KeyDown() {
 	if (e.type == SDL_KEYDOWN){
 		return true;
 	}
 	return false;
 }
 
-int EventHandlerSDL::getKeyDown() {
+int EventHandlerSDL::GetKeyDown() {
 	int key;
 
 	enum KeyPressSurfaces

@@ -32,54 +32,6 @@ void PacmanSDL::Visualize(){
 	SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
 }
 
-void PacmanSDL::Animate(){
-	if(living){
-		if(collision){ //stuck
-			frame = 1;
-		}else {
-			frame++;
-			if(frame > 2){
-				frame = 0;
-			}
-		}
-	} else {
-		frame++;
-		if(frame > 14){
-			frame = 2;
-		}
-	}
-}
-
-void PacmanSDL::Move(){
-	int tempPosX = mPosX;
-	int tempPosY = mPosY;
-
-	this->MoveInDir(direction);
-	if(this->checkCollisions()){ //not possible to go to direction
-		mPosX = tempPosX;
-		mPosY = tempPosY;
-
-		this->MoveInDir(prevDirection); //keep going prev direction
-		if(this->checkCollisions()){
-			mPosX = tempPosX;
-			mPosY = tempPosY;
-		}
-	} else {
-		prevDirection = direction;
-	}
-
-	if(mPosX < -20) //pacman went to far
-	{
-		mPosX = aFactory->GetScreenWidth();
-	}
-	if(mPosX > aFactory->GetScreenWidth())
-	{
-		mPosX = -20;
-	}
-
-	this->Visualize();
-}
-
 void PacmanSDL::MoveInDir(int direction){
 	switch(direction)
 	{
@@ -114,22 +66,6 @@ void PacmanSDL::MoveInDir(int direction){
 			break;
 		default:
 			break;
-	}
-}
-
-void PacmanSDL::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
-	for(int i = 0; i<numOfGhosts; i++){
-		int* ghostBoxInt = ghosts[i]->GetCollisionBox();
-		bool captured = aFactory->checkCollision(this->GetCollisionBox(), ghostBoxInt);
-		if(captured){
-			if(ghosts[i]->GetAttackingState()){
-				aFactory->SubtractLives(1);
-				aFactory->SetPlaying(false, "Dead");
-				living = false;
-			} else {
-				ghosts[i]->SetLivingState(false);
-			}
-		}
 	}
 }
 

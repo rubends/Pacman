@@ -27,7 +27,7 @@ public:
 	void Animate();
 	void MoveInDir(int direction);
 	void SetDirection(int key);
-	void GotCaptured(Ghost* ghosts[], int numOfGhosts);
+	void GotCaptured(Ghost* ghosts[], int NUM_OF_GHOSTS);
 protected:
 	SDL_Renderer* sdlRenderer;
 	SDL_Surface* surface;
@@ -35,8 +35,6 @@ protected:
 	SDL_Rect pacmanSprite[15];
 	SDL_Texture* pacTexture = NULL;
 	SDL_Rect renderQuad;
-
-	int frame = 0;
 };
 
 #endif /* PACMANSDL_H_ */

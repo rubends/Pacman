@@ -7,12 +7,13 @@
 
 #ifndef GHOST_H_
 #define GHOST_H_
+
 #include <iostream>
+#include "Factory.h"
 #include "Entity.h"
 using namespace std;
 
-//class Entity;
-class Ghost : public Entity{
+class Ghost : public Entity {
 public:
 	Ghost();
 	virtual ~Ghost();
@@ -23,15 +24,22 @@ public:
 	void ResetGhost();
 	bool SetFlashingState(bool flash);
 	bool GetFlashingState();
+	void Move();
+	void ReturnToCenter();
+	void MoveTo(int x, int y);
+	void MoveToCoordinates(int x, int y);
+
 	virtual void Visualize() = 0;
-	virtual void Move() = 0;
-	virtual void MoveTo(int x, int y) = 0;
 protected:
 	int type;
-	int GHOST_VEL = 4;
 	bool attacking = true;
 	bool flashing = false;
 	bool living = true;
+	int prevDir[4] = { 1, 1, 1, 1 };
+	int dir[4] = { 1, 1, 1, 1 };
+	int changeDir = 0;
+
+	const int GHOST_VEL = 4;
 };
 
 #endif /* GHOST_H_ */

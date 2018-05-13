@@ -12,13 +12,13 @@
 #include "Tile.h"
 using namespace std;
 
-class Factory; //Forward declaration so the compiler knows what Factory is --> to use checkCollision
+class Factory; //Forward declaration so the compiler knows what Factory is --> to use CheckCollision
 class Entity {
 public:
 	Entity();
 	virtual ~Entity();
-	void setFactory(Factory* fac);
-	bool checkCollisions();
+	void SetFactory(Factory* fac);
+	bool CheckCollisions();
 	int* GetCollisionBox();
 protected:
 	Factory* aFactory;

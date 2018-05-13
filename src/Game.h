@@ -23,13 +23,13 @@ public:
 	Game(Factory*& abstractFactory);
 	virtual ~Game();
 	void GetSettings();
-	void start();
+	void Start();
 protected:
-	int numOfGhosts = 4;
-	int fps = 30; //best 30
-	int mspf = 1000/fps; //ms per f: 30fps --> every 33.3 ms a frame
-	int countToAttacking = 5000 / mspf; // 5 sec / ms per frame = # frames to go
-	int animationSpeed = 3; //every x frames sprite change
+	const int NUM_OF_GHOSTS = 4;
+	const int FPS = 30; //best 30
+	const int MSPF = 1000/FPS; //ms per f: 30FPS --> every 33.3 ms a frame
+	const int COUNT_TO_ATTACKING = 5000 / MSPF; // 5 sec / ms per frame = # frames to go
+	const int ANIMATION_SPEED = 3; //every x frames sprite change
 };
 
 #endif /* GAME_H_ */

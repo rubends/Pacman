@@ -23,16 +23,15 @@ class FactorySDL : public Factory{
 	public:
 		FactorySDL();
 		virtual ~FactorySDL();
-		Ghost* createGhost(int type);
-		Pacman* createPacman();
-		Tile* createTile(int x, int y, int type, int width, int height);
-		void DestroyTile(int tile);
-		Map* createMap();
+		Ghost* CreateGhost(int type);
+		Pacman* CreatePacman();
+		Tile* CreateTile(int x, int y, int type, int width, int height);
+		Map* CreateMap();
 		void UpdateText();
 		void ClearScreen();
 		void UpdateScreen();
-		SDL_Surface* getSurface();
-		void quitVis();
+		SDL_Surface* GetSurface();
+		void QuitVis();
 	protected:
 		SDL_Renderer* sdlRendererTEMP;
 		SDL_Renderer* sdlRenderer;

@@ -10,7 +10,7 @@
 Factory::Factory() {
 	tileMap = NULL;
 
-	mapStream.open(mapName, std::ios::binary); // GET MAP RESOLUTION BEFORE LOADING SDL
+	mapStream.open(MAP_NAME, std::ios::binary); // GET MAP RESOLUTION BEFORE LOADING SDL
 	if( mapStream.fail() )
 	{
 		printf( "Unable to load map file!\n" );
@@ -24,19 +24,19 @@ Factory::Factory() {
 	numOftiles = mapStream.tellg()/2; //get the number of tiles
 	mapStream.close();
 
-	screenWidth = lineLength * tileSize;
-	screenHeight = (numOftiles/lineLength) * tileSize;
+	screenWidth = lineLength * TILE_SIZE;
+	screenHeight = (numOftiles/lineLength) * TILE_SIZE;
 }
 
 Factory::~Factory() {
 	// TODO Auto-generated destructor stub
 }
 
-Tile** Factory::getMapTiles() {
+Tile** Factory::GetMapTiles() {
 	return tileMap->GetTiles();
 }
 
-bool Factory::checkCollision(int* entityBox, int* tileBox){
+bool Factory::CheckCollision(int* entityBox, int* tileBox){
 	int leftA, leftB;
 	int rightA, rightB;
 	int topA, topB;
@@ -86,7 +86,7 @@ int Factory::SubtractLives(int subtraction){
 }
 
 string Factory::GetMapName(){
-	return mapName;
+	return MAP_NAME;
 }
 
 int Factory::AddToScore(int addition){
@@ -95,7 +95,11 @@ int Factory::AddToScore(int addition){
 }
 
 int Factory::GetTileSize(){
-	return tileSize;
+	return TILE_SIZE;
+}
+
+void Factory::DestroyTile(int tile){
+	tileMap->DestroyTile(tile);
 }
 
 std::vector<Ghost*> Factory::GetGhosts(){

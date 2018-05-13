@@ -19,7 +19,7 @@ Map::Map(Factory* abstractFactory) {
 	for(int tile = 0; tile < totalTiles; tile++){
 		int tileType = 0;
 		map >> tileType;
-		tileSet[tile] = aFactory->createTile(x, y, tileType, tileWidth, tileHeight);
+		tileSet[tile] = aFactory->CreateTile(x, y, tileType, tileWidth, tileHeight);
 		x += tileWidth;
 		if(x >= screenWidth)
 		{
@@ -47,7 +47,7 @@ void Map::Load() {
 void Map::Draw() {
 	for(int tile = 0; tile < totalTiles; tile++){
 		if(destroyedTiles[tile] != 1){
-			tileSet[tile]->visualize();
+			tileSet[tile]->Visualize();
 		}
 	}
 }
@@ -58,7 +58,7 @@ Tile** Map::GetTiles(){
 
 void Map::DestroyTile(int tile){
 	if(destroyedTiles[tile] != 1){
-		int* tileBoxInt = tileSet[tile]->getBoxInt();
+		int* tileBoxInt = tileSet[tile]->GetBoxInt();
 		if(tileBoxInt[4] == 9){ // PELLET TODO get variable int of pellet
 			std::vector<Ghost*>ghosts = aFactory->GetGhosts();
 			for(size_t i = 0; i <= (ghosts.size()-1); i++){

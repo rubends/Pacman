@@ -5,12 +5,12 @@
  *      Author: ruben
  */
 
-#include "Entity.h"
 #include "Factory.h"
 
 Entity::Entity() {
 	collision = false;
 	aFactory = NULL;
+
 
 	mPosX = 0;
 	mPosY = 0;
@@ -22,7 +22,7 @@ Entity::~Entity() {
 	delete entityBox;
 }
 
-void Entity::setFactory(Factory* fac){
+void Entity::SetFactory(Factory* fac){
 	aFactory = fac;
 	totalTiles = aFactory->GetNumOfTiles();
 	screenWidth = aFactory->GetScreenWidth();
@@ -41,16 +41,16 @@ int* Entity::GetCollisionBox(){
 }
 
 
-bool Entity::checkCollisions(){
-	Tile** tileSet = aFactory->getMapTiles();
+bool Entity::CheckCollisions(){
+	Tile** tileSet = aFactory->GetMapTiles();
 
 	collision = false;
 	int* tileBoxInt = 0;
 
 	for(int j = 0; j < totalTiles; j++){ //CHECK TILES
-		tileBoxInt = tileSet[j]->getBoxInt();
+		tileBoxInt = tileSet[j]->GetBoxInt();
 
-		bool tempCollide = aFactory->checkCollision(this->GetCollisionBox(), tileBoxInt);
+		bool tempCollide = aFactory->CheckCollision(this->GetCollisionBox(), tileBoxInt);
 
 		if(!collision && tempCollide){
 			if(tileBoxInt[4] > 0 && tileBoxInt[4] <= 6){ //is wall

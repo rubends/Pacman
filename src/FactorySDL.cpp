@@ -57,31 +57,27 @@ FactorySDL::~FactorySDL(){
 
 }
 
-Ghost* FactorySDL::createGhost(int type){
+Ghost* FactorySDL::CreateGhost(int type){
 	Ghost* ghost = new GhostSDL(type, sdlRendererTEMP, loadedSurface);
-	ghost->setFactory(this);
+	ghost->SetFactory(this);
 	ghosts.push_back(ghost);
 	return ghost;
 }
 
-Pacman* FactorySDL::createPacman(){
+Pacman* FactorySDL::CreatePacman(){
 	Pacman* pacman = new PacmanSDL(sdlRendererTEMP, loadedSurface);
-	pacman->setFactory(this);
+	pacman->SetFactory(this);
 
 	return pacman;
 }
 
-Tile* FactorySDL::createTile(int x, int y, int type, int width, int height){
+Tile* FactorySDL::CreateTile(int x, int y, int type, int width, int height){
 	Tile* tile = new TileSDL(sdlRendererTEMP, tileTexture);
-	tile->renderTile(x, y, type, width, height);
+	tile->RenderTile(x, y, type, width, height);
 	return tile;
 }
 
-void FactorySDL::DestroyTile(int tile){
-	tileMap->DestroyTile(tile);
-}
-
-Map* FactorySDL::createMap() {
+Map* FactorySDL::CreateMap() {
 	tileMap = new Map(this);
 	return tileMap;
 }
@@ -132,11 +128,11 @@ void FactorySDL::UpdateScreen(){
 	SDL_RenderPresent( sdlRenderer );
 }
 
-SDL_Surface* FactorySDL::getSurface(){
+SDL_Surface* FactorySDL::GetSurface(){
 	return loadedSurface;
 }
 
-void FactorySDL::quitVis(){
+void FactorySDL::QuitVis(){
 	SDL_DestroyRenderer( sdlRendererTEMP );
 	SDL_DestroyRenderer( sdlRenderer );
 	SDL_DestroyWindow( sdlWindow );

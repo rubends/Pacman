@@ -9,11 +9,13 @@
 #define PACMAN_H_
 
 #include <iostream>
+#include "Factory.h"
 #include "Entity.h"
 #include "Ghost.h"
 using namespace std;
 
-class Pacman : public Entity{
+class Ghost;
+class Pacman : public Entity {
 public:
 	Pacman();
 	virtual ~Pacman();
@@ -22,17 +24,18 @@ public:
 	void SetDirection(int key);
 	bool GetLiving();
 	bool SetLiving(bool alive);
+	void Animate();
+	void Move();
+	void GotCaptured(Ghost* ghosts[], int numOfGhosts);
 
 	virtual void Visualize() = 0;
-	virtual void Animate() = 0;
 	virtual void MoveInDir(int direction) = 0;
-	virtual void Move() = 0;
-	virtual void GotCaptured(Ghost* ghosts[], int numOfGhosts) = 0;
 protected:
-	int PACMAN_VEL = 4; // = tilesize / 5
+	const int PACMAN_VEL = 4; // = tilesize / 5
 	bool living = true;
 	int direction = 4;
 	int prevDirection = 4;
+	int frame = 0;
 };
 
 #endif /* PACMAN_H_ */

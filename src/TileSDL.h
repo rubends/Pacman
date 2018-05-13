@@ -18,26 +18,13 @@ class TileSDL : public Tile{
 public:
 	TileSDL(SDL_Renderer* sdlRendererTEMP, SDL_Texture* tileTexture);
 	virtual ~TileSDL();
-	void visualize();
-	void renderTile(int x, int y, int tileType, int width, int height);
-	int* getBoxInt();
+	void Visualize();
 protected:
 	SDL_Renderer* sdlRenderer;
 	SDL_Texture* texture;
 
 	SDL_Rect tileSprite;
 	SDL_Rect tileRect;
-
-	const int PATH = 0;
-	const int WALL_VERT = 1;
-	const int WALL_HORI = 2;
-	const int WALL_COR_UP_LR = 3;
-	const int WALL_COR_UP_RL = 4;
-	const int WALL_COR_DOWN_RL = 5;
-	const int WALL_COR_DOWN_LR = 6;
-
-	const int CHERRY = 8;
-	const int PELLET = 9;
 };
 
 #endif /* TILESDL_H_ */
