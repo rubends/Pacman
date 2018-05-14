@@ -31,7 +31,7 @@ public:
 	virtual void Visualize() = 0;
 	virtual void MoveInDir(int direction) = 0;
 protected:
-	const int PACMAN_VEL = 4; // = tilesize / 5
+	int pacmanVel = 5; // velocity = tilesize / pacmanVel
 	bool living = true;
 	int direction = 4;
 	int prevDirection = 4;

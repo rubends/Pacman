@@ -8,9 +8,6 @@
 #include "Pacman.h"
 
 Pacman::Pacman() {
-	mPosX = 20*13; // todo get variable
-	mPosY = 20*24;
-
 	isPac = true;
 }
 
@@ -39,8 +36,8 @@ bool Pacman::GetLiving(){
 bool Pacman::SetLiving(bool alive){
 	living = alive;
 	if(alive){
-		mPosX = 20*13; //todo get variable
-		mPosY = 20*24;
+		mPosX = 13*mWidth;
+		mPosY = 24*mHeight;
 	}
 	return living;
 }
@@ -101,9 +98,11 @@ void Pacman::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
 			if(ghosts[i]->GetAttackingState()){
 				aFactory->SubtractLives(1);
 				aFactory->SetPlaying(false, "Dead");
+				aFactory->PlaySound("dead");
 				living = false;
 			} else {
 				ghosts[i]->SetLivingState(false);
+				aFactory->PlaySound("kill");
 			}
 		}
 	}

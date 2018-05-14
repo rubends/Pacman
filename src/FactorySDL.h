@@ -16,6 +16,7 @@
 #include <sdl2/SDL.h>
 #include <sdl2/SDL_image.h>
 #include <sdl2/SDL_ttf.h>
+#include <sdl2/SDL_mixer.h>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class FactorySDL : public Factory{
 		void UpdateScreen();
 		SDL_Surface* GetSurface();
 		void QuitVis();
+		void PlaySound(string sound);
 	protected:
 		SDL_Renderer* sdlRendererTEMP;
 		SDL_Renderer* sdlRenderer;
@@ -47,6 +49,8 @@ class FactorySDL : public Factory{
 		SDL_Rect messageRect;
 
 		SDL_Texture* tileTexture;
+
+		Mix_Chunk *pacSound;
 
 		std::string printTxt = "";
 

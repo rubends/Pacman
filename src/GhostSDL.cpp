@@ -39,16 +39,17 @@ void GhostSDL::Visualize(){
 			ghostSprite[0].y = 112;
 		}
 	} else {
-		if(!flashing){
-			ghostSprite[0].x = 584;
-			if(living){
+		if(living){
+			if(!flashing){
+				ghostSprite[0].x = 584;
 				ghostSprite[0].y = 64;
 			} else {
-				ghostSprite[0].y = 80;
+				ghostSprite[0].x = 616;
+				ghostSprite[0].y = 64;
 			}
 		} else {
-			ghostSprite[0].x = 616;
-			ghostSprite[0].y = 64;
+			ghostSprite[0].x = 584;
+			ghostSprite[0].y = 80;
 		}
 	}
 

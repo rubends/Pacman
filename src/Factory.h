@@ -52,6 +52,7 @@ public:
 	virtual void ClearScreen() = 0;
 	virtual void UpdateScreen() = 0;
 	virtual void QuitVis() = 0;
+	virtual void PlaySound(string sound) = 0;
 protected:
 	int screenWidth;
 	int screenHeight;

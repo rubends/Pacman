@@ -9,7 +9,7 @@
 
 FactorySDL::FactorySDL(){
 
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
+	if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
 		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
 	} else {
 		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
@@ -26,6 +26,7 @@ FactorySDL::FactorySDL(){
 			sdlRendererTEMP = SDL_CreateRenderer( sdlWindow, -1, SDL_RENDERER_ACCELERATED );
 			sdlRenderer = sdlRendererTEMP;
 			int imgFlags = IMG_INIT_PNG;
+			//Initialize SDL_image
 			if( !( IMG_Init( imgFlags ) & imgFlags ) )
 			{
 				printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
@@ -33,6 +34,7 @@ FactorySDL::FactorySDL(){
 				sdlScreenSurface = SDL_GetWindowSurface( sdlWindow );
 			}
 
+			//Initialize SDL_ttf
 			if(TTF_Init() < 0){
 				printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", IMG_GetError() );
 			} else {
@@ -42,6 +44,13 @@ FactorySDL::FactorySDL(){
 				messageTexture = NULL;
 				textSurface = NULL;
 			}
+
+			//Initialize SDL_mixer
+			if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) // standard frq = 44100, hardware channels = 2 (stereo), sample size = audio chunks
+			{
+				printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+			}
+			pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_beginning.wav" );
 
 			this->ClearScreen();
 
@@ -151,7 +160,39 @@ void FactorySDL::QuitVis(){
 	sdlWindow = NULL;
 
 	//Quit SDL subsystems
+	TTF_Quit();
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
-	TTF_Quit();
+}
+
+void FactorySDL::PlaySound(string sound){
+	if(sound == "pacman"){
+		if(Mix_Playing(2) != 0){
+			Mix_HaltChannel(2);
+			Mix_FreeChunk( pacSound );
+			pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_chomp.wav" );
+		}
+		if( Mix_Playing(1) == 0 )
+		{
+			Mix_PlayChannel( 1, pacSound, 0 );
+		}
+	} else if(sound == "beginning"){
+		if(Mix_Playing(1) != 0){
+			Mix_HaltChannel(1);
+			Mix_FreeChunk( pacSound );
+			pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_beginning.wav" );
+		}
+		if( Mix_Playing(2) == 0 )
+		{
+			Mix_PlayChannel( 2, pacSound, 0 );
+		}
+	} else if(sound == "dead"){
+		pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_death.wav" );
+		Mix_PlayChannel( -1, pacSound, 0 );
+	} else if(sound == "kill"){
+		pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_eatghost.wav" );
+		Mix_PlayChannel( -1, pacSound, 0 );
+	}
+
 }

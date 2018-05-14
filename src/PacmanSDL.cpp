@@ -28,22 +28,27 @@ PacmanSDL::~PacmanSDL() {
 }
 
 void PacmanSDL::Visualize(){
+	if(mPosX == 0 && mPosY == 0){
+		mPosX = 13*mWidth;
+		mPosY = 24*mHeight;
+	}
 	renderQuad = { mPosX, mPosY, mWidth, mHeight };
 	SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );
 }
 
 void PacmanSDL::MoveInDir(int direction){
+	int velocity = mWidth / pacmanVel;
 	switch(direction)
 	{
 		case 1: //UP
-			mPosY -= PACMAN_VEL;
+			mPosY -= velocity;
 			pacmanSprite[0].x = 455;
 			pacmanSprite[1].x = 471;
 			pacmanSprite[0].y = 32;
 			pacmanSprite[1].y = 32;
 			break;
 		case 2: //DOWN
-			mPosY += PACMAN_VEL;
+			mPosY += velocity;
 
 			pacmanSprite[0].x = 455;
 			pacmanSprite[1].x = 471;
@@ -51,14 +56,14 @@ void PacmanSDL::MoveInDir(int direction){
 			pacmanSprite[1].y = 48;
 			break;
 		case 3: //LEFT
-			mPosX -= PACMAN_VEL;
+			mPosX -= velocity;
 			pacmanSprite[0].x = 455;
 			pacmanSprite[1].x = 471;
 			pacmanSprite[0].y = 16;
 			pacmanSprite[1].y = 16;
 			break;
 		case 4: //RIGHT
-			mPosX += PACMAN_VEL;
+			mPosX += velocity;
 			pacmanSprite[0].x = 455;
 			pacmanSprite[1].x = 471;
 			pacmanSprite[0].y = 0;

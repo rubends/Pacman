@@ -101,11 +101,13 @@ void Game::Start(){
 				for(int j=2; j < numOfGhosts;j++){
 					ghosts[j]->Move();
 				}
+				aFactory->PlaySound("pacman");
 			} else {
 				pacman->Visualize();
 				for(int j=0; j < numOfGhosts;j++){
 					ghosts[j]->Visualize();
 				}
+				aFactory->PlaySound("beginning");
 			}
 			if(clock_ms % (animationSpeed*mspf) == 0){ //every x frames animation
 				pacman->Animate();

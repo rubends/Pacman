@@ -3,13 +3,13 @@ A classic Pacman game made with C++ and the SDL library.
 Programming pattern: Abstract Factory.
 
 ## Todo:
-- Make variable/config file: WALL, PELLET, ... & highscore
+- save highscore (in config file)
 - Namespaces
 - Sound effects
 - ghost movement improvement
-- ghost dead
 - alle todos
 - einde van spel when alle pellets op
+- abstract factory = enkel dingen createn?
 
 
 ## PPT

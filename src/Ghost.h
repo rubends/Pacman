@@ -39,7 +39,7 @@ protected:
 	int dir[4] = { 1, 1, 1, 1 };
 	int changeDir = 0;
 
-	const int GHOST_VEL = 4;
+	int ghostVel = 5; // velocity = tilesize / ghostVel
 };
 
 #endif /* GHOST_H_ */

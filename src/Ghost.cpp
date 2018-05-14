@@ -19,8 +19,10 @@ bool Ghost::GetAttackingState() {
 }
 
 void Ghost::SetAttackingState(bool attack) {
-	attacking = attack;
-	flashing = false;
+	if(living){
+		attacking = attack;
+		flashing = false;
+	}
 }
 
 bool Ghost::GetLivingState() {
@@ -48,6 +50,8 @@ bool Ghost::SetFlashingState(bool flash) {
 }
 
 void Ghost::Move(){ //RANDOM MOVEMENT
+	int velocity = mWidth / ghostVel;
+
 	if(living)
 	{
 		int tempPosX = mPosX;
@@ -61,16 +65,16 @@ void Ghost::Move(){ //RANDOM MOVEMENT
 		switch(dir[type])
 		{
 			case 1:
-				mPosY -= GHOST_VEL;
+				mPosY -= velocity;
 				break;
 			case 2:
-				mPosY += GHOST_VEL;
+				mPosY += velocity;
 				break;
 			case 3:
-				mPosX -= GHOST_VEL;
+				mPosX -= velocity;
 				break;
 			case 4:
-				mPosX += GHOST_VEL;
+				mPosX += velocity;
 				break;
 			default:
 				break;
@@ -83,16 +87,16 @@ void Ghost::Move(){ //RANDOM MOVEMENT
 				switch(prevDir[type])
 				{
 					case 1:
-						mPosY -= GHOST_VEL;
+						mPosY -= velocity;
 						break;
 					case 2:
-						mPosY += GHOST_VEL;
+						mPosY += velocity;
 						break;
 					case 3:
-						mPosX -= GHOST_VEL;
+						mPosX -= velocity;
 						break;
 					case 4:
-						mPosX += GHOST_VEL;
+						mPosX += velocity;
 						break;
 					default:
 						break;
@@ -130,17 +134,19 @@ void Ghost::ReturnToCenter(){
 	if(mPosX == x && mPosY == y){
 		living = true;
 		attacking = true;
+		flashing = false;
 	}
 }
 
 void Ghost::MoveToCoordinates(int x, int y){
 	int tempPosX = mPosX;
 	int tempPosY = mPosY;
+	int velocity = mWidth / ghostVel;
 
 	if(mPosX - x > 0){ //TRY HORIZONTALLY;
-		mPosX -= GHOST_VEL;
+		mPosX -= velocity;
 	} else if (mPosX - x < 0) {
-		mPosX += GHOST_VEL;
+		mPosX += velocity;
 	}
 
 	if(this->CheckCollisions()){
@@ -149,9 +155,9 @@ void Ghost::MoveToCoordinates(int x, int y){
 
 
 	if(mPosY - y > 0){ //TRY VERTICALLY
-		mPosY -= GHOST_VEL;
+		mPosY -= velocity;
 	} else if (mPosY - y < 0){
-		mPosY += GHOST_VEL;
+		mPosY += velocity;
 	}
 
 	if(this->CheckCollisions()){
