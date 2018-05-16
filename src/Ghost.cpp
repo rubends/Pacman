@@ -115,9 +115,9 @@ void Ghost::Move(){ //RANDOM MOVEMENT
 
 	if(mPosX < -30) //ghost went to far
 	{
-		mPosX = aFactory->GetScreenWidth();
+		mPosX = gContext->GetScreenWidth();
 	}
-	if(mPosX > aFactory->GetScreenWidth())
+	if(mPosX > gContext->GetScreenWidth())
 	{
 		mPosX = -30;
 	}

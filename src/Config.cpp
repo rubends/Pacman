@@ -45,27 +45,27 @@ void Config::GetConfig() {
 	configFile.close();
 }
 
-int Config::getNumOfGhost(){
+int Config::GetNumOfGhost(){
 	return numOfGhosts;
 }
 
-int Config::getFps(){
+int Config::GetFps(){
 	return fps;
 }
 
-int Config::getAnimationSpeed(){
+int Config::GetAnimationSpeed(){
 	return animationSpeed;
 }
 
-string Config::getMapName(){
+string Config::GetMapName(){
 	return mapName;
 }
 
-int Config::getTileSize(){
+int Config::GetTileSize(){
 	return tileSize;
 }
 
-int Config::getLives(){
+int Config::GetLives(){
 	return lives;
 }
 

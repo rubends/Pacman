@@ -17,12 +17,12 @@ public:
 	virtual ~Config();
 
 	void GetConfig();
-	int getNumOfGhost();
-	int getFps();
-	int getAnimationSpeed();
-	string getMapName();
-	int getTileSize();
-	int getLives();
+	int GetNumOfGhost();
+	int GetFps();
+	int GetAnimationSpeed();
+	string GetMapName();
+	int GetTileSize();
+	int GetLives();
 protected:
 	// DEFAULT VALUES
 	int numOfGhosts = 4;

@@ -11,10 +11,10 @@
 Game::Game(Factory*& abstractFactory) {
 	aFactory = abstractFactory;
 
-	Config* cFile = aFactory->GetConfig();
-	numOfGhosts = cFile->getNumOfGhost();
-	animationSpeed = cFile->getAnimationSpeed(); //every x frames sprite change
-	fps = cFile->getFps();
+	cFile = aFactory->CreateConfig();
+	numOfGhosts = cFile->GetNumOfGhost();
+	animationSpeed = cFile->GetAnimationSpeed(); //every x frames sprite change
+	fps = cFile->GetFps();
 	mspf = 1000/fps; //ms per f: 30FPS --> every 33.3 ms a frame
 	countToAttacking = 5000 / mspf; // 5 sec / ms per frame = # frames to go
 	delete cFile;
@@ -26,6 +26,7 @@ Game::~Game(){
 
 void Game::Start(){
 	Map* map = aFactory->CreateMap();
+	GameContext* gContext = aFactory->CreateGameContext();
 	Pacman* pacman = aFactory->CreatePacman();
 	Ghost* ghosts[numOfGhosts];
 	for(int i = 0; i < numOfGhosts; i++){
@@ -53,22 +54,22 @@ void Game::Start(){
 				//delete [] ghosts;
 				//delete pacman;
 				//delete ev;
-				aFactory->QuitVis();
+				gContext->QuitVis();
 			} else if(ev->KeyDown()){
 				if(ev->GetKeyDown() == 6){ //pressed enter
-					aFactory->SetPlaying(!aFactory->GetPlaying(), "Paused");
-
+					gContext->SetPlaying(!gContext->GetPlaying(), "Paused");
 					if(!pacman->GetLiving()){
 						pacman->SetLiving(true);
 						for(int j=0; j < numOfGhosts;j++){
 							ghosts[j]->ResetGhost();
 						}
-						if(aFactory->GetLives() <= 0){
-							aFactory->ResetGame();
+						if(gContext->GetLives() <= 0){
+							gContext->ResetGame();
+							map->Load();
 							pacman->SetDirection(4);
 						}
 					}
-				} else if (aFactory->GetPlaying()) { //not changing direction while paused
+				} else if (gContext->GetPlaying()) { //not changing direction while paused
 					pacman->SetDirection(ev->GetKeyDown());
 				}
 			}
@@ -90,9 +91,9 @@ void Game::Start(){
 		if(last_frame != clock_ms && clock_ms % mspf == 0){
 			last_frame = clock_ms; //make sure not multiple frames in same ms
 
-			aFactory->ClearScreen();
+			gContext->ClearScreen();
 			map->Draw();
-			if(aFactory->GetPlaying())
+			if(gContext->GetPlaying())
 			{
 				pacman->Move();
 				ghosts[0]->MoveTo(pacman->GetX(), pacman->GetY());
@@ -101,13 +102,13 @@ void Game::Start(){
 				for(int j=2; j < numOfGhosts;j++){
 					ghosts[j]->Move();
 				}
-				aFactory->PlaySound("pacman");
+				gContext->PlaySound("pacman");
 			} else {
 				pacman->Visualize();
 				for(int j=0; j < numOfGhosts;j++){
 					ghosts[j]->Visualize();
 				}
-				aFactory->PlaySound("beginning");
+				gContext->PlaySound("beginning");
 			}
 			if(clock_ms % (animationSpeed*mspf) == 0){ //every x frames animation
 				pacman->Animate();
@@ -122,8 +123,8 @@ void Game::Start(){
 				}
 			}
 
-			aFactory->UpdateText();
-			aFactory->UpdateScreen();
+			gContext->UpdateText();
+			gContext->UpdateScreen();
 		}
 	}
 }

@@ -80,9 +80,9 @@ void Pacman::Move(){
 
 	if(mPosX < -20) //pacman went to far
 	{
-		mPosX = aFactory->GetScreenWidth();
+		mPosX = gContext->GetScreenWidth();
 	}
-	if(mPosX > aFactory->GetScreenWidth())
+	if(mPosX > gContext->GetScreenWidth())
 	{
 		mPosX = -20;
 	}
@@ -96,13 +96,13 @@ void Pacman::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
 		bool captured = aFactory->CheckCollision(this->GetCollisionBox(), ghostBoxInt);
 		if(captured){
 			if(ghosts[i]->GetAttackingState()){
-				aFactory->SubtractLives(1);
-				aFactory->SetPlaying(false, "Dead");
-				aFactory->PlaySound("dead");
+				gContext->SubtractLives(1);
+				gContext->SetPlaying(false, "Dead");
+				gContext->PlaySound("dead");
 				living = false;
 			} else {
 				ghosts[i]->SetLivingState(false);
-				aFactory->PlaySound("kill");
+				gContext->PlaySound("kill");
 			}
 		}
 	}

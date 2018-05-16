@@ -11,25 +11,36 @@
 #include "Factory.h"
 #include <fstream>
 #include "Tile.h"
+#include "GameContext.h"
 
 using namespace std;
 
 class Factory; //TO USE
 class Map {
 public:
-	Map(Factory* aFactory);
+	Map(Factory* abstractFactory, string mapName, int tileSize);
+	void SetContext(GameContext* GameContext);
 	void Draw();
 	Tile** GetTiles();
 	void DestroyTile(int tile);
 	void Load();
+	void CreateMap();
+	int GetScreenWidth();
+	int GetScreenHeight();
 	virtual ~Map();
 protected:
+	GameContext* gContext;
+
 	int totalTiles;
 	//TODO tile array variable size
 	Tile** tileSet = new Tile*[911]; //** --> Cannot instantiate abstract object
 	int* destroyedTiles = new int [911];
-	Factory* aFactory;
+	Factory* aFactory = NULL;
 	std::ifstream map;
+
+	int screenWidth;
+	int screenHeight;
+	int tileSize;
 };
 
 #endif /* MAP_H_ */

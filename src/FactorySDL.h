@@ -12,11 +12,8 @@
 #include "PacmanSDL.h"
 #include "GhostSDL.h"
 #include "TileSDL.h"
-
-#include <sdl2/SDL.h>
-#include <sdl2/SDL_image.h>
-#include <sdl2/SDL_ttf.h>
-#include <sdl2/SDL_mixer.h>
+#include "GameContextSDL.h"
+#include "initSDL.h"
 
 using namespace std;
 
@@ -27,33 +24,11 @@ class FactorySDL : public Factory{
 		Ghost* CreateGhost(int type);
 		Pacman* CreatePacman();
 		Tile* CreateTile(int x, int y, int type, int width, int height);
-		Map* CreateMap();
-		void UpdateText();
-		void ClearScreen();
-		void UpdateScreen();
-		SDL_Surface* GetSurface();
-		void QuitVis();
-		void PlaySound(string sound);
+		GameContext* CreateGameContext();
+		void CreateVis();
 	protected:
-		SDL_Renderer* sdlRendererTEMP;
-		SDL_Renderer* sdlRenderer;
-		SDL_Surface* loadedSurface;
-		SDL_Window* sdlWindow;
-		SDL_Surface* sdlScreenSurface;
-
-		TTF_Font* font;
-		TTF_Font* fontBig;
-		SDL_Color white;
-		SDL_Surface* textSurface;
-		SDL_Texture* messageTexture;
-		SDL_Rect messageRect;
-
-		SDL_Texture* tileTexture;
-
-		Mix_Chunk *pacSound;
-
-		std::string printTxt = "";
-
+		InitSDL* sdlInit;
+		GameContext* gContext;
 	};
 
 #endif /* FACTORYSDL_H_ */

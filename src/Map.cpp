@@ -7,26 +7,25 @@
 
 #include "Map.h"
 
-Map::Map(Factory* abstractFactory) {
+Map::Map(Factory* abstractFactory, string mapName, int size) {
 	aFactory = abstractFactory;
-	map.open(aFactory->GetMapName(), std::ios::binary);
-	totalTiles = aFactory->GetNumOfTiles();
-	int screenWidth = aFactory->GetScreenWidth();
-	int tileWidth = aFactory->GetTileSize();
-	int tileHeight = aFactory->GetTileSize();
-	int x = 0, y = 0;
-
-	for(int tile = 0; tile < totalTiles; tile++){
-		int tileType = 0;
-		map >> tileType;
-		tileSet[tile] = aFactory->CreateTile(x, y, tileType, tileWidth, tileHeight);
-		x += tileWidth;
-		if(x >= screenWidth)
-		{
-			x = 0;
-			y += tileHeight;
-		}
+	gContext = NULL;
+	tileSize = size;
+	map.open(mapName, std::ios::binary);
+	if( map.fail() )
+	{
+		printf( "Unable to load map file!\n" );
 	}
+
+	char line[256];
+	map.getline(line, 256); //get position at first line
+	int lineLength = map.tellg()/2;
+
+	map.seekg(0, ios::end); //to the end of the file
+	totalTiles = map.tellg()/2; //get the number of tiles
+
+	screenWidth = lineLength * tileSize;
+	screenHeight = (totalTiles/lineLength) * tileSize;
 }
 
 Map::~Map() {
@@ -35,6 +34,31 @@ Map::~Map() {
 		delete tileSet[tile];
 	}
 	delete [] tileSet;
+}
+
+void Map::SetContext(GameContext* GameContext){
+	gContext = GameContext;
+	gContext->SetScreenWidth(screenWidth);
+	gContext->SetScreenHeight(screenHeight);
+	gContext->SetTotalTiles(totalTiles);
+}
+
+void Map::CreateMap() {
+	map.seekg(0, ios::beg);
+	int x = 0, y = 0;
+
+	for(int tile = 0; tile < totalTiles; tile++){
+		int tileType = 0;
+		map >> tileType;
+		tileSet[tile] = aFactory->CreateTile(x, y, tileType, tileSize, tileSize);
+		x += tileSize;
+		if(x >= screenWidth)
+		{
+			x = 0;
+			y += tileSize;
+		}
+	}
+	map.close();
 }
 
 void Map::Load() {
@@ -66,12 +90,20 @@ void Map::DestroyTile(int tile){
 			}
 			destroyedTiles[tile] = 1;
 		} else if(tileBoxInt[4] == 8){ // CHERRY
-			aFactory->AddToScore(10);
+			gContext->AddToScore(10);
 			destroyedTiles[tile] = 1;
 		} else if(tileBoxInt[4] == 0){ //PAC-DOT
-			aFactory->AddToScore(1);
+			gContext->AddToScore(1);
 			destroyedTiles[tile] = 1;
 		}
 		delete tileBoxInt;
 	}
+}
+
+int Map::GetScreenWidth(){
+	return screenWidth;
+}
+
+int Map::GetScreenHeight(){
+	return screenHeight;
 }

@@ -10,6 +10,7 @@
 Entity::Entity() {
 	collision = false;
 	aFactory = NULL;
+	gContext = NULL;
 
 
 	mPosX = 0;
@@ -22,13 +23,17 @@ Entity::~Entity() {
 	delete entityBox;
 }
 
+void Entity::SetGameContext(GameContext* gameContext){
+	gContext = gameContext;
+	totalTiles = gContext->GetTotalTiles();
+	screenWidth = gContext->GetScreenWidth();
+	screenHeight = gContext->GetScreenHeight();
+	mWidth = gContext->GetTileSize();
+	mHeight = gContext->GetTileSize();
+}
+
 void Entity::SetFactory(Factory* fac){
 	aFactory = fac;
-	totalTiles = aFactory->GetNumOfTiles();
-	screenWidth = aFactory->GetScreenWidth();
-	screenHeight = aFactory->GetScreenHeight();
-	mWidth = aFactory->GetTileSize();
-	mHeight = aFactory->GetTileSize();
 }
 
 int* Entity::GetCollisionBox(){

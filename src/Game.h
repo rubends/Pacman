@@ -25,6 +25,7 @@ public:
 	virtual ~Game();
 	void Start();
 protected:
+	Config* cFile;
 	int fps;
 	int mspf;
 	int countToAttacking;

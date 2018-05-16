@@ -13,6 +13,7 @@
 #include "Map.h"
 #include "Tile.h"
 #include "Config.h"
+#include "GameContext.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -21,6 +22,7 @@ using namespace std;
 class Map;
 class Pacman;
 class Ghost;
+class GameContext;
 class Factory {
 public:
 	Factory();
@@ -28,48 +30,22 @@ public:
 
 	bool CheckCollision(int* a, int* b);
 	Tile** GetMapTiles();
-	int GetScreenWidth();
-	int GetScreenHeight();
-	int GetNumOfTiles();
 	string GetMapName();
-	int GetScore();
-	int AddToScore(int addition);
-	int GetLives();
-	int SubtractLives(int subtraction);
-	int GetTileSize();
 	void DestroyTile(int tile);
 	std::vector<Ghost*> GetGhosts();
-	bool GetPlaying();
-	bool SetPlaying(bool play, string text);
 	void ResetGame();
-	Config* GetConfig();
+	Config* CreateConfig();
+	Map* CreateMap();
 
 	virtual Ghost* CreateGhost(int type) = 0;
 	virtual Pacman* CreatePacman() = 0;
 	virtual Tile* CreateTile(int x, int y, int type, int width, int height) = 0;
-	virtual Map* CreateMap() = 0;
-	virtual void UpdateText() = 0;
-	virtual void ClearScreen() = 0;
-	virtual void UpdateScreen() = 0;
-	virtual void QuitVis() = 0;
-	virtual void PlaySound(string sound) = 0;
+	virtual void CreateVis() = 0;
+	virtual GameContext* CreateGameContext() = 0;
 protected:
-	int screenWidth;
-	int screenHeight;
-	int numOftiles;
-	std::ifstream mapStream;
 	Map* tileMap;
 	std::vector<Ghost*> ghosts;
 	Config* cFile;
-
-	int highScore = 0;
-	int score = 0;
-	bool playing = false;
-	string startText = "Start";
-
-	string mapName;
-	int tileSize;
-	int lives;
 };
 
 #endif /* FACTORY_H_ */
