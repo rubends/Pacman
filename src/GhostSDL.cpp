@@ -24,7 +24,7 @@ GhostSDL::~GhostSDL(){
 
 void GhostSDL::Visualize(){
 	if(mPosX == 0 && mPosY == 0){ //default setting when factory was unknown
-		mPosX = 15*mWidth;
+		mPosX = (12+type)*mWidth;
 		mPosY = 15*mHeight;
 	}
 	if(attacking){

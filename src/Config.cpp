@@ -10,7 +10,6 @@
 
 Config::Config() {
 	this->GetConfig();
-
 }
 
 Config::~Config() {
@@ -36,9 +35,9 @@ void Config::GetConfig() {
 			} else if (param == "mapName") {
 				mapName = value;
 			} else if (param == "tileSize") {
-				tileSize = atoi(value.c_str());;
+				tileSize = atoi(value.c_str());
 			} else if (param == "lives") {
-				lives = atoi(value.c_str());;
+				lives = atoi(value.c_str());
 			}
 		}
 	}

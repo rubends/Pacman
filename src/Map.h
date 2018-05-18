@@ -16,6 +16,7 @@
 using namespace std;
 
 class Factory; //TO USE
+class GameContext;
 class Map {
 public:
 	Map(Factory* abstractFactory, string mapName, int tileSize);

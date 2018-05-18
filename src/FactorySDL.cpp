@@ -9,7 +9,6 @@
 
 FactorySDL::FactorySDL(){
 	sdlInit = NULL;
-	gContext = NULL;
 }
 
 FactorySDL::~FactorySDL(){
@@ -19,7 +18,8 @@ FactorySDL::~FactorySDL(){
 Ghost* FactorySDL::CreateGhost(int type){
 	Ghost* ghost = new GhostSDL(type, sdlInit->GetRenderer(), sdlInit->GetSurface());
 	ghost->SetFactory(this);
-	ghosts.push_back(ghost);
+	ghost->SetGameContext(gContext);
+	gContext->AddGhost(ghost);
 	return ghost;
 }
 
@@ -43,6 +43,7 @@ void FactorySDL::CreateVis() {
 
 GameContext* FactorySDL::CreateGameContext(){
 	gContext = new GameContextSDL(sdlInit);
+	gContext->SetMap(tileMap);
 	tileMap->SetContext(gContext);
 	return gContext;
 }

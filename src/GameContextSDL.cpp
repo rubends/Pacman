@@ -93,9 +93,11 @@ void GameContextSDL::PlaySound(string sound){
 			Mix_PlayChannel( 2, pacSound, 0 );
 		}
 	} else if(sound == "dead"){
+		Mix_FreeChunk( pacSound );
 		pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_death.wav" );
 		Mix_PlayChannel( -1, pacSound, 0 );
 	} else if(sound == "kill"){
+		Mix_FreeChunk( pacSound );
 		pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_eatghost.wav" );
 		Mix_PlayChannel( -1, pacSound, 0 );
 	}
@@ -114,6 +116,8 @@ void GameContextSDL::UpdateScreen(){
 }
 
 void GameContextSDL::QuitVis(){
+	Mix_FreeChunk( pacSound );
+	pacSound = NULL;
 	sdlInit->QuitVis();
 }
 

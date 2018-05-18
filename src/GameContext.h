@@ -12,10 +12,12 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "Map.h"
 
 using namespace std;
 
 class Ghost;
+class Map;
 class GameContext {
 public:
 	GameContext();
@@ -23,6 +25,7 @@ public:
 
 	int GetLives();
 	int SubtractLives(int subtraction);
+	int SetLives(int numOfLives);
 	bool GetPlaying();
 	bool SetPlaying(bool play, string text);
 	int GetScore();
@@ -36,6 +39,12 @@ public:
 	int SetTileSize(int size);
 	int GetTileSize();
 	void ResetGame();
+	bool CheckCollision(int* a, int* b);
+	void AddGhost(Ghost* ghost);
+	std::vector<Ghost*> GetGhosts();
+	void SetMap(Map* map);
+	Tile** GetMapTiles();
+	void DestroyTile(int tile);
 
 	virtual void UpdateText() = 0;
 	virtual void PlaySound(string sound) = 0;
@@ -46,15 +55,14 @@ protected:
 	int screenWidth = 0;
 	int screenHeight = 0;
 	int numOfTiles = 0;
-	std::ifstream mapStream;
 	std::vector<Ghost*> ghosts;
+	Map* tileMap = NULL;
 
 	int highScore = 0;
 	int score = 0;
 	bool playing = false;
 	string startText = "Start";
 
-	string mapName = "test";
 	int tileSize = 20;
 	int lives = 3;
 

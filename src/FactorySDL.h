@@ -21,6 +21,7 @@ class FactorySDL : public Factory{
 	public:
 		FactorySDL();
 		virtual ~FactorySDL();
+
 		Ghost* CreateGhost(int type);
 		Pacman* CreatePacman();
 		Tile* CreateTile(int x, int y, int type, int width, int height);
@@ -28,7 +29,6 @@ class FactorySDL : public Factory{
 		void CreateVis();
 	protected:
 		InitSDL* sdlInit;
-		GameContext* gContext;
 	};
 
 #endif /* FACTORYSDL_H_ */

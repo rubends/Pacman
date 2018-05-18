@@ -93,7 +93,7 @@ void Pacman::Move(){
 void Pacman::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
 	for(int i = 0; i<numOfGhosts; i++){
 		int* ghostBoxInt = ghosts[i]->GetCollisionBox();
-		bool captured = aFactory->CheckCollision(this->GetCollisionBox(), ghostBoxInt);
+		bool captured = gContext->CheckCollision(this->GetCollisionBox(), ghostBoxInt);
 		if(captured){
 			if(ghosts[i]->GetAttackingState()){
 				gContext->SubtractLives(1);
@@ -102,8 +102,9 @@ void Pacman::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
 				living = false;
 			} else {
 				ghosts[i]->SetLivingState(false);
-				gContext->PlaySound("kill");
+				//gContext->PlaySound("kill");
 			}
 		}
+		delete ghostBoxInt;
 	}
 }

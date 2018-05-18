@@ -10,7 +10,6 @@
 
 #include "Ghost.h"
 #include "Pacman.h"
-#include "Map.h"
 #include "Tile.h"
 #include "Config.h"
 #include "GameContext.h"
@@ -28,12 +27,6 @@ public:
 	Factory();
 	virtual ~Factory();
 
-	bool CheckCollision(int* a, int* b);
-	Tile** GetMapTiles();
-	string GetMapName();
-	void DestroyTile(int tile);
-	std::vector<Ghost*> GetGhosts();
-	void ResetGame();
 	Config* CreateConfig();
 	Map* CreateMap();
 
@@ -44,7 +37,7 @@ public:
 	virtual GameContext* CreateGameContext() = 0;
 protected:
 	Map* tileMap;
-	std::vector<Ghost*> ghosts;
+	GameContext* gContext;
 	Config* cFile;
 };
 

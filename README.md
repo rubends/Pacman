@@ -8,8 +8,7 @@ Programming pattern: Abstract Factory.
 - Sound effects
 - ghost movement improvement
 - alle todos
-- einde van spel when alle pellets op
-- abstract factory = enkel dingen createn?
+- einde van spel when alle pellets op + quit everything
 
 
 ## PPT

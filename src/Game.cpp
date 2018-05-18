@@ -17,7 +17,6 @@ Game::Game(Factory*& abstractFactory) {
 	fps = cFile->GetFps();
 	mspf = 1000/fps; //ms per f: 30FPS --> every 33.3 ms a frame
 	countToAttacking = 5000 / mspf; // 5 sec / ms per frame = # frames to go
-	delete cFile;
 }
 
 Game::~Game(){
@@ -27,6 +26,9 @@ Game::~Game(){
 void Game::Start(){
 	Map* map = aFactory->CreateMap();
 	GameContext* gContext = aFactory->CreateGameContext();
+	gContext->SetTileSize(cFile->GetTileSize());
+	gContext->SetLives(cFile->GetLives());
+
 	Pacman* pacman = aFactory->CreatePacman();
 	Ghost* ghosts[numOfGhosts];
 	for(int i = 0; i < numOfGhosts; i++){
@@ -54,6 +56,7 @@ void Game::Start(){
 				//delete [] ghosts;
 				//delete pacman;
 				//delete ev;
+				//delete cFile;
 				gContext->QuitVis();
 			} else if(ev->KeyDown()){
 				if(ev->GetKeyDown() == 6){ //pressed enter

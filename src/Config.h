@@ -30,7 +30,7 @@ protected:
 	int animationSpeed = 3; //every x frames sprite change
 	string mapName = "Assets/Map2.map";
 	int tileSize = 20;
-	int lives = 3;
+	int lives = 4;
 };
 
 #endif /* CONFIG_H_ */

@@ -62,7 +62,7 @@ void Map::CreateMap() {
 }
 
 void Map::Load() {
-	cout << "RELOAD";
+	cout << "Map: RELOAD";
 	for(int tile = 0; tile < totalTiles; tile++){
 		destroyedTiles[tile] = 0;
 	}
@@ -84,7 +84,7 @@ void Map::DestroyTile(int tile){
 	if(destroyedTiles[tile] != 1){
 		int* tileBoxInt = tileSet[tile]->GetBoxInt();
 		if(tileBoxInt[4] == 9){ // PELLET TODO get variable int of pellet
-			std::vector<Ghost*>ghosts = aFactory->GetGhosts();
+			std::vector<Ghost*>ghosts = gContext->GetGhosts();
 			for(size_t i = 0; i <= (ghosts.size()-1); i++){
 				ghosts[i]->SetAttackingState(false);
 			}

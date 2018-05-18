@@ -26,6 +26,11 @@ int GameContext::SubtractLives(int subtraction){
 	return lives;
 }
 
+int GameContext::SetLives(int numOfLives){
+	lives = numOfLives;
+	return lives;
+}
+
 bool GameContext::GetPlaying(){
 	return playing;
 }
@@ -55,19 +60,17 @@ int GameContext::AddToScore(int addition){
 
 int GameContext::SetScreenWidth(int sWidth){
 	screenWidth = sWidth;
-	cout << screenWidth;
 	return screenWidth;
 }
 int GameContext::SetScreenHeight(int sHeight){
 	screenHeight = sHeight;
 	return screenHeight;
 }
+
 int GameContext::GetScreenWidth(){
-	cout << '-';
-	cout << screenWidth; // CRASH
-	return 560;
 	return screenWidth;
 }
+
 int GameContext::GetScreenHeight(){
 	return screenHeight;
 }
@@ -93,4 +96,48 @@ void GameContext::ResetGame(){
 	score = 0;
 	lives = 3; //todo get this
 	startText = "Start again";
+}
+
+bool GameContext::CheckCollision(int* entityBox, int* tileBox){
+	int leftA, leftB;
+	int rightA, rightB;
+	int topA, topB;
+	int bottomA, bottomB;
+
+	leftA = entityBox[0];
+	rightA = entityBox[0] + entityBox[2]; // + width
+	topA = entityBox[1];
+	bottomA = entityBox[1] + entityBox[3]; // + height
+
+	leftB = tileBox[0];
+	rightB = tileBox[0] + tileBox[2]; // + width
+	topB = tileBox[1];
+	bottomB = tileBox[1] + tileBox[3]; // + height
+
+	if( rightA > leftB && leftA < rightB && topA < bottomB && bottomA > topB)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void GameContext::AddGhost(Ghost* ghost){
+	ghosts.push_back(ghost);
+}
+
+std::vector<Ghost*> GameContext::GetGhosts(){
+	return ghosts;
+}
+
+void GameContext::SetMap(Map* map){
+	tileMap = map;
+}
+
+Tile** GameContext::GetMapTiles() {
+	return tileMap->GetTiles();
+}
+
+void GameContext::DestroyTile(int tile){
+	tileMap->DestroyTile(tile);
 }

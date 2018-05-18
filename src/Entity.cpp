@@ -47,7 +47,7 @@ int* Entity::GetCollisionBox(){
 
 
 bool Entity::CheckCollisions(){
-	Tile** tileSet = aFactory->GetMapTiles();
+	Tile** tileSet = gContext->GetMapTiles();
 
 	collision = false;
 	int* tileBoxInt = 0;
@@ -55,14 +55,14 @@ bool Entity::CheckCollisions(){
 	for(int j = 0; j < totalTiles; j++){ //CHECK TILES
 		tileBoxInt = tileSet[j]->GetBoxInt();
 
-		bool tempCollide = aFactory->CheckCollision(this->GetCollisionBox(), tileBoxInt);
+		bool tempCollide = gContext->CheckCollision(this->GetCollisionBox(), tileBoxInt);
 
 		if(!collision && tempCollide){
 			if(tileBoxInt[4] > 0 && tileBoxInt[4] <= 6){ //is wall
 				collision = true;
 			}
 			if(isPac){ //entity is pacman
-				aFactory->DestroyTile(j);
+				gContext->DestroyTile(j);
 			}
 		}
 	}
