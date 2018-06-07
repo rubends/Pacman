@@ -17,25 +17,27 @@
 
 using namespace std;
 
-class InitSDL {
-public:
-	InitSDL(int screenWidth, int screenHeight);
-	virtual ~InitSDL();
-	void ClearScreen();
-	void UpdateScreen();
-	void QuitVis();
-	SDL_Renderer* GetRenderer();
-	SDL_Surface* GetSurface();
-	SDL_Texture* GetTileTexture();
-	SDL_Renderer* GetVisibleRenderer();
-protected:
-	SDL_Renderer* sdlRendererTEMP;
-	SDL_Renderer* sdlRenderer;
-	SDL_Surface* loadedSurface;
-	SDL_Window* sdlWindow;
-	SDL_Surface* sdlScreenSurface;
+namespace PACMAN {
+	class InitSDL {
+	public:
+		InitSDL(int screenWidth, int screenHeight);
+		virtual ~InitSDL();
+		void ClearScreen();
+		void UpdateScreen();
+		void QuitVis();
+		SDL_Renderer* GetRenderer();
+		SDL_Surface* GetSurface();
+		SDL_Texture* GetTileTexture();
+		SDL_Renderer* GetVisibleRenderer();
+	protected:
+		SDL_Renderer* sdlRendererTEMP;
+		SDL_Renderer* sdlRenderer;
+		SDL_Surface* loadedSurface;
+		SDL_Window* sdlWindow;
+		SDL_Surface* sdlScreenSurface;
 
-	SDL_Texture* tileTexture;
-};
+		SDL_Texture* tileTexture;
+	};
+}
 
 #endif /* INITSDL_H_ */

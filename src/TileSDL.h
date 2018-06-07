@@ -14,17 +14,19 @@
 
 using namespace std;
 
-class TileSDL : public Tile{
-public:
-	TileSDL(SDL_Renderer* sdlRendererTEMP, SDL_Texture* tileTexture);
-	virtual ~TileSDL();
-	void Visualize();
-protected:
-	SDL_Renderer* sdlRenderer;
-	SDL_Texture* texture;
+namespace PACMAN {
+	class TileSDL : public Tile{
+	public:
+		TileSDL(SDL_Renderer* sdlRendererTEMP, SDL_Texture* tileTexture);
+		virtual ~TileSDL();
+		void Visualize();
+	protected:
+		SDL_Renderer* sdlRenderer;
+		SDL_Texture* texture;
 
-	SDL_Rect tileSprite;
-	SDL_Rect tileRect;
-};
+		SDL_Rect tileSprite;
+		SDL_Rect tileRect;
+	};
+}
 
 #endif /* TILESDL_H_ */

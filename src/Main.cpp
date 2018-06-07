@@ -15,8 +15,8 @@
 using namespace std;
 
 int main(int argc, char* args[]) { //parameters for SDL
-	Factory* aFactory = new FactorySDL();
-	Game* game = new Game(aFactory);
+	PACMAN::Factory* aFactory = new PACMAN::FactorySDL();
+	PACMAN::Game* game = new PACMAN::Game(aFactory);
 	game->Start();
 	delete aFactory;
 	delete game;

@@ -8,14 +8,16 @@
 #ifndef EVENTHANDLER_H_
 #define EVENTHANDLER_H_
 
-class EventHandler {
-public:
-	EventHandler();
-	virtual ~EventHandler();
-	virtual int PollEvent() = 0;
-	virtual bool QuitEvent() = 0;
-	virtual bool KeyDown() = 0;
-	virtual int GetKeyDown() = 0;
-};
+namespace PACMAN {
+	class EventHandler {
+	public:
+		EventHandler();
+		virtual ~EventHandler();
+		virtual int PollEvent() = 0;
+		virtual bool QuitEvent() = 0;
+		virtual bool KeyDown() = 0;
+		virtual int GetKeyDown() = 0;
+	};
+}
 
 #endif /* EVENTHANDLER_H_ */

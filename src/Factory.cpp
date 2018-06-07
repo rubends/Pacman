@@ -7,24 +7,26 @@
 
 #include "Factory.h"
 
-Factory::Factory() {
-	tileMap = NULL;
-	cFile = NULL;
-	gContext = NULL;
-}
+namespace PACMAN {
+	Factory::Factory() {
+		tileMap = NULL;
+		cFile = NULL;
+		gContext = NULL;
+	}
 
-Factory::~Factory() {
-	// TODO Auto-generated destructor stub
-}
+	Factory::~Factory() {
+		// TODO Auto-generated destructor stub
+	}
 
-Config* Factory::CreateConfig() {
-	cFile = new Config();
-	return cFile;
-}
+	Config* Factory::CreateConfig() {
+		cFile = new Config();
+		return cFile;
+	}
 
-Map* Factory::CreateMap() {
-	tileMap = new Map(this, cFile->GetMapName(), cFile->GetTileSize());
-	this->CreateVis();
-	tileMap->CreateMap();
-	return tileMap;
+	Map* Factory::CreateMap() {
+		tileMap = new Map(this, cFile->GetMapName(), cFile->GetTileSize());
+		this->CreateVis();
+		tileMap->CreateMap();
+		return tileMap;
+	}
 }

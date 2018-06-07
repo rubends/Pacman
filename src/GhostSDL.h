@@ -17,18 +17,20 @@
 
 using namespace std;
 
-class GhostSDL : public Ghost{
-public:
-	GhostSDL(int ghostType, SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface);
-	virtual ~GhostSDL();
-	void Visualize();
-protected:
-	SDL_Renderer* sdlRenderer;
-	SDL_Surface* surface;
+namespace PACMAN {
+	class GhostSDL : public Ghost{
+	public:
+		GhostSDL(int ghostType, SDL_Renderer* sdlRendererTEMP, SDL_Surface* loadedSurface);
+		virtual ~GhostSDL();
+		void Visualize();
+	protected:
+		SDL_Renderer* sdlRenderer;
+		SDL_Surface* surface;
 
-	SDL_Rect ghostSprite[3];
-	SDL_Texture* ghostTexture = NULL;
-	SDL_Rect renderQuadG;
-};
+		SDL_Rect ghostSprite[3];
+		SDL_Texture* ghostTexture = NULL;
+		SDL_Rect renderQuadG;
+	};
+}
 
 #endif /* GHOSTSDL_H_ */

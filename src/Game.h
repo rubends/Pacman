@@ -18,19 +18,21 @@
 
 using namespace std;
 
-class Game {
-public:
-	Factory* aFactory;
-	Game(Factory*& abstractFactory);
-	virtual ~Game();
-	void Start();
-protected:
-	Config* cFile;
-	int fps;
-	int mspf;
-	int countToAttacking;
-	int numOfGhosts;
-	int animationSpeed;
-};
+namespace PACMAN {
+	class Game {
+	public:
+		Factory* aFactory;
+		Game(Factory*& abstractFactory);
+		virtual ~Game();
+		void Start();
+	protected:
+		Config* cFile;
+		int fps;
+		int mspf;
+		int countToAttacking;
+		int numOfGhosts;
+		int animationSpeed;
+	};
+}
 
 #endif /* GAME_H_ */

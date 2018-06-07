@@ -11,16 +11,18 @@
 #include "EventHandler.h"
 #include <sdl2/SDL.h>
 
-class EventHandlerSDL : public EventHandler{
-public:
-	EventHandlerSDL();
-	virtual ~EventHandlerSDL();
-	int PollEvent();
-	bool QuitEvent();
-	bool KeyDown();
-	int GetKeyDown();
-protected:
-	SDL_Event e;
-};
+namespace PACMAN {
+	class EventHandlerSDL : public EventHandler{
+	public:
+		EventHandlerSDL();
+		virtual ~EventHandlerSDL();
+		int PollEvent();
+		bool QuitEvent();
+		bool KeyDown();
+		int GetKeyDown();
+	protected:
+		SDL_Event e;
+	};
+}
 
 #endif /* EVENTHANDLERSDL_H_ */

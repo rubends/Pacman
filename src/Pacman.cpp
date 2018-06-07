@@ -7,104 +7,106 @@
 
 #include "Pacman.h"
 
-Pacman::Pacman() {
-	isPac = true;
-}
-
-Pacman::~Pacman() {
-	// TODO Auto-generated destructor stub
-}
-
-int Pacman::GetX() {
-	return mPosX;
-}
-
-int Pacman::GetY() {
-	return mPosY;
-}
-
-void Pacman::SetDirection(int key){
-	if(direction != key){
-		direction = key;
+namespace PACMAN {
+	Pacman::Pacman() {
+		isPac = true;
 	}
-}
 
-bool Pacman::GetLiving(){
-	return living;
-}
-
-bool Pacman::SetLiving(bool alive){
-	living = alive;
-	if(alive){
-		mPosX = 13*mWidth;
-		mPosY = 24*mHeight;
+	Pacman::~Pacman() {
+		// TODO Auto-generated destructor stub
 	}
-	return living;
-}
 
-void Pacman::Animate(){
-	if(living){
-		if(collision){ //stuck
-			frame = 1;
-		}else {
+	int Pacman::GetX() {
+		return mPosX;
+	}
+
+	int Pacman::GetY() {
+		return mPosY;
+	}
+
+	void Pacman::SetDirection(int key){
+		if(direction != key){
+			direction = key;
+		}
+	}
+
+	bool Pacman::GetLiving(){
+		return living;
+	}
+
+	bool Pacman::SetLiving(bool alive){
+		living = alive;
+		if(alive){
+			mPosX = 13*mWidth;
+			mPosY = 24*mHeight;
+		}
+		return living;
+	}
+
+	void Pacman::Animate(){
+		if(living){
+			if(collision){ //stuck
+				frame = 1;
+			}else {
+				frame++;
+				if(frame > 2){
+					frame = 0;
+				}
+			}
+		} else {
 			frame++;
-			if(frame > 2){
-				frame = 0;
+			if(frame > 14){
+				frame = 2;
 			}
 		}
-	} else {
-		frame++;
-		if(frame > 14){
-			frame = 2;
-		}
 	}
-}
 
-void Pacman::Move(){
-	int tempPosX = mPosX;
-	int tempPosY = mPosY;
+	void Pacman::Move(){
+		int tempPosX = mPosX;
+		int tempPosY = mPosY;
 
-	this->MoveInDir(direction);
-	if(this->CheckCollisions()){ //not possible to go to direction
-		mPosX = tempPosX;
-		mPosY = tempPosY;
-
-		this->MoveInDir(prevDirection); //keep going prev direction
-		if(this->CheckCollisions()){
+		this->MoveInDir(direction);
+		if(this->CheckCollisions()){ //not possible to go to direction
 			mPosX = tempPosX;
 			mPosY = tempPosY;
-		}
-	} else {
-		prevDirection = direction;
-	}
 
-	if(mPosX < -20) //pacman went to far
-	{
-		mPosX = gContext->GetScreenWidth();
-	}
-	if(mPosX > gContext->GetScreenWidth())
-	{
-		mPosX = -20;
-	}
-
-	this->Visualize();
-}
-
-void Pacman::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
-	for(int i = 0; i<numOfGhosts; i++){
-		int* ghostBoxInt = ghosts[i]->GetCollisionBox();
-		bool captured = gContext->CheckCollision(this->GetCollisionBox(), ghostBoxInt);
-		if(captured){
-			if(ghosts[i]->GetAttackingState()){
-				gContext->SubtractLives(1);
-				gContext->SetPlaying(false, "Dead");
-				gContext->PlaySound("dead");
-				living = false;
-			} else {
-				ghosts[i]->SetLivingState(false);
-				//gContext->PlaySound("kill");
+			this->MoveInDir(prevDirection); //keep going prev direction
+			if(this->CheckCollisions()){
+				mPosX = tempPosX;
+				mPosY = tempPosY;
 			}
+		} else {
+			prevDirection = direction;
 		}
-		delete ghostBoxInt;
+
+		if(mPosX < -20) //pacman went to far
+		{
+			mPosX = gContext->GetScreenWidth();
+		}
+		if(mPosX > gContext->GetScreenWidth())
+		{
+			mPosX = -20;
+		}
+
+		this->Visualize();
+	}
+
+	void Pacman::GotCaptured(Ghost* ghosts[], int numOfGhosts) {
+		for(int i = 0; i<numOfGhosts; i++){
+			int* ghostBoxInt = ghosts[i]->GetCollisionBox();
+			bool captured = gContext->CheckCollision(this->GetCollisionBox(), ghostBoxInt);
+			if(captured){
+				if(ghosts[i]->GetAttackingState()){
+					gContext->SubtractLives(1);
+					gContext->SetPlaying(false, "Dead");
+					gContext->PlaySound("dead");
+					living = false;
+				} else {
+					ghosts[i]->SetLivingState(false);
+					//gContext->PlaySound("kill");
+				}
+			}
+			delete ghostBoxInt;
+		}
 	}
 }

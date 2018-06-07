@@ -3,9 +3,7 @@ A classic Pacman game made with C++ and the SDL library.
 Programming pattern: Abstract Factory.
 
 ## Todo:
-- save highscore (in config file)
 - Namespaces
-- Sound effects
 - ghost movement improvement
 - alle todos
 - einde van spel when alle pellets op + quit everything

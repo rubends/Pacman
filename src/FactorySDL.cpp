@@ -7,43 +7,45 @@
 
 #include "FactorySDL.h"
 
-FactorySDL::FactorySDL(){
-	sdlInit = NULL;
-}
+namespace PACMAN {
+	FactorySDL::FactorySDL(){
+		sdlInit = NULL;
+	}
 
-FactorySDL::~FactorySDL(){
+	FactorySDL::~FactorySDL(){
 
-}
+	}
 
-Ghost* FactorySDL::CreateGhost(int type){
-	Ghost* ghost = new GhostSDL(type, sdlInit->GetRenderer(), sdlInit->GetSurface());
-	ghost->SetFactory(this);
-	ghost->SetGameContext(gContext);
-	gContext->AddGhost(ghost);
-	return ghost;
-}
+	Ghost* FactorySDL::CreateGhost(int type){
+		Ghost* ghost = new GhostSDL(type, sdlInit->GetRenderer(), sdlInit->GetSurface());
+		ghost->SetFactory(this);
+		ghost->SetGameContext(gContext);
+		gContext->AddGhost(ghost);
+		return ghost;
+	}
 
-Pacman* FactorySDL::CreatePacman(){
-	Pacman* pacman = new PacmanSDL(sdlInit->GetRenderer(), sdlInit->GetSurface());
-	pacman->SetFactory(this);
-	pacman->SetGameContext(gContext);
+	Pacman* FactorySDL::CreatePacman(){
+		Pacman* pacman = new PacmanSDL(sdlInit->GetRenderer(), sdlInit->GetSurface());
+		pacman->SetFactory(this);
+		pacman->SetGameContext(gContext);
 
-	return pacman;
-}
+		return pacman;
+	}
 
-Tile* FactorySDL::CreateTile(int x, int y, int type, int width, int height){
-	Tile* tile = new TileSDL(sdlInit->GetRenderer(), sdlInit->GetTileTexture());
-	tile->RenderTile(x, y, type, width, height);
-	return tile;
-}
+	Tile* FactorySDL::CreateTile(int x, int y, int type, int width, int height){
+		Tile* tile = new TileSDL(sdlInit->GetRenderer(), sdlInit->GetTileTexture());
+		tile->RenderTile(x, y, type, width, height);
+		return tile;
+	}
 
-void FactorySDL::CreateVis() {
-	sdlInit = new InitSDL(tileMap->GetScreenWidth(), tileMap->GetScreenHeight());
-}
+	void FactorySDL::CreateVis() {
+		sdlInit = new InitSDL(tileMap->GetScreenWidth(), tileMap->GetScreenHeight());
+	}
 
-GameContext* FactorySDL::CreateGameContext(){
-	gContext = new GameContextSDL(sdlInit);
-	gContext->SetMap(tileMap);
-	tileMap->SetContext(gContext);
-	return gContext;
+	GameContext* FactorySDL::CreateGameContext(){
+		gContext = new GameContextSDL(sdlInit);
+		gContext->SetMap(tileMap);
+		tileMap->SetContext(gContext);
+		return gContext;
+	}
 }
