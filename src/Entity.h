@@ -35,6 +35,7 @@ namespace PACMAN {
 		int totalTiles = 0;
 		int screenWidth = 0;
 		int screenHeight = 0;
+		int numOfGhosts = 0;
 	};
 }
 

@@ -29,6 +29,7 @@ namespace PACMAN {
 		GameContext* gContext = aFactory->CreateGameContext();
 		gContext->SetTileSize(cFile->GetTileSize());
 		gContext->SetLives(cFile->GetLives());
+		gContext->SetNumOfGhosts(numOfGhosts);
 
 		Pacman* pacman = aFactory->CreatePacman();
 		Ghost* ghosts[numOfGhosts];
@@ -64,18 +65,25 @@ namespace PACMAN {
 					//delete aFactory;
 				} else if(ev->KeyDown()){
 					if(ev->GetKeyDown() == 6){ //pressed enter
-						gContext->SetPlaying(!gContext->GetPlaying(), "Paused");
-						if(!pacman->GetLiving()){
-							pacman->SetLiving(true);
-							for(int j=0; j < numOfGhosts;j++){
-								ghosts[j]->ResetGhost();
-							}
-							if(gContext->GetLives() <= 0){
-								gContext->ResetGame();
-								gContext->SetLives(cFile->GetLives());
-								map->Load();
+						if(map->GetNumOfPellets() > 0){
+							gContext->SetPlaying(!gContext->GetPlaying(), "Paused");
+							if(!pacman->GetLiving()){
+								pacman->SetLiving(true);
+								for(int j=0; j < numOfGhosts;j++){
+									ghosts[j]->ResetGhost();
+								}
+								if(gContext->GetLives() <= 0){
+									gContext->ResetGame();
+									gContext->SetLives(cFile->GetLives());
+									map->Load();
+								}
 								pacman->SetDirection(4);
 							}
+						} else {
+							map->Load();
+							pacman->SetLiving(true);
+							pacman->SetDirection(4);
+							gContext->SetPlaying(true, "Paused");
 						}
 					} else if (gContext->GetPlaying()) { //not changing direction while paused
 						pacman->SetDirection(ev->GetKeyDown());
@@ -91,6 +99,10 @@ namespace PACMAN {
 						ghosts[j]->SetAttackingState(true);
 					}
 				}
+			}
+
+			if(map->GetNumOfPellets() == 0){
+				gContext->SetPlaying(false, "Winner");
 			}
 
 			ticks = clock(); //#clock ticks since running

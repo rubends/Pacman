@@ -37,8 +37,8 @@ namespace PACMAN {
 	bool Pacman::SetLiving(bool alive){
 		living = alive;
 		if(alive){
-			mPosX = 13*mWidth;
-			mPosY = 24*mHeight;
+			mPosX = (screenWidth/2);
+			mPosY = floor(3*screenHeight/4);
 		}
 		return living;
 	}
@@ -81,9 +81,9 @@ namespace PACMAN {
 
 		if(mPosX < -20) //pacman went to far
 		{
-			mPosX = gContext->GetScreenWidth();
+			mPosX = screenWidth;
 		}
-		if(mPosX > gContext->GetScreenWidth())
+		if(mPosX > screenWidth)
 		{
 			mPosX = -20;
 		}

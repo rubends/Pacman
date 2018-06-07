@@ -12,6 +12,8 @@ namespace PACMAN {
 		aFactory = abstractFactory;
 		gContext = NULL;
 		tileSize = size;
+		numOfPellets = 0;
+		numOfPelletsLeft = 0;
 		map.open(mapName, std::ios::binary);
 		if( map.fail() )
 		{
@@ -52,6 +54,9 @@ namespace PACMAN {
 			int tileType = 0;
 			map >> tileType;
 			tileSet[tile] = aFactory->CreateTile(x, y, tileType, tileSize, tileSize);
+			if(tileType == 0){
+				numOfPellets++;
+			}
 			x += tileSize;
 			if(x >= screenWidth)
 			{
@@ -59,6 +64,7 @@ namespace PACMAN {
 				y += tileSize;
 			}
 		}
+		numOfPelletsLeft = (numOfPellets-15);
 		map.close();
 	}
 
@@ -66,6 +72,7 @@ namespace PACMAN {
 		for(int tile = 0; tile < totalTiles; tile++){
 			destroyedTiles[tile] = 0;
 		}
+		numOfPelletsLeft = numOfPellets;
 	}
 
 	void Map::Draw() {
@@ -95,6 +102,7 @@ namespace PACMAN {
 			} else if(tileBoxInt[4] == 0){ //PAC-DOT
 				gContext->AddToScore(1);
 				destroyedTiles[tile] = 1;
+				numOfPelletsLeft--;
 			}
 			delete tileBoxInt;
 		}
@@ -106,5 +114,9 @@ namespace PACMAN {
 
 	int Map::GetScreenHeight(){
 		return screenHeight;
+	}
+
+	int Map::GetNumOfPellets(){
+		return numOfPelletsLeft;
 	}
 }

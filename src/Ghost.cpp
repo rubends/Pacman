@@ -35,8 +35,8 @@ namespace PACMAN {
 	}
 
 	void Ghost::ResetGhost(){
-		mPosX = 15*mWidth;
-		mPosY = 15*mHeight;
+		mPosX = (screenWidth/2)-(floor(numOfGhosts/2) * mWidth)+(type*mWidth);
+		mPosY = (screenHeight/2);
 		living = true;
 		attacking = true;
 	}
@@ -127,8 +127,8 @@ namespace PACMAN {
 	}
 
 	void Ghost::ReturnToCenter(){
-		int x = 15*mWidth;
-		int y = 15*mHeight;
+		int x = (screenWidth/2);
+		int y = (screenHeight/2);
 
 		this->MoveToCoordinates(x, y);
 

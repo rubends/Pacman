@@ -155,4 +155,13 @@ namespace PACMAN {
 		hs.close();
 		return highScore;
 	}
+
+	int GameContext::SetNumOfGhosts(int nrGhosts){
+		numOfGhosts = nrGhosts;
+		return numOfGhosts;
+	}
+
+	int GameContext::GetNumOfGhosts(){
+		return numOfGhosts;
+	}
 }

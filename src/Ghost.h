@@ -11,6 +11,7 @@
 #include <iostream>
 #include "Factory.h"
 #include "Entity.h"
+#include <math.h>
 using namespace std;
 
 namespace PACMAN {

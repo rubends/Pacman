@@ -48,6 +48,8 @@ namespace PACMAN {
 		void DestroyTile(int tile);
 		int SetHighscore(int score);
 		int GetHighscore();
+		int SetNumOfGhosts(int nrGhosts);
+		int GetNumOfGhosts();
 
 		virtual void UpdateText() = 0;
 		virtual void PlaySound(string sound) = 0;
@@ -58,6 +60,7 @@ namespace PACMAN {
 		int screenWidth = 0;
 		int screenHeight = 0;
 		int numOfTiles = 0;
+		int numOfGhosts = 0;
 		std::vector<Ghost*> ghosts;
 		Map* tileMap = NULL;
 		std::fstream hs;

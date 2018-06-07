@@ -30,8 +30,8 @@ namespace PACMAN {
 
 	void PacmanSDL::Visualize(){
 		if(mPosX == 0 && mPosY == 0){
-			mPosX = 13*mWidth;
-			mPosY = 24*mHeight;
+			mPosX = (screenWidth/2);
+			mPosY = floor(3*screenHeight/4);
 		}
 		renderQuad = { mPosX, mPosY, mWidth, mHeight };
 		SDL_RenderCopy( sdlRenderer, pacTexture, &pacmanSprite[frame], &renderQuad );

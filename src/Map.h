@@ -29,6 +29,7 @@ namespace PACMAN {
 		void CreateMap();
 		int GetScreenWidth();
 		int GetScreenHeight();
+		int GetNumOfPellets();
 		virtual ~Map();
 	protected:
 		GameContext* gContext;
@@ -37,6 +38,8 @@ namespace PACMAN {
 		//TODO tile array variable size
 		Tile** tileSet = new Tile*[911]; //** --> Cannot instantiate abstract object
 		int* destroyedTiles = new int [911];
+		int numOfPellets;
+		int numOfPelletsLeft;
 		Factory* aFactory = NULL;
 		std::ifstream map;
 

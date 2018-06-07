@@ -31,6 +31,7 @@ namespace PACMAN {
 		screenHeight = gContext->GetScreenHeight();
 		mWidth = gContext->GetTileSize();
 		mHeight = gContext->GetTileSize();
+		numOfGhosts = gContext->GetNumOfGhosts();
 	}
 
 	void Entity::SetFactory(Factory* fac){

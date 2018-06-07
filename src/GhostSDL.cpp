@@ -24,9 +24,9 @@ namespace PACMAN {
 	}
 
 	void GhostSDL::Visualize(){
-		if(mPosX == 0 && mPosY == 0){ //default setting when factory was unknown
-			mPosX = (12+type)*mWidth;
-			mPosY = 15*mHeight;
+		if(mPosX == 0 && mPosY == 0){ //default setting when factory was unknown.
+			mPosX = (screenWidth/2)-(floor(numOfGhosts/2) * mWidth)+(type*mWidth);
+			mPosY = (screenHeight/2);
 		}
 		if(attacking){
 			ghostSprite[0].x = 455;
