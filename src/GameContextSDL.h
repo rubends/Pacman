@@ -41,6 +41,7 @@ namespace PACMAN {
 		SDL_Rect messageRect;
 		std::string printTxt = "";
 
+		Mix_Chunk *pacMusic;
 		Mix_Chunk *pacSound;
 	};
 }

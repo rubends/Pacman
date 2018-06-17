@@ -91,12 +91,14 @@ namespace PACMAN {
 		if(destroyedTiles[tile] != 1){
 			int* tileBoxInt = tileSet[tile]->GetBoxInt();
 			if(tileBoxInt[4] == 9){ // PELLET TODO get variable int of pellet
+				gContext->PlaySound("eat");
 				std::vector<Ghost*>ghosts = gContext->GetGhosts();
 				for(size_t i = 0; i <= (ghosts.size()-1); i++){
 					ghosts[i]->SetAttackingState(false);
 				}
 				destroyedTiles[tile] = 1;
 			} else if(tileBoxInt[4] == 8){ // CHERRY
+				gContext->PlaySound("eat");
 				gContext->AddToScore(10);
 				destroyedTiles[tile] = 1;
 			} else if(tileBoxInt[4] == 0){ //PAC-DOT

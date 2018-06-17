@@ -37,7 +37,7 @@ namespace PACMAN {
 			ghosts[i] = aFactory->CreateGhost(i);
 		}
 
-		EventHandler* ev = new EventHandlerSDL();
+		EventHandler* ev = aFactory->CreateEventHandler();
 		int last_frame = 0;
 		clock_t ticks = 0;
 		int clock_ms = 0; //clock in ms
@@ -53,15 +53,14 @@ namespace PACMAN {
 				{
 					quit = true;
 					for(int i = 0; i < numOfGhosts; i++){
-						//delete ghosts[i];
+						delete ghosts[i];
 					}
-					cout << "SHUT DOWN";
 					gContext->QuitVis();
 					delete gContext;
-					//delete [] ghosts;
-					//delete pacman;
+					delete [] ghosts;
+					delete pacman;
 					//delete ev;
-					//delete cFile;
+					delete cFile;
 					//delete aFactory;
 				} else if(ev->KeyDown()){
 					if(ev->GetKeyDown() == 6){ //pressed enter
@@ -117,7 +116,7 @@ namespace PACMAN {
 				{
 					pacman->Move();
 					ghosts[0]->MoveTo(pacman->GetX(), pacman->GetY());
-					ghosts[1]->MoveTo(pacman->GetX()+80, pacman->GetY()+80); // todo verbeteren
+					ghosts[1]->MoveInFront(pacman->GetX(), pacman->GetY());
 					pacman->GotCaptured(ghosts, numOfGhosts);
 					for(int j=2; j < numOfGhosts;j++){
 						ghosts[j]->Move();

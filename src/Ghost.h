@@ -30,6 +30,7 @@ namespace PACMAN {
 		void ReturnToCenter();
 		void MoveTo(int x, int y);
 		void MoveToCoordinates(int x, int y);
+		void MoveInFront(int x, int y);
 
 		virtual void Visualize() = 0;
 	protected:

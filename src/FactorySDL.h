@@ -14,6 +14,7 @@
 #include "TileSDL.h"
 #include "GameContextSDL.h"
 #include "initSDL.h"
+#include "EventHandlerSDL.h"
 
 using namespace std;
 namespace PACMAN {
@@ -26,6 +27,7 @@ namespace PACMAN {
 			Pacman* CreatePacman();
 			Tile* CreateTile(int x, int y, int type, int width, int height);
 			GameContext* CreateGameContext();
+			EventHandler* CreateEventHandler();
 			void CreateVis();
 		protected:
 			PACMAN::InitSDL* sdlInit;

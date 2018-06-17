@@ -4,7 +4,7 @@ Programming pattern: Abstract Factory.
 
 ## Todo:
 - ghost movement improvement
-- alle todos
+- dead geluid
 
 ## PPT
 - Zelfgemaakt klassediagram laten zien

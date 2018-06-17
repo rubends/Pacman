@@ -19,7 +19,8 @@ namespace PACMAN {
 		messageTexture = NULL;
 		textSurface = NULL;
 
-		pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_beginning.wav" );
+		pacMusic = Mix_LoadWAV( "Assets/Sounds/pacman_beginning.wav" );
+		pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_eatghost.wav" );
 	}
 
 	GameContextSDL::~GameContextSDL() {
@@ -76,22 +77,22 @@ namespace PACMAN {
 		if(sound == "pacman"){
 			if(Mix_Playing(2) != 0){
 				Mix_HaltChannel(2);
-				Mix_FreeChunk( pacSound );
-				pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_chomp.wav" );
+				Mix_FreeChunk( pacMusic );
+				pacMusic = Mix_LoadWAV( "Assets/Sounds/pacman_chomp.wav" );
 			}
 			if( Mix_Playing(1) == 0 )
 			{
-				Mix_PlayChannel( 1, pacSound, 0 );
+				Mix_PlayChannel( 1, pacMusic, 0 );
 			}
 		} else if(sound == "beginning"){
 			if(Mix_Playing(1) != 0){
 				Mix_HaltChannel(1);
-				Mix_FreeChunk( pacSound );
-				pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_beginning.wav" );
+				Mix_FreeChunk( pacMusic );
+				pacMusic = Mix_LoadWAV( "Assets/Sounds/pacman_beginning.wav" );
 			}
 			if( Mix_Playing(2) == 0 )
 			{
-				Mix_PlayChannel( 2, pacSound, 0 );
+				Mix_PlayChannel( 2, pacMusic, 0 );
 			}
 		} else if(sound == "dead"){
 			Mix_FreeChunk( pacSound );
@@ -100,7 +101,11 @@ namespace PACMAN {
 		} else if(sound == "kill"){
 			Mix_FreeChunk( pacSound );
 			pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_eatghost.wav" );
-			Mix_PlayChannel( -1, pacSound, 0 );
+			Mix_PlayChannel( 3, pacSound, 0 );
+		} else if(sound == "eat"){
+			Mix_FreeChunk( pacSound );
+			pacSound = Mix_LoadWAV( "Assets/Sounds/pacman_eatfruit.wav" );
+			Mix_PlayChannel( 3, pacSound, 0 );
 		}
 
 	}

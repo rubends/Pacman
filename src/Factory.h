@@ -13,6 +13,7 @@
 #include "Tile.h"
 #include "Config.h"
 #include "GameContext.h"
+#include "EventHandler.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -23,6 +24,7 @@ namespace PACMAN {
 	class Pacman;
 	class Ghost;
 	class GameContext;
+	class EventHandler;
 	class Factory {
 	public:
 		Factory();
@@ -36,6 +38,7 @@ namespace PACMAN {
 		virtual Tile* CreateTile(int x, int y, int type, int width, int height) = 0;
 		virtual void CreateVis() = 0;
 		virtual GameContext* CreateGameContext() = 0;
+		virtual EventHandler* CreateEventHandler() = 0;
 	protected:
 		Map* tileMap;
 		GameContext* gContext;

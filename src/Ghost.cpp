@@ -164,6 +164,10 @@ namespace PACMAN {
 		if(this->CheckCollisions()){
 			mPosY = tempPosY;
 		}
+
+		if(mPosY == tempPosY && mPosX == tempPosX){
+			//this->Move();
+		}
 	}
 
 	void Ghost::MoveTo(int x, int y){
@@ -173,6 +177,41 @@ namespace PACMAN {
 			this->ReturnToCenter();
 		}
 
+		this->Visualize();
+	}
+
+	void Ghost::MoveInFront(int x, int y){
+		if(living){
+			int toX, toY;
+			int further = 4;
+			if(mPosX - x > 0){ //pacman to the left of the ghost
+				toX = x - (further*mWidth);
+			} else {
+				toX = x + (further*mWidth);
+			}
+
+			if(toX < 0){
+				toX = 0;
+			} else if (toX > screenWidth){
+				toX = screenWidth;
+			}
+
+			if(mPosY - y > 0){ //pacman above the ghost
+				toY = y - (further*mHeight);
+			} else{
+				toY = y + (further*mHeight);
+			}
+
+			if(toY < 0){
+				toY = 0;
+			} else if (toY > screenHeight){
+				toY = screenHeight;
+			}
+
+			this->MoveToCoordinates(toX, toY);
+		}  else {
+			this->ReturnToCenter();
+		}
 		this->Visualize();
 	}
 }

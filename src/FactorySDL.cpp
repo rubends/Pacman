@@ -48,4 +48,9 @@ namespace PACMAN {
 		tileMap->SetContext(gContext);
 		return gContext;
 	}
+
+	EventHandler* FactorySDL::CreateEventHandler(){
+		EventHandler* ev = new EventHandlerSDL();
+		return ev;
+	}
 }

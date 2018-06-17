@@ -103,7 +103,7 @@ namespace PACMAN {
 					living = false;
 				} else {
 					ghosts[i]->SetLivingState(false);
-					//gContext->PlaySound("kill");
+					gContext->PlaySound("kill");
 				}
 			}
 			delete ghostBoxInt;
