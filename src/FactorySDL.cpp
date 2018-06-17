@@ -13,7 +13,7 @@ namespace PACMAN {
 	}
 
 	FactorySDL::~FactorySDL(){
-
+		delete sdlInit;
 	}
 
 	Ghost* FactorySDL::CreateGhost(int type){

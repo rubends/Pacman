@@ -122,6 +122,8 @@ namespace PACMAN {
 	}
 
 	void GameContextSDL::QuitVis(){
+		Mix_FreeChunk( pacMusic );
+		pacMusic = NULL;
 		Mix_FreeChunk( pacSound );
 		pacSound = NULL;
 		sdlInit->QuitVis();

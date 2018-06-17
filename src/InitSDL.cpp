@@ -44,7 +44,6 @@ namespace PACMAN {
 				{
 					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 				}
-				Mix_AllocateChannels(4); //combine 4 channels
 
 				//this->ClearScreen();
 

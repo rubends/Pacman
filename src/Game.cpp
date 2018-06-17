@@ -52,16 +52,6 @@ namespace PACMAN {
 				if( ev->QuitEvent() )
 				{
 					quit = true;
-					for(int i = 0; i < numOfGhosts; i++){
-						delete ghosts[i];
-					}
-					gContext->QuitVis();
-					delete gContext;
-					delete [] ghosts;
-					delete pacman;
-					//delete ev;
-					delete cFile;
-					//delete aFactory;
 				} else if(ev->KeyDown()){
 					if(ev->GetKeyDown() == 6){ //pressed enter
 						if(map->GetNumOfPellets() > 0){
@@ -146,6 +136,14 @@ namespace PACMAN {
 				gContext->UpdateScreen();
 			}
 		}
+
+		// Game ended
+		for(int i = 0; i < numOfGhosts; i++){
+			delete ghosts[i];
+		}
+		gContext->QuitVis();
+		delete pacman;
+		delete ev;
 	}
 }
 

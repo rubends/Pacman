@@ -15,7 +15,9 @@ namespace PACMAN {
 	}
 
 	Factory::~Factory() {
-		// TODO Auto-generated destructor stub
+		delete tileMap;
+		delete gContext;
+		delete cFile;
 	}
 
 	Config* Factory::CreateConfig() {
